@@ -1,4 +1,5 @@
-#!/usr/local/bin python3
+#!/usr/bin/python
+# -*-coding:Latin-1 -*
 
 from __future__ import print_function
 import time

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+# -*-coding:Latin-1 -*
+
 from __future__ import print_function
 
-import MCP3008
+#import MCP3008
 import odrive
 # import odrive.enums  # à checker
 from time import sleep
