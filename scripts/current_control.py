@@ -84,4 +84,5 @@ def test():
 if __name__ == '__main__':
     # Pour ne pas lancer l'expérience : 'python3 main.py False ___'
     # Pour lancer l'homologation par Mat : 'python3 main.py ___ True
+    # basta
     test()
