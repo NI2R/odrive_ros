@@ -25,8 +25,8 @@ class Param:
 
         # vmax en tick/s les encodeurs font 8192 tick/tours
         # controller.*.vel_limite prend le pas sur trap_traj.*.vel_limt
-        self.axis0.controller.config.vel_limit = 50000
-        self.axis1.controller.config.vel_limit = 50000
+        self.axis0.controller.config.vel_limit = 10000
+        self.axis1.controller.config.vel_limit = 10000
 
         # trap_traj parametrage des valeurs limit du comportement dynamique
         self.axis1.trap_traj.config.vel_limit = 10000
