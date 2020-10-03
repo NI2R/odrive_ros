@@ -60,7 +60,7 @@ def demo_tour(odrv0):
 param.config()
 param.calib()
 # param.calib_bis()
-param.save_config()
+# param.save_config()
 """ ------------------------------- """
 
 """ Choix de lancement des demos : """
