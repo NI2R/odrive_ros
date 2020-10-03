@@ -85,8 +85,8 @@ class Param:
         #permet d'attendre que le tunning soit "réglé", sinon robot dérive
         time.sleep(1)
 
-    def calib_bis(self)
-    
+    def calib_bis(self):
+
         #test 1 moteur
         if self.odrv0.axis0.encoder.config.pre_calibrated = True and \
             self.odrv0.axis0.motor.config.pre_calibrated :
