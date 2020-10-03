@@ -88,8 +88,8 @@ class Param:
     def calib_bis(self):
 
         #test 1 moteur
-        if self.odrv0.axis0.encoder.config.pre_calibrated = True and \
-            self.odrv0.axis0.motor.config.pre_calibrated :
+        if self.odrv0.axis0.encoder.config.pre_calibrated is True and \
+            self.odrv0.axis0.motor.config.pre_calibrated is True :
             time.sleep(1)
         else :
             # Fonction de calibration sans condition
