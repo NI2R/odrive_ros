@@ -114,7 +114,7 @@ class Param:
         while self.axis0.current_state != 1 and self.axis1.current_state != 1:
             time.sleep(0.1)
 
-        odrv.save_configuration()
+        self.odrv0.save_configuration()
 
 
     def unlock_wheels(self):
