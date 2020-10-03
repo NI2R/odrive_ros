@@ -93,9 +93,6 @@ class Param:
         # test 1 moteur, calib/Tun si pas déjà faite et saved en config
         if self.axis0.encoder.config.pre_calibrated is True and \
            self.axis0.motor.config.pre_calibrated is True:
-           """ and self.axis1.encoder.config.pre_calibrated is True and \
-           self.axis1.motor.config.pre_calibrated is True"""
-
             input("ATTENTION! RAZ des moteurs, maintenir le robot en l'air")
             time.sleep(1)
             self.axis0.encoder.config.use_index = True
