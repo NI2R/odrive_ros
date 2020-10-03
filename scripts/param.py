@@ -96,8 +96,7 @@ class Param:
            """ and self.axis1.encoder.config.pre_calibrated is True and \
            self.axis1.motor.config.pre_calibrated is True"""
            # flag = "INIT"
-           flag = input("ATTENTION ! : RAZ des moteurs, \
-           maintenir le robot en l'air: [ENTRER pour continuer]")
+           flag = input("ATTENTION ! : RAZ des moteurs, maintenir le robot en l'air: [ENTRER pour continuer]")
            if flag is "" :
                 time.sleep()
                 self.axis0.encoder.config.use_index = True
