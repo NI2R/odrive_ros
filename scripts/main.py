@@ -10,7 +10,7 @@ import sys
 sys.path.append('../../')
 # from utils.communication import Communication
 # import utils.Switch as s
-move = m.Move(param.odrv0)
+move = m.Move(p.odrv0)
 
 def demo_simple(odrv0):
 
