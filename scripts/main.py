@@ -75,8 +75,8 @@ if s.cote() == True: #Jaune
 else : run_test(param.odrv0) # Violet
 '''
 """--------------------------------"""
-test_calib_bis(param.odrv0)
-# demo_simple(param.odrv0)
+#test_calib_bis(param.odrv0)
+demo_simple(param.odrv0)
 
 print('Fin du programme')
 

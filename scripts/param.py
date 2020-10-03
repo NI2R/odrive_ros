@@ -82,8 +82,8 @@ class Param:
         self.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
         # flag calib Done !
-        odrv0.axis0.motor.config.pre_calibrated = True
-        odrv0.axis1.motor.config.pre_calibrated = True
+        self.axis0.motor.config.pre_calibrated = True
+        self.axis1.motor.config.pre_calibrated = True
 
         # permet d'attendre que le tunning soit "réglé", sinon robot dérive
         time.sleep(1)
@@ -97,7 +97,6 @@ class Param:
             print("ATTENTION! RAZ des moteurs, maintenir le robot en l'air")
             enter = raw_input()
             print(enter)
-
             time.sleep(1)
             self.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
             self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
