@@ -14,18 +14,20 @@ sys.path.append('../../')
 param = p.Param()
 move = m.Move(param.odrv0)
 
+
 def demo_simple(odrv0):
 
-    #time.sleep(1)
+    time.sleep(1)
     move.translation(500, [False, False, False, False, False])
     time.sleep(0.5)
     move.rotation(-360, [False, False, False, False, False])
     time.sleep(1)
     move.translation(-500, [False, False, False, False, False])
 
-def test_calib_bis(odrv0):
 
+def test_calib_bis(odrv0):
     move.translation(100, [False, False, False, False, False])
+
 
 def homologation(odrv0):
 
@@ -56,7 +58,7 @@ def demo_tour(odrv0):
 # Lance la configuration du odrive
 
 param.config()
-#param.calib()
+# param.calib()
 param.calib_bis()
 param.save_config()
 """ ------------------------------- """
@@ -74,7 +76,7 @@ else : run_test(param.odrv0) # Violet
 '''
 """--------------------------------"""
 test_calib_bis(param.odrv0)
-#demo_simple(param.odrv0)
+# demo_simple(param.odrv0)
 
 print('Fin du programme')
 

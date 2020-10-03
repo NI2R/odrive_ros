@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 
-#import MCP3008
+# import MCP3008
 import odrive
 # import odrive.enums  # à checker
 from time import sleep
@@ -108,7 +108,7 @@ class Move:
                     wd = 0
                     prev_step = axis.encoder.pos_estimate
 
-                ## boucle d'accélération waitendmove
+                " boucle d'accélération waitendmove "
                 #if self.buffer == movAvg:
                 #    self.seuil += 1
                 #    print("seuil =",self.seuil)

@@ -88,7 +88,7 @@ class Param:
 
     def calib_bis(self):
 
-        #test 1 moteur
+        #test 1 moteur, calib/Tun si pas déjà faite et saved en config
         if self.odrv0.axis0.encoder.config.pre_calibrated is True and \
             self.odrv0.axis0.motor.config.pre_calibrated is True :
             self.odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
@@ -98,14 +98,8 @@ class Param:
             print("starting calibration...")
             self.odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 
-
-    	    #"" fonction sauvegarde calibration""
-            while self.odrv0.axis0.current_state != 1 :
-                time.sleep(0.1)
-
             # Met les moteurs en boucle fermée
             self.odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-
 
             # flag calib Done !
             self.odrv0.axis0.encoder.config.pre_calibrated = True
