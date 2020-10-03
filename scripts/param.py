@@ -80,9 +80,9 @@ class Param:
         # Go to index
         self.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
         self.axis1.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
-        while self.axis0.current_state != 1 and self.axis1.current_state != 1:
-            time.sleep(0.1)
-            
+        #while self.axis0.current_state != 1 and self.axis1.current_state != 1:
+            #time.sleep(0.1)
+
         # Fonction de calibration sans condition
         print("starting calibration...")
         self.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
