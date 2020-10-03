@@ -65,7 +65,7 @@ class Move:
             elif mouv == "trans":
                 distInst = \
                  (axis.encoder.pos_estimate * self.WheelPerimeter) \
-                 / self.nbCountsgit
+                 / self.nbCounts
                 # print("Déplacement du Robot : %.2f mm" % distInst)
 
             Sen_count = 0
