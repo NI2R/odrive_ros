@@ -3,8 +3,8 @@
 
 from __future__ import print_function
 
-# import MCP3008
-import odrive
+import MCP3008
+# import odrive
 # import odrive.enums  # à checker
 from time import sleep
 from math import pi, fabs
