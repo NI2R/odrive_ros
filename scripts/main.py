@@ -16,12 +16,13 @@ def demo_simple(odrv0):
 
     move = m.Move(odrv0)
 
-    # time.sleep(1)
-    # move.translation(500, [False, False, False, False, False])
+    #time.sleep(1)
+    move.translation(500, [False, False, False, False, False])
+    time.sleep(0.5)
+    move.rotation(-360, [False, False, False, False, False])
     time.sleep(1)
-    move.rotation(-90, [False, False, False, False, False])
-    time.sleep(1)
-    move.translation(1000, [False, False, False, False, False])
+    move.translation(-500, [False, False, False, False, False])
+    
 
 
 def homologation(odrv0):
@@ -56,6 +57,8 @@ param = p.Param()
 param.config()
 
 param.calib()
+
+time.sleep(1)
 """ ------------------------------- """
 
 """ Choix de lancement des demos : """

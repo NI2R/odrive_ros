@@ -71,14 +71,15 @@ class Param:
         print("starting calibration...")
         self.odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         self.odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
-
+	
+	#"" fonction sauvegarde calibration""
         while self.odrv0.axis0.current_state != 1 and self.odrv0.axis1.current_state != 1:
             time.sleep(0.1)
 
         # Met les moteurs en boucle fermée
         self.odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
         self.odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-
+	time.sleep(1)
     def unlock_wheels(self):
         # AXIS_STATE_IDLE , libère le moteur : boucle ouverte
         self.odrv0.axis0.requested_state = AXIS_STATE_IDLE
