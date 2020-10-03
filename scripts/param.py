@@ -82,8 +82,8 @@ class Param:
         self.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
         # flag calib Done !
-        self.axis0.motor.config.pre_calibrated = True
-        self.axis1.motor.config.pre_calibrated = True
+        #self.axis0.motor.config.pre_calibrated = True
+        #self.axis1.motor.config.pre_calibrated = True
 
         # permet d'attendre que le tunning soit "réglé", sinon robot dérive
         time.sleep(1)
