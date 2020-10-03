@@ -16,8 +16,6 @@ move = m.Move(param.odrv0)
 
 def demo_simple(odrv0):
 
-    move = m.Move(odrv0)
-
     #time.sleep(1)
     move.translation(500, [False, False, False, False, False])
     time.sleep(0.5)
@@ -26,11 +24,11 @@ def demo_simple(odrv0):
     move.translation(-500, [False, False, False, False, False])
 
 def test_calib_bis(odrv0):
-    #move = m.Move(odrv0)
+
     move.translation(100, [False, False, False, False, False])
 
 def homologation(odrv0):
-    move = m.Move(odrv0)
+
     move.translation(500, [True, True, True, False, False])
     time.sleep(1)
     move.rotation(-90, [True, True, True, False, False])
@@ -43,7 +41,7 @@ def homologation(odrv0):
 
 
 def demo_tour(odrv0):
-    move = m.Move(odrv0)
+
     # Fait  3 tours de carreaux (chez Martial)
     for i in range(0, 12):
         move.translation(350)
@@ -53,8 +51,6 @@ def demo_tour(odrv0):
 
 
 """ Paramétrage et Calibration """
-
-
 # param.raz()# Lance fonction remise à zero des moteurs
 # time.sleep(5)
 # Lance la configuration du odrive
