@@ -10,7 +10,9 @@ import sys
 sys.path.append('../../')
 # from utils.communication import Communication
 # import utils.Switch as s
-move = m.Move(p.odrv0)
+# déclaration des variables utiles :
+param = p.Param()
+move = m.Move(param.odrv0)
 
 def demo_simple(odrv0):
 
@@ -51,7 +53,7 @@ def demo_tour(odrv0):
 
 
 """ Paramétrage et Calibration """
-param = p.Param()
+
 
 # param.raz()# Lance fonction remise à zero des moteurs
 # time.sleep(5)
