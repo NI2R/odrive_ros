@@ -3,9 +3,8 @@
 
 from __future__ import print_function
 
-# import MCP3008
-# import odrive
-# import odrive.enums  # à checker
+import odrive
+import odrive.enums  # à checker
 from time import sleep
 from math import pi, fabs
 # import matplotlib.pyplot as plt
