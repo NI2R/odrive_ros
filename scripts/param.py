@@ -99,7 +99,7 @@ class Param:
             print(enter)
 
             time.sleep(1)
-            self.axis0.encoder.config.use_index = True
+            self.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
             self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
         else :
