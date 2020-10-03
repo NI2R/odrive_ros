@@ -13,7 +13,7 @@ sys.path.append('../../')
 
 
 def demo_simple(odrv0):
- 
+
     move = m.Move(odrv0)
 
     #time.sleep(1)
@@ -74,7 +74,7 @@ if s.cote() == True: #Jaune
 else : run_test(param.odrv0) # Violet
 '''
 """--------------------------------"""
-test_calib_bis(param.odrv)
+test_calib_bis(param.odrv0)
 #demo_simple(param.odrv0)
 
 print('Fin du programme')
