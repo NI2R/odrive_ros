@@ -113,10 +113,10 @@ class Param:
     def save_config(self):
 
         # test pour garder la config de tunning moteurs entre deux runs.
-        while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
+        while self.odrv0.axis0.current_state != 1 and self.odrv0.axis1.current_state != 1:
             time.sleep(0.1)
 
-        odrv0.save_configuration()
+        self.odrv0.save_configuration()
 
 
     def unlock_wheels(self):
