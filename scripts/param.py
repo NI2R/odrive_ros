@@ -110,7 +110,7 @@ class Param:
             odrv0.axis0.motor.config.pre_calibrated = True
 
 
-    def save_config(self)
+    def save_config(self):
 
         # test pour garder la config de tunning moteurs entre deux runs.
         while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
