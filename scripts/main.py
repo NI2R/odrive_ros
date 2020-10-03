@@ -24,6 +24,7 @@ def demo_simple(odrv0):
     move.translation(-500, [False, False, False, False, False])
 
 def test_calib_bis(odrv0):
+    move = m.Move(odrv0)
     move.translation(100, [False, False, False, False, False])
 
 def homologation(odrv0):
