@@ -35,7 +35,8 @@ while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
     time.sleep(0.1)
 odrv0.axis0.motor.config.pre_calibrated = True
 odrv0.axis1.motor.config.pre_calibrated = True
+odrv0.save_configuration()
+
 # Met les moteurs en boucle fermée
 odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-odrv0.save_configuration()

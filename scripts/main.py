@@ -22,8 +22,9 @@ def demo_simple(odrv0):
     move.rotation(-360, [False, False, False, False, False])
     time.sleep(1)
     move.translation(-500, [False, False, False, False, False])
-    
 
+def test_calib_bis(odrv0):
+    move.translation(100, [False, False, False, False, False])
 
 def homologation(odrv0):
     move = m.Move(odrv0)
@@ -54,11 +55,11 @@ param = p.Param()
 # param.raz()# Lance fonction remise à zero des moteurs
 # time.sleep(5)
 # Lance la configuration du odrive
+
 param.config()
-
-param.calib()
-
-time.sleep(1)
+#param.calib()
+param.calib_bis()
+param.save_config()
 """ ------------------------------- """
 
 """ Choix de lancement des demos : """
@@ -73,7 +74,8 @@ if s.cote() == True: #Jaune
 else : run_test(param.odrv0) # Violet
 '''
 """--------------------------------"""
-demo_simple(param.odrv0)
+test_calib_bis(param.odrv)
+#demo_simple(param.odrv0)
 
 print('Fin du programme')
 
