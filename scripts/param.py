@@ -123,9 +123,6 @@ class Param:
     def save_config(self):
 
         # test pour garder la config de tunning moteurs entre deux runs.
-        while self.axis0.current_state != 1 and self.axis1.current_state != 1:
-            time.sleep(0.1)
-
         self.odrv0.save_configuration()
 
 
