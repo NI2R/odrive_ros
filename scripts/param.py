@@ -95,12 +95,10 @@ class Param:
            self.axis0.motor.config.pre_calibrated is True:
            """ and self.axis1.encoder.config.pre_calibrated is True and \
            self.axis1.motor.config.pre_calibrated is True"""
-           # flag = 'INIT'
-           flag = input("ATTENTION ! : RAZ des moteurs, maintenir le robot en l'air: [ENTRER pour continuer]")
-           if flag == '' :
-                time.sleep()
-                self.axis0.encoder.config.use_index = True
-                self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+           input("ATTENTION ! : RAZ des moteurs, maintenir le robot en l'air: [ENTRER pour continuer]")
+           time.sleep()
+           self.axis0.encoder.config.use_index = True
+           self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
         else :
             #
