@@ -108,8 +108,8 @@ class Param:
 
 
             # flag calib Done !
-            odrv0.axis0.encoder.config.pre_calibrated = True
-            odrv0.axis0.motor.config.pre_calibrated = True
+            self.odrv0.axis0.encoder.config.pre_calibrated = True
+            self.odrv0.axis0.motor.config.pre_calibrated = True
 
 
     def save_config(self):
