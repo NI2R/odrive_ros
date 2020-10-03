@@ -60,13 +60,13 @@ class Move:
                 angleInst = \
                  (- 360.0 * self.WheelPerimeter * axis.encoder.pos_estimate) \
                  / (pi * self.AxlTrack * self.nbCounts)
-                print("Angle du Robot : %.2f°" % angleInst)
+                # print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
                 distInst = \
                  (axis.encoder.pos_estimate * self.WheelPerimeter) \
                  / self.nbCounts
-                print("Déplacement du Robot : %.2f mm" % distInst)
+                # print("Déplacement du Robot : %.2f mm" % distInst)
 
             Sen_count = 0
             # print("Values vaut : ", MCP3008.readadc(1) )
@@ -121,7 +121,7 @@ class Move:
                 #    self.seuil = 0
 
                 self.buffer = movAvg
-                print("seuil =", self.seuil)
+                # print("seuil =", self.seuil)
 
             elif Sen_count != 0:
                 return
