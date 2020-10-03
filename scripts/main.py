@@ -58,8 +58,8 @@ def demo_tour(odrv0):
 # Lance la configuration du odrive
 
 param.config()
-# param.calib()
-param.calib_bis()
+param.calib()
+# param.calib_bis()
 param.save_config()
 """ ------------------------------- """
 
