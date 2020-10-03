@@ -101,6 +101,8 @@ class Param:
             time.sleep(1)
             self.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
             self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+            while self.axis0.current_state != 1 and self.axis1.current_state != 1:
+                time.sleep(0.1)
 
         else :
             #
