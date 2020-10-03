@@ -95,7 +95,7 @@ class Param:
            self.axis0.motor.config.pre_calibrated is True:
            """ and self.axis1.encoder.config.pre_calibrated is True and \
            self.axis1.motor.config.pre_calibrated is True"""
-           input("ATTENTION ! : RAZ des moteurs, maintenir le robot en l'air")
+           W = input("ATTENTION ! : RAZ des moteurs, maintenir le robot en l'air")
            time.sleep(1)
            self.axis0.encoder.config.use_index = True
            self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
