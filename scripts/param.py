@@ -72,13 +72,15 @@ class Param:
         # Met les moteurs en boucle fermée
         self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
         self.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+        print("moteur en boucle fermée")
         self.axis0.controller.move_to_pos(0)
         self.axis1.controller.move_to_pos(0)
+        print("movetopos 0")
 
         # Go to index
         #self.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
         #self.axis1.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
-        
+
         # Fonction de calibration sans condition
         print("starting calibration...")
         self.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
