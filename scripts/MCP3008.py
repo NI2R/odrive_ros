@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*-coding:Latin-1 -*
 
-import spidev
+# import spidev
 
 # Define Variables
 delay = 0.5
