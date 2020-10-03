@@ -10,7 +10,7 @@ import sys
 sys.path.append('../../')
 # from utils.communication import Communication
 # import utils.Switch as s
-move = m.Move(odrv0)
+move = m.Move(param.odrv0)
 
 def demo_simple(odrv0):
 
@@ -24,7 +24,7 @@ def demo_simple(odrv0):
     move.translation(-500, [False, False, False, False, False])
 
 def test_calib_bis(odrv0):
-    #move = m.Move(odrv0)
+    move = m.Move(odrv0)
     move.translation(100, [False, False, False, False, False])
 
 def homologation(odrv0):
