@@ -93,8 +93,12 @@ class Param:
         # test 1 moteur, calib/Tun si pas déjà faite et saved en config
         if self.axis0.encoder.config.pre_calibrated is True and \
            self.axis0.motor.config.pre_calibrated is True :
+            self.axis0.encoder.config.use_index = True
+
+
             self.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
             time.sleep(1)
+
         else :
             # Fonction de calibration sans condition
             print("starting calibration...")
@@ -106,6 +110,8 @@ class Param:
             # flag calib Done !
             self.axis0.encoder.config.pre_calibrated = True
             self.axis0.motor.config.pre_calibrated = True
+            self.axis0.config.startup_encoder_index_search = True
+
 
 
     def save_config(self):
