@@ -91,6 +91,7 @@ class Param:
         #test 1 moteur
         if self.odrv0.axis0.encoder.config.pre_calibrated is True and \
             self.odrv0.axis0.motor.config.pre_calibrated is True :
+            self.odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
             time.sleep(1)
         else :
             # Fonction de calibration sans condition
