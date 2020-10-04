@@ -322,7 +322,9 @@ class Move:
 
         self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
         sleep(0.5)
+        print("--------------^----------------")
         self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
         sleep(0.5)
+        print("--------------^----------------")
         self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
-        
+        print("===============================")
