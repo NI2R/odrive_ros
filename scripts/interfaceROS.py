@@ -6,8 +6,8 @@ import os
 import rospy
 from math import pi
 
-import param  # a verifier
-
+import param as p # a verifier
+import move as m
 
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
@@ -33,6 +33,7 @@ class Robot_properties:
 		rospy.Subscriber("Angle_final", Float32, self.update_Angle_fi)
 		rospy.Subscriber("Distance_rectiligne", Float32, self.update_Distance_rec)
 
+	""" INPUTS """
 	def update_Angle_int(self, data):
 		#self. = data
 		self.Angle_int = data * pi / 180
@@ -45,15 +46,20 @@ class Robot_properties:
 		#self. = data
 		self.Dist_rect = data
 
+	""" OUTPUTS """
 	def update_Vitesse0(self, vitesse0):
 		print vitesse0
 		# convertir en Twist
-		self.pubVitesse0.publish(vitesse0)
+		toTwist = Twist()
+		toTwist.linear.x = vitesse0
+		self.pubVitesse0.publish(toTwist)
 
 	def update_Vitesse1(self, vitesse1):
 		print vitesse1
 		# convertir en Twist
-		self.pubVitesse1.publish(vitesse1)
+		toTwist = Twist()
+		toTwist.linear.x = vitesse1
+		self.pubVitesse1.publish(toTwist)
 
 	def update_Distance_parc(self, Distance):
 		print Distance
@@ -61,14 +67,14 @@ class Robot_properties:
 		self.pubDistance.publish(Distance)
 
 
-
 def main():
-	param = param.Param()
+	param = p.Param()
+	move = m.Move()
 	rospy.init_node('Odrive', anonymous=True)
 	param.config()
 	param.calib()
 	while not rospy.is_shutdown():
-		#Objtester.updater()
+		move.run()
 		rospy.sleep(1)
 
 if __name__ ==  '__main__':

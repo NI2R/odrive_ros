@@ -6,6 +6,7 @@ from __future__ import print_function
 #import MCP3008
 import odrive
 # import odrive.enums  # à checker
+from interfaceROS import Robot_properties
 from time import sleep
 from math import pi, fabs
 #import matplotlib.pyplot as plt
@@ -32,6 +33,9 @@ class Move:
         # boucle accel
         self.seuil = 0
         self.buffer = 0
+
+        # Appel de la classe Robot_properties
+        self.Robot = Robot_properties()
 
     def wait_end_move(self, mouv, axis, goal, errorMax, senslist):
         ''' Fonction appelée à la fin des fonctions Move pour assurer
@@ -82,9 +86,14 @@ class Move:
 
                 vitMoteur = (distInst1 - distInst0) / 1000
 
-                """________________________________________________________
-                # 2 fct publish pour vitesse0 et vitesse1 dans Robot_properties
-                ________________________________________________________"""
+                """ PUBLICATIONS ROS : """
+                self.Robot.update_Distance_parc(distInst0)
+
+                if axis == 0 :
+                    self.Robot.update_Vitesse0(vitMoteur)
+                else :
+                    self.Robot.update_Vitesse1(vitMoteur)
+
 
             Sen_count = 0
             # print("Values vaut : ", MCP3008.readadc(1) )
@@ -308,3 +317,12 @@ class Move:
         axis1.controller.set_vel_setpoint(0, 0)
         axis0.controller.pos_setpoint = axis0.encoder.pos_estimate
         axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
+
+    def run(self):
+
+        self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
+        sleep(0.5)
+        self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
+        sleep(0.5)
+        self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
+        
