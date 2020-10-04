@@ -62,11 +62,29 @@ class Move:
                  / (pi * self.AxlTrack * self.nbCounts)
                 print("Angle du Robot : %.2f°" % angleInst)
 
+
             elif mouv == "trans":
-                distInst = \
+                distInst0 = \
                  (axis.encoder.pos_estimate * self.WheelPerimeter) \
                  / self.nbCounts
-                print("Déplacement du Robot : %.2f mm" % distInst)
+                print("Déplacement du Robot : %.2f mm" % distInst0)
+
+                """________________________________________________________
+                    # 1 fct publish pour distance_parcourue dans Robot_properties
+                    ________________________________________________________"""
+
+                sleep(1)
+
+                distInst1 = \
+                 (axis.encoder.pos_estimate * self.WheelPerimeter) \
+                 / self.nbCounts
+                print("Déplacement du Robot : %.2f mm" % distInst1)
+
+                vitMoteur = (distInst1 - distInst0) / 1000
+
+                """________________________________________________________
+                # 2 fct publish pour vitesse0 et vitesse1 dans Robot_properties
+                ________________________________________________________"""
 
             Sen_count = 0
             # print("Values vaut : ", MCP3008.readadc(1) )

@@ -22,7 +22,7 @@ def demo_simple(odrv0):
     move.rotation(-360, [False, False, False, False, False])
     time.sleep(1)
     move.translation(-500, [False, False, False, False, False])
-    
+
 
 
 def homologation(odrv0):
@@ -55,7 +55,6 @@ param = p.Param()
 # time.sleep(5)
 # Lance la configuration du odrive
 param.config()
-
 param.calib()
 
 time.sleep(1)
@@ -73,7 +72,7 @@ if s.cote() == True: #Jaune
 else : run_test(param.odrv0) # Violet
 '''
 """--------------------------------"""
-demo_simple(param.odrv0)
+# demo_simple(param.odrv0)
 
 print('Fin du programme')
 
