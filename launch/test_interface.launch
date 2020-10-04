@@ -1,0 +1,21 @@
+<!--
+Copyright (c) 2020, NI2R.
+-->
+<launch>
+<!-- launch test goblet -->
+   <!--<include file="$(find vision_globlet)/launch/test_interface.launch" >
+   </include>-->
+	<node pkg="rosserial_python" type="serial_node.py" name="serial_nodeACM0">
+    <param name="port" value="/dev/ttyACM0" />
+    <param name="baud" value="57600" />
+	</node>
+
+	<node pkg="rosserial_python" type="serial_node.py" name="serial_nodeACM1">
+    <param name="port" value="/dev/ttyACM1" />
+    <param name="baud" value="57600" />
+	</node>
+
+	<node name="interfaceROSArduino" pkg="arduinoProg" type="interfaceROS.py" output="screen" />
+	<!--<node name="serialNode" pkg="rosserial_python" type="serial_node.py" output="screen" />-->
+ 
+</launch>
