@@ -23,6 +23,9 @@ class Move:
         self.AxlTrack = 275    # en mm
         self.WheelPerimeter = self.WheelDiameter * pi  # en mm
 
+        # 1 tour du robot suivant Z :
+        self.pivot = self.WheelPerimeter * self.AxlTrack/2
+
         # coding features
         self.errorMax = 10      # unité ?
         self.OBS = False        # Init  Ostacle Detecté
@@ -34,7 +37,7 @@ class Move:
         self.seuil = 0
         self.buffer = 0
 
-        # Appel de la classe Robot_properties
+        # Appel de la classe Robot_properties dans interfaseROS.py
         self.Robot = Robot_properties()
 
     def wait_end_move(self, mouv, axis, goal, errorMax, senslist):
@@ -64,25 +67,20 @@ class Move:
                 angleInst = \
                  (- 360.0 * self.WheelPerimeter * axis.encoder.pos_estimate) \
                  / (pi * self.AxlTrack * self.nbCounts)
-                print("Angle du Robot : %.2f°" % angleInst)
-
+                # print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
                 distInst0 = \
                  (axis.encoder.pos_estimate * self.WheelPerimeter) \
                  / self.nbCounts
-                print("Déplacement du Robot : %.2f mm" % distInst0)
-
-                """________________________________________________________
-                    # 1 fct publish pour distance_parcourue dans Robot_properties
-                    ________________________________________________________"""
+                # print("Déplacement du Robot : %.2f mm" % distInst0)
 
                 sleep(1)
 
                 distInst1 = \
                  (axis.encoder.pos_estimate * self.WheelPerimeter) \
                  / self.nbCounts
-                print("Déplacement du Robot : %.2f mm" % distInst1)
+                # print("Déplacement du Robot : %.2f mm" % distInst1)
 
                 vitMoteur = (distInst1 - distInst0) / 1000
 
@@ -93,6 +91,7 @@ class Move:
                     self.Robot.update_Vitesse0(vitMoteur)
                 else :
                     self.Robot.update_Vitesse1(vitMoteur)
+
 
 
             Sen_count = 0
@@ -175,22 +174,23 @@ class Move:
         mouv = "rot"
 
         # Def. de l'angle parcouru par les roues avant nouveau deplacement
-        angleInit0 = \
-            (- 360.0 * self.WheelPerimeter * axis0.encoder.pos_estimate) \
-            / (pi * self.AxlTrack * self.nbCounts)
-        angleInit1 = \
-            (- 360.0 * self.WheelPerimeter * axis1.encoder.pos_estimate) \
-            / (pi * self.AxlTrack * self.nbCounts)
+        #angleInit0 = \
+        #    (- 360.0 * self.WheelPerimeter * axis0.encoder.pos_estimate) \
+        #    / (pi * self.AxlTrack * self.nbCounts)
+        #angleInit1 = \
+        #    (- 360.0 * self.WheelPerimeter * axis1.encoder.pos_estimate) \
+        #    / (pi * self.AxlTrack * self.nbCounts)
 
         print("Lancement d'une Rotation de %.0f°" % angle)
         # calcul des ticks/pas à parcourir pour tourner
         # sur place de l'angle demandé
-        RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
+        #RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
+        distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
 
         # Controle de la Position Angulaire en Absolu :
         # retrait de axis*.encoder.pos_estimate \
-        target0 = (self.nbCounts * RunAngle) / self.WheelPerimeter
-        target1 = (self.nbCounts * RunAngle) / self.WheelPerimeter
+        #target0 = (self.nbCounts * RunAngle) / self.WheelPerimeter
+        #target1 = (self.nbCounts * distAngulaire) / self.WheelPerimeter
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
@@ -222,17 +222,17 @@ class Move:
                 print("Rotation Terminée !")
 
                 # Calcul et Affichage du nouvel angle atteint
-                angleFin0 = \
-                    - angleInit0 + (- 360.0 * self.WheelPerimeter
-                                    * axis0.encoder.pos_estimate) \
-                    / (pi * self.AxlTrack * self.nbCounts)
-                print("Angle Roue Gauche : %.2f " % angleFin0)
+                #angleFin0 = \
+                #    - angleInit0 + (- 360.0 * self.WheelPerimeter
+                #                    * axis0.encoder.pos_estimate) \
+                #    / (pi * self.AxlTrack * self.nbCounts)
+                #print("Angle Roue Gauche : %.2f " % angleFin0)
 
-                angleFin1 = \
-                    - angleInit1 + (- 360.0 * self.WheelPerimeter
-                                    * axis1.encoder.pos_estimate) \
-                    / (pi * self.AxlTrack * self.nbCounts)
-                print("Angle Roue Droite : %.2f " % angleFin1)
+                #angleFin1 = \
+                #    - angleInit1 + (- 360.0 * self.WheelPerimeter
+                #                    * axis1.encoder.pos_estimate) \
+                #    / (pi * self.AxlTrack * self.nbCounts)
+                #print("Angle Roue Droite : %.2f " % angleFin1)
 
                 self.ActDone = False
                 break
@@ -319,11 +319,12 @@ class Move:
 
     def run(self):
 
+        print("----------------<- 1 ROTATION ->----------------")
         self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
         sleep(0.5)
-        print("--------------^----------------")
+        print("---------------<- 2 TRANSLATION ->---------------")
         self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
         sleep(0.5)
-        print("--------------^----------------")
+        print("----------------<- 3 ROTATION ->----------------")
         self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
-        print("===============================")
+        print("=================================================")
