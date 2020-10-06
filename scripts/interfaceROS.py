@@ -48,21 +48,21 @@ class Robot_properties:
 
 	""" OUTPUTS """
 	def update_Vitesse0(self, vitesse0):
-		print vitesse0
+		print(vitesse0)
 		# convertir en Twist
 		toTwist = Twist()
 		toTwist.linear.x = vitesse0
 		self.pubVitesse0.publish(toTwist)
 
 	def update_Vitesse1(self, vitesse1):
-		print vitesse1
+		print(vitesse1)
 		# convertir en Twist
 		toTwist = Twist()
 		toTwist.linear.x = vitesse1
 		self.pubVitesse1.publish(toTwist)
 
 	def update_Distance_parc(self, Distance):
-		print Distance
+		print(Distance)
 		# convertir en float32
 		toFloat32 = Float32()
 		toFloat32.data = Distance
