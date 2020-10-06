@@ -186,7 +186,11 @@ class Move:
         # sur place de l'angle demandé
         #RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
         #distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
+<<<<<<< HEAD
         distanceAngulaire = (self.AxlTrack/2) * angle * (180 / pi) * self.nbCounts
+=======
+	    distanceAngulaire = (self.AxlTrack/2) * angle * (180 / pi) * self.nbCounts
+>>>>>>> 24402fc18643b50b7f1ff235fa709f49823f9a24
         # Controle de la Position Angulaire en Absolu :
         # retrait de axis*.encoder.pos_estimate \
         #target0 = (self.nbCounts * RunAngle) / self.WheelPerimeter
