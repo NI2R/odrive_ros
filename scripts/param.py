@@ -72,7 +72,7 @@ class Param:
         self.odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         self.odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 
-	#"" fonction sauvegarde calibration""
+	    #"" fonction sauvegarde calibration""
         while self.odrv0.axis0.current_state != 1 and self.odrv0.axis1.current_state != 1:
             time.sleep(0.1)
 
