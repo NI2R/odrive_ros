@@ -20,7 +20,7 @@ class Move:
         # Robot physical constant
         self.WheelDiameter = 80     # en mm
         self.nbCounts = 8192    # Nombre de tics pr un tour d'encoder
-        self.AxlTrack = 275    # en mm
+        self.AxlTrack = 277    # en mm
         self.WheelPerimeter = self.WheelDiameter * pi  # en mm
 
         # 1 tour du robot suivant Z :
@@ -176,7 +176,7 @@ class Move:
         #RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
         #distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
 
-        distanceAngulaire = ((self.AxlTrack/2) * angle * (pi / 180) * self.nbCounts)/self.WheelPerimeter 
+        distanceAngulaire = ((self.AxlTrack/2) * angle * (pi / 180) * self.nbCounts)/self.WheelPerimeter
 
 
         # Controle de la Position Angulaire en Absolu :
