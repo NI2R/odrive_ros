@@ -11,6 +11,10 @@ sys.path.append('../../')
 # from utils.communication import Communication
 # import utils.Switch as s
 
+def distance_angulaire(odrv0):
+    move = m.Move(odrv0)
+    move.rotation(90, [False, False, False, False, False])
+    time.sleep(1)
 
 def demo_simple(odrv0):
 
@@ -73,6 +77,7 @@ else : run_test(param.odrv0) # Violet
 '''
 """--------------------------------"""
 # demo_simple(param.odrv0)
+distance_angulaire(param.odrv0)
 
 print('Fin du programme')
 
