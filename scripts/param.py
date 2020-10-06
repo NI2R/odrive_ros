@@ -80,6 +80,7 @@ class Param:
         self.odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
         self.odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 	    time.sleep(1)
+        
     def unlock_wheels(self):
         # AXIS_STATE_IDLE , libère le moteur : boucle ouverte
         self.odrv0.axis0.requested_state = AXIS_STATE_IDLE
