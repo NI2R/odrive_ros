@@ -185,8 +185,8 @@ class Move:
         # calcul des ticks/pas à parcourir pour tourner
         # sur place de l'angle demandé
         #RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
-        distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
-
+        #distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
+	distanceAngulaire = (self.AxlTrack/2) * angle * (180 / pi) * self.nbCounts
         # Controle de la Position Angulaire en Absolu :
         # retrait de axis*.encoder.pos_estimate \
         #target0 = (self.nbCounts * RunAngle) / self.WheelPerimeter
@@ -199,13 +199,13 @@ class Move:
             # axis0.encoder.pos_estimate != target0 \
             # or axis1.encoder.pos_estimate != target1:
             if self.OBS is False and self.ActDone is False:
-                axis0.controller.move_to_pos(target0)
-                axis1.controller.move_to_pos(target1)
+                axis0.controller.move_to_pos(distanceAngulaire)
+                axis1.controller.move_to_pos(distanceAngulaire)
                 # Attente fin de mouvement SI aucun obstacle détécté
-                self.wait_end_move(mouv, axis0, target0, self.errorMax,
+                self.wait_end_move(mouv, axis0, distanceAngulaire, self.errorMax,
                                    senslist)
                 # test sur 1 encoder pr l'instant
-                self.wait_end_move(mouv, axis1, target1, self.errorMax,
+                self.wait_end_move(mouv, axis1, distanceAngulaire, self.errorMax,
                                    senslist)
                 print("Rotation : Pas d'Obstacle")
 
