@@ -177,7 +177,7 @@ class Move:
         #distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
 
         distanceAngulaire = ((self.AxlTrack/2) * angle * (pi / 180) * self.nbCounts)/self.WheelPerimeter
-        print(distanceAngulaire / self.nbCounts)
+        print((distanceAngulaire * 180/pi)/ self.nbCounts)
 
         # Controle de la Position Angulaire en Absolu :
         # retrait de axis*.encoder.pos_estimate \
