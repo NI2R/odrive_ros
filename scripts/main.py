@@ -13,7 +13,7 @@ sys.path.append('../../')
 
 def distance_angulaire(odrv0):
     move = m.Move(odrv0)
-    move.rotation(90, [False, False, False, False, False])
+    move.rotation(180, [False, False, False, False, False])
     time.sleep(1)
 
 def demo_simple(odrv0):

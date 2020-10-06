@@ -18,7 +18,7 @@ class Move:
         # self.info_move = self.Treat.step(p1, p2)
 
         # Robot physical constant
-        self.WheelDiameter = 80     # en mm
+        self.WheelDiameter = 78     # en mm
         self.nbCounts = 8192    # Nombre de tics pr un tour d'encoder
         self.AxlTrack = 280    # en mm
         self.WheelPerimeter = self.WheelDiameter * pi  # en mm
