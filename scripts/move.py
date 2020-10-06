@@ -136,7 +136,7 @@ class Move:
                 #    self.seuil = 0
 
                 self.buffer = movAvg
-                print("seuil =", self.seuil)
+                # print("seuil =", self.seuil)
 
             elif Sen_count != 0:
                 return
@@ -176,7 +176,7 @@ class Move:
         #RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
         #distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
 
-        distanceAngulaire = (self.AxlTrack/2) * angle * (180 / pi) * self.nbCounts
+        distanceAngulaire = (self.AxlTrack/2) * angle * (pi / 180) / self.nbCounts
 
 
         # Controle de la Position Angulaire en Absolu :
