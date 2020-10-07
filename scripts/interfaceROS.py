@@ -36,15 +36,15 @@ class Robot_properties:
 	""" INPUTS """
 	def update_Angle_int(self, data):
 		#self. = data
-		self.Angle_int = data.data * pi / 180
+		self.Angle_int = data * pi / 180
 
 	def update_Angle_fi(self, data):
 		#self. = data
-		self.Angle_fi = data.data * pi / 180
+		self.Angle_fi = data * pi / 180
 
 	def update_Distance_rec(self, data):
 		#self. = data
-		self.Dist_rect = data.data
+		self.Dist_rect = data
 
 	""" OUTPUTS """
 	def update_Vitesse0(self, vitesse0):
@@ -62,11 +62,17 @@ class Robot_properties:
 		self.pubVitesse1.publish(toTwist)
 
 	def update_Distance_parc(self, Distance):
+<<<<<<< HEAD
 		print(Distance)
 		# convertir en float32
 		toFloat32 = Float32()
 		toFloat32.data = Distance
 		self.pubDistance.publish(toFloat32)
+=======
+		print Distance
+		# convertir en Twist
+		self.pubDistance.publish(Distance)
+>>>>>>> parent of aedfe31... correctif convertion en float Distances et vitesse (interfaces_ROS
 
 
 def main():

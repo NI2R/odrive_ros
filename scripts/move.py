@@ -325,9 +325,16 @@ class Move:
         print("----------------<- 1 ROTATION ->----------------")
         self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
         sleep(0.5)
+<<<<<<< HEAD
         print("---------------<- 2 TRANSLATION ->---------------")
         self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
         sleep(0.5)
         print("----------------<- 3 ROTATION ->----------------")
         self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
         print("=================================================")
+=======
+        self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
+        sleep(0.5)
+        self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
+        
+>>>>>>> parent of aedfe31... correctif convertion en float Distances et vitesse (interfaces_ROS
