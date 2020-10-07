@@ -62,17 +62,12 @@ class Robot_properties:
 		self.pubVitesse1.publish(toTwist)
 
 	def update_Distance_parc(self, Distance):
-<<<<<<< HEAD
+
 		print(Distance)
 		# convertir en float32
 		toFloat32 = Float32()
 		toFloat32.data = Distance
 		self.pubDistance.publish(toFloat32)
-=======
-		print Distance
-		# convertir en Twist
-		self.pubDistance.publish(Distance)
->>>>>>> parent of aedfe31... correctif convertion en float Distances et vitesse (interfaces_ROS
 
 
 def main():
