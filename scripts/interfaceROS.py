@@ -3,7 +3,7 @@
 
 import sys
 import os
-#import rospy
+import rospy
 from math import pi
 
 import param as p # a verifier
