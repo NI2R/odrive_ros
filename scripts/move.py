@@ -147,7 +147,7 @@ class Move:
                 #    self.seuil = 0
 
                 self.buffer = movAvg
-                print("seuil =", self.seuil)
+                # print("seuil =", self.seuil)
 
             elif Sen_count != 0:
                 return
