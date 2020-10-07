@@ -191,16 +191,9 @@ class Move:
 
 
         # Controle de la Position Angulaire en Absolu :
-<<<<<<< HEAD
         # retrait de axis*.encoder.pos_estimate \
         #target0 = (self.nbCounts * RunAngle) / self.WheelPerimeter
         #target1 = (self.nbCounts * distAngulaire) / self.WheelPerimeter
-=======
-        target0 = axis0.encoder.pos_estimate \
-            + (self.nbCounts * RunAngle) / self.WheelPerimeter
-        target1 = axis1.encoder.pos_estimate \
-            + (self.nbCounts * RunAngle) / self.WheelPerimeter
->>>>>>> parent of ab6731d... rotation bug = retrait  pos_estimate m
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)

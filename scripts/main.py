@@ -5,6 +5,7 @@ from __future__ import print_function
 import time
 import param as p
 import move as m
+from interfaceROS import Robot_properties
 
 import sys
 sys.path.append('../../')
@@ -49,13 +50,13 @@ def demo_tour(odrv0):
 
 
 """ Paramétrage et Calibration """
-param = p.Param()
+# param = p.Param()
 
 # param.raz()# Lance fonction remise à zero des moteurs
 # time.sleep(5)
 # Lance la configuration du odrive
-param.config()
-param.calib()
+# param.config()
+# param.calib()
 
 time.sleep(1)
 """ ------------------------------- """
