@@ -1,0 +1,7 @@
+#
+# MARK:- Project
+#
+
+
+*.DS_Store
+*.pyc
