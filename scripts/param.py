@@ -44,6 +44,8 @@ class Param:
 
         # Lance la calibration moteur si pas déjà faite
         print("starting calibration...")
+        self.odrv.axis0.motor.config.pre_calibrated = False
+        self.odrv.axis1.motor.config.pre_calibrated = False
         self.odrv.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         self.odrv.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 
