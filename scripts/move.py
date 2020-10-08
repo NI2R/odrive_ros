@@ -12,7 +12,7 @@ from math import pi
 
 
 class Move:
-    def __init__(self, axis, odrv0):  # p1, p2
+    def __init__(self, odrv0):  # p1, p2
         # self.Treat = Treatment()
         # self.info_move = self.Treat.step(p1, p2)
 
@@ -29,7 +29,7 @@ class Move:
         self.OBS = False        # Init  Ostacle Detecté
         self.ActDone = False     # Init Action Faite
         self.SenOn = list()
-        self.pos_estimate = axis.encoder.pos_estimate
+
         # Appel de la classe Robot_properties dans interfaseROS.py
         self.Robot = Robot_properties()
 
@@ -41,7 +41,7 @@ class Move:
         nb = 1
         avg = nb * [0]
         index = 0
-        movAvg = abs(goal - self.pos_estimate)
+        movAvg = abs(goal - axis.encoder.pos_estimate)
         diff_step = 0
         wd = 0
         self.ActDone = False
@@ -53,19 +53,19 @@ class Move:
             # Fonction pour afficher l'angle ou le déplacement instantannée
             # du robot
             if mouv == "rot":
-                angleInst = (- 360.0 * self.pRoue * self.pos_estimate) \
+                angleInst = (- 360.0 * self.pRoue * axis.encoder.pos_estimate)\
                  / (pi * self.entreAxe * self.nbTicks)
                 # print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
                 distInst0 = \
-                 (self.pos_estimate * self.pRoue) \
+                 (axis.encoder.pos_estimate * self.pRoue) \
                  / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst0)
 
                 sleep(1)
 
-                distInst1 = (self.pos_estimate * self.pRoue) / self.nbTicks
+                distInst1 = (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst1)
 
                 vitMoteur = (distInst1 - distInst0) / 1000
@@ -82,7 +82,7 @@ class Move:
 
             Sen_count = 0
             # print("Values vaut : ", MCP3008.readadc(1) )
-            # print("Encoder : ", self.pos_estimate,"Goal/Target : "
+            # print("Encoder : ", axis.encoder.pos_estimate,"Goal/Target : "
             # , goal, "movAvg : ", movAvg)
 
             """ Fonctions pour l'OAS """
@@ -101,11 +101,11 @@ class Move:
             if Sen_count == 0:
                 self.OBS = False
                 for i in range(index, nb):
-                    avg[i] = abs(goal - self.pos_estimate)
+                    avg[i] = abs(goal - axis.encoder.pos_estimate)
                 movAvg = 0
                 for i in range(0, nb):
                     movAvg += avg[i] / nb
-                diff_step = fabs(self.pos_estimate - self.pos_estimate)
+                diff_step = fabs(axis.encoder.pos_estimate - axis.encoder.pos_estimate)
                 # print(diff_step)
                 if diff_step < 10:
                     wd += 1
@@ -189,27 +189,27 @@ class Move:
         mouv = "trans"
 
         # Def. de la distance parcouru par les roues avant nouveau deplacement
-        distInit0 = (axis0.encoder.self.pos_estimate * self.pRoue) \
+        distInit0 = (axis0.encoder.pos_estimate * self.pRoue) \
             / self.nbTicks
-        distInit1 = (axis1.encoder.self.pos_estimate * self.pRoue) \
+        distInit1 = (axis1.encoder.pos_estimate * self.pRoue) \
             / self.nbTicks
 
         print("Lancement d'une Translation de %.0f mm" % distance)
 
         # Controle de la Position Longit en Absolu:
-        target0 = axis0.encoder.self.pos_estimate - (self.nbTicks * distance) \
+        target0 = axis0.encoder.pos_estimate - (self.nbTicks * distance) \
             / self.pRoue
 
         # Distance / Perimètre = nb tour a parcourir
-        target1 = axis1.encoder.self.pos_estimate + (self.nbTicks * distance) \
+        target1 = axis1.encoder.pos_estimate + (self.nbTicks * distance) \
             / self.pRoue
 
         # Action ! :
         """ [A inclure fonction évitement (OBS = True)] """
         """--------------------------------------------"""
         while 1:  # [A tester] (a la place de condition en dessous)
-            # axis0.encoder.self.pos_estimate != target0 :
-            # or axis1.encoder.self.pos_estimate != target1:
+            # axis0.encoder.pos_estimate != target0 :
+            # or axis1.encoder.pos_estimate != target1:
 
             if self.OBS is False and self.ActDone is False:
                 axis0.controller.move_to_pos(target0)
@@ -231,11 +231,11 @@ class Move:
                 print("Translation Terminée !")
                 # Calcul et Affichage des nouveaux déplacements
                 distRe0 = - distInit0 + \
-                    (axis0.encoder.self.pos_estimate * self.pRoue)\
+                    (axis0.encoder.pos_estimate * self.pRoue)\
                     / self.nbTicks
                 print("Distance Roue Gauche : %.4f " % distRe0)
                 distRe1 = - distInit1 + \
-                    (axis1.encoder.self.pos_estimate * self.pRoue)\
+                    (axis1.encoder.pos_estimate * self.pRoue)\
                     / self.nbTicks
                 print("Distance Roue Droite : %.4f " % distRe1)
                 self.ActDone = False
@@ -255,8 +255,8 @@ class Move:
 
         axis0.controller.set_vel_setpoint(0, 0)
         axis1.controller.set_vel_setpoint(0, 0)
-        axis0.controller.pos_setpoint = axis0.encoder.self.pos_estimate
-        axis1.controller.pos_setpoint = axis1.encoder.self.pos_estimate
+        axis0.controller.pos_setpoint = axis0.encoder.pos_estimate
+        axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
 
     def run(self):
 
