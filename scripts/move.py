@@ -3,83 +3,69 @@
 
 from __future__ import print_function
 
-#import MCP3008
-import odrive
+# import MCP3008
+# import odrive #pas utilisé ?
 # import odrive.enums  # à checker
 from interfaceROS import Robot_properties
 from time import sleep
-from math import pi, fabs
-#import matplotlib.pyplot as plt
+from math import pi
 
 
 class Move:
-    def __init__(self, odrv0):  # p1, p2
+    def __init__(self, axis, odrv0):  # p1, p2
         # self.Treat = Treatment()
         # self.info_move = self.Treat.step(p1, p2)
 
-        # Robot physical constant
-        self.WheelDiameter = 80     # en mm
-        self.nbCounts = 8192    # Nombre de tics pr un tour d'encoder
-        self.AxlTrack = 275    # en mm
-        self.WheelPerimeter = self.WheelDiameter * pi  # en mm
+        self.odrv = odrv0      # Assignation du odrive
 
-        # 1 tour du robot suivant Z :
-        self.pivot = self.WheelPerimeter * self.AxlTrack/2
+        # Robot physical constant
+        self.nbTicks = 8192    # Nombre de tics pr un tour d'encoder
+        self.dRoue = 80     # Diamètre roue en mm
+        self.pRoue = self.dRoue * pi  # Périmètre roue en mm
+        self.entreAxe = 280    # entre-axe en mm
 
         # coding features
         self.errorMax = 10      # unité ?
         self.OBS = False        # Init  Ostacle Detecté
         self.ActDone = False     # Init Action Faite
-        self.odrv0 = odrv0      # Assignation du odrive name
         self.SenOn = list()
-
-        # boucle accel
-        self.seuil = 0
-        self.buffer = 0
-
+        self.pos_estimate = axis.encoder.pos_estimate
         # Appel de la classe Robot_properties dans interfaseROS.py
         self.Robot = Robot_properties()
 
     def wait_end_move(self, mouv, axis, goal, errorMax, senslist):
         ''' Fonction appelée à la fin des fonctions Move pour assurer
             l'execution complète du mouvement/déplacement. '''
-        """ [EN TEST ] CONDITION DE DETECTION D'OBSTACLE """
+        """ [EN TEST] CONDITIONS for Obstacle Avoidance System (OAS)"""
         # + la liste est petite + la condition du while lachera rapidement
         nb = 1
         avg = nb * [0]
         index = 0
-        movAvg = abs(goal - axis.encoder.pos_estimate)
-        self.ActDone = False
-
-        # [A tester] (pour lecture capteur en fonction du sens de Translation)
-        Sen = [0, 1, 2, 3, 4]
-
-        self.SenOn = [0 for i in range(len(Sen))]
-
-        prev_step = axis.encoder.pos_estimate
+        movAvg = abs(goal - self.pos_estimate)
         diff_step = 0
         wd = 0
+        self.ActDone = False
+        # Pour lecture capteur en fonction du sens de Translation
+        Sen = [0, 1, 2, 3, 4]
+        self.SenOn = [0 for i in range(len(Sen))]
 
         while movAvg >= errorMax:
             # Fonction pour afficher l'angle ou le déplacement instantannée
             # du robot
             if mouv == "rot":
-                angleInst = \
-                 (- 360.0 * self.WheelPerimeter * axis.encoder.pos_estimate) \
-                 / (pi * self.AxlTrack * self.nbCounts)
+                angleInst = (- 360.0 * self.pRoue * self.pos_estimate) \
+                 / (pi * self.entreAxe * self.nbTicks)
                 # print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
                 distInst0 = \
-                 (axis.encoder.pos_estimate * self.WheelPerimeter) \
-                 / self.nbCounts
+                 (self.pos_estimate * self.pRoue) \
+                 / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst0)
 
                 sleep(1)
 
-                distInst1 = \
-                 (axis.encoder.pos_estimate * self.WheelPerimeter) \
-                 / self.nbCounts
+                distInst1 = (self.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst1)
 
                 vitMoteur = (distInst1 - distInst0) / 1000
@@ -87,19 +73,20 @@ class Move:
                 """ PUBLICATIONS ROS : """
                 self.Robot.update_Distance_parc(distInst0)
 
-                if axis == 0 :
+                if axis == 0:
                     self.Robot.update_Vitesse0(vitMoteur)
-                else :
+                else:
                     self.Robot.update_Vitesse1(vitMoteur)
 
 
 
             Sen_count = 0
             # print("Values vaut : ", MCP3008.readadc(1) )
-            # print("Encoder : ", axis.encoder.pos_estimate,"Goal/Target : "
+            # print("Encoder : ", self.pos_estimate,"Goal/Target : "
             # , goal, "movAvg : ", movAvg)
 
-            for i in range(len(Sen)):
+            """ Fonctions pour l'OAS """
+            """for i in range(len(Sen)):
                 if senslist[i] is True:
                     if MCP3008.readadc(Sen[i]) > 700:  # 600 trop de detection
                         self.OBS = True
@@ -111,19 +98,14 @@ class Move:
             for i in self.SenOn:
                 if i != 0:
                     Sen_count += 1
-
             if Sen_count == 0:
                 self.OBS = False
-                # A revoir pour relancer le robot apres un arret.
-                # self.detect_obs(axis, goal)
                 for i in range(index, nb):
-                    avg[i] = abs(goal - axis.encoder.pos_estimate)
-
+                    avg[i] = abs(goal - self.pos_estimate)
                 movAvg = 0
                 for i in range(0, nb):
                     movAvg += avg[i] / nb
-
-                diff_step = fabs(axis.encoder.pos_estimate - prev_step)
+                diff_step = fabs(self.pos_estimate - self.pos_estimate)
                 # print(diff_step)
                 if diff_step < 10:
                     wd += 1
@@ -132,7 +114,6 @@ class Move:
                         return
                 else:
                     wd = 0
-                    prev_step = axis.encoder.pos_estimate
 
                 ## boucle d'accélération waitendmove
                 #if self.buffer == movAvg:
@@ -146,22 +127,12 @@ class Move:
                 #else:
                 #    self.seuil = 0
 
-                self.buffer = movAvg
-                # print("seuil =", self.seuil)
-
+            self.buffer = movAvg
+            # print("seuil =", self.seuil)
             elif Sen_count != 0:
                 return
-
+            """
         self.ActDone = True
-
-    def detect_obs(self, axis, goal):
-        # En test pas utilisé ici
-        if self.OBS is True:
-            print("Obstacle détécté !")
-            self.stop()
-        else:
-            print("Run !")
-            axis.controller.move_to_pos(goal)
 
     def rotation(self, angle, senslist):
         ''' [ Fonction qui fait tourner le robot sur lui même
@@ -173,70 +144,37 @@ class Move:
         # Flag Mouvement rotation
         mouv = "rot"
 
-        # Def. de l'angle parcouru par les roues avant nouveau deplacement
-        #angleInit0 = \
-        #    (- 360.0 * self.WheelPerimeter * axis0.encoder.pos_estimate) \
-        #    / (pi * self.AxlTrack * self.nbCounts)
-        #angleInit1 = \
-        #    (- 360.0 * self.WheelPerimeter * axis1.encoder.pos_estimate) \
-        #    / (pi * self.AxlTrack * self.nbCounts)
-
         print("Lancement d'une Rotation de %.0f°" % angle)
         # calcul des ticks/pas à parcourir pour tourner
-        # sur place de l'angle demandé
-        #RunAngle = (float(angle) * pi * self.AxlTrack) / 360.0
-        #distAngulaire =  (self.WheelPerimeter) * float(angle) / (self.nbCounts * self.AxlTrack/2)
 
-        distanceAngulaire = ((self.AxlTrack/2) * angle * (pi / 180) * self.nbCounts)/self.WheelPerimeter
+        distAngulaire = ((self.entreAxe/2) * angle * (pi / 180) \
+                         * self.nbTicks)/self.pRoue
 
-
-        # Controle de la Position Angulaire en Absolu :
-        # retrait de axis*.encoder.pos_estimate \
-        #target0 = (self.nbCounts * RunAngle) / self.WheelPerimeter
-        #target1 = (self.nbCounts * distAngulaire) / self.WheelPerimeter
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
 
-        while 1:  # [A tester] (a la place de condition en dessous)
-            # axis0.encoder.pos_estimate != target0 \
-            # or axis1.encoder.pos_estimate != target1:
-            if self.OBS is False and self.ActDone is False:
-                axis0.controller.move_to_pos(distanceAngulaire)
-                axis1.controller.move_to_pos(distanceAngulaire)
-                # Attente fin de mouvement SI aucun obstacle détécté
-                self.wait_end_move(mouv, axis0, distanceAngulaire, self.errorMax,
-                                   senslist)
-                # test sur 1 encoder pr l'instant
-                self.wait_end_move(mouv, axis1, distanceAngulaire, self.errorMax,
-                                   senslist)
-                print("Rotation : Pas d'Obstacle")
+        while 1:
 
-            # elif compteur_evitement == 3:
-                # evitement(fdgf,sfv,sfg)
-                # compteur_evitement = 0
+            if self.OBS is False and self.ActDone is False:
+                axis0.controller.move_to_pos(distAngulaire)
+                axis1.controller.move_to_pos(distAngulaire)
+
+                # Attente fin de mouvement SI aucun obstacle détécté
+                self.wait_end_move(mouv, axis0, distAngulaire, self.errorMax,
+                                   senslist)
+                self.wait_end_move(mouv, axis1, distAngulaire, self.errorMax,
+                                   senslist)
+                # print("Rotation : Pas d'Obstacle")
+
+            # fonction lié à l'OAS
             elif self.OBS is True and self.ActDone is False:
-                # compteur_evitement =+ 1
                 self.stop()
                 sleep(0.5)
                 self.OBS = False
                 print("Rotation : Obstacle")
             else:
                 print("Rotation Terminée !")
-
-                # Calcul et Affichage du nouvel angle atteint
-                #angleFin0 = \
-                #    - angleInit0 + (- 360.0 * self.WheelPerimeter
-                #                    * axis0.encoder.pos_estimate) \
-                #    / (pi * self.AxlTrack * self.nbCounts)
-                #print("Angle Roue Gauche : %.2f " % angleFin0)
-
-                #angleFin1 = \
-                #    - angleInit1 + (- 360.0 * self.WheelPerimeter
-                #                    * axis1.encoder.pos_estimate) \
-                #    / (pi * self.AxlTrack * self.nbCounts)
-                #print("Angle Roue Droite : %.2f " % angleFin1)
-
                 self.ActDone = False
                 break
 
@@ -251,27 +189,27 @@ class Move:
         mouv = "trans"
 
         # Def. de la distance parcouru par les roues avant nouveau deplacement
-        distInit0 = (axis0.encoder.pos_estimate * self.WheelPerimeter) \
-            / self.nbCounts
-        distInit1 = (axis1.encoder.pos_estimate * self.WheelPerimeter) \
-            / self.nbCounts
+        distInit0 = (axis0.encoder.self.pos_estimate * self.pRoue) \
+            / self.nbTicks
+        distInit1 = (axis1.encoder.self.pos_estimate * self.pRoue) \
+            / self.nbTicks
 
         print("Lancement d'une Translation de %.0f mm" % distance)
 
         # Controle de la Position Longit en Absolu:
-        target0 = axis0.encoder.pos_estimate - (self.nbCounts * distance) \
-            / self.WheelPerimeter
+        target0 = axis0.encoder.self.pos_estimate - (self.nbTicks * distance) \
+            / self.pRoue
 
         # Distance / Perimètre = nb tour a parcourir
-        target1 = axis1.encoder.pos_estimate + (self.nbCounts * distance) \
-            / self.WheelPerimeter
+        target1 = axis1.encoder.self.pos_estimate + (self.nbTicks * distance) \
+            / self.pRoue
 
         # Action ! :
         """ [A inclure fonction évitement (OBS = True)] """
         """--------------------------------------------"""
         while 1:  # [A tester] (a la place de condition en dessous)
-            # axis0.encoder.pos_estimate != target0 :
-            # or axis1.encoder.pos_estimate != target1:
+            # axis0.encoder.self.pos_estimate != target0 :
+            # or axis1.encoder.self.pos_estimate != target1:
 
             if self.OBS is False and self.ActDone is False:
                 axis0.controller.move_to_pos(target0)
@@ -293,12 +231,12 @@ class Move:
                 print("Translation Terminée !")
                 # Calcul et Affichage des nouveaux déplacements
                 distRe0 = - distInit0 + \
-                    (axis0.encoder.pos_estimate * self.WheelPerimeter)\
-                    / self.nbCounts
+                    (axis0.encoder.self.pos_estimate * self.pRoue)\
+                    / self.nbTicks
                 print("Distance Roue Gauche : %.4f " % distRe0)
                 distRe1 = - distInit1 + \
-                    (axis1.encoder.pos_estimate * self.WheelPerimeter)\
-                    / self.nbCounts
+                    (axis1.encoder.self.pos_estimate * self.pRoue)\
+                    / self.nbTicks
                 print("Distance Roue Droite : %.4f " % distRe1)
                 self.ActDone = False
                 break
@@ -317,8 +255,8 @@ class Move:
 
         axis0.controller.set_vel_setpoint(0, 0)
         axis1.controller.set_vel_setpoint(0, 0)
-        axis0.controller.pos_setpoint = axis0.encoder.pos_estimate
-        axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
+        axis0.controller.pos_setpoint = axis0.encoder.self.pos_estimate
+        axis1.controller.pos_setpoint = axis1.encoder.self.pos_estimate
 
     def run(self):
 
