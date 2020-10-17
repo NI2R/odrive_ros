@@ -35,10 +35,10 @@ class Robot_properties:
     """ INPUTS """
 
     def update_Angle_int(self, data):
-        self.Angle_int = data.data * pi / 180
+        self.Angle_int = data.data
 
     def update_Angle_fi(self, data):
-        self.Angle_fi = data.data * pi / 180
+        self.Angle_fi = data.data
 
     def update_Distance_rec(self, data):
         self.Dist_rect = data.data

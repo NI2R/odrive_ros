@@ -55,12 +55,12 @@ class Move:
             if mouv == "rot":
                 angleInst = (- 360.0 * self.pRoue * axis.encoder.pos_estimate)\
                  / (pi * self.entreAxe * self.nbTicks)
-                print("Angle du Robot : %.2f°" % angleInst)
+                # print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
                 distInst0 = \
                  (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
-                print("Déplacement du Robot : %.2f mm" % distInst0)
+                # print("Déplacement du Robot : %.2f mm" % distInst0)
 
                 sleep(1)
 
@@ -86,7 +86,7 @@ class Move:
             # , goal, "movAvg : ", movAvg)
 
             """ Fonctions pour l'OAS """
-            """for i in range(len(Sen)):
+            for i in range(len(Sen)):
                 if senslist[i] is True:
                     if MCP3008.readadc(Sen[i]) > 700:  # 600 trop de detection
                         self.OBS = True
@@ -131,7 +131,7 @@ class Move:
             # print("seuil =", self.seuil)
             elif Sen_count != 0:
                 return
-            """
+
         self.ActDone = True
 
     def rotation(self, angle, senslist):
@@ -144,11 +144,12 @@ class Move:
         # Flag Mouvement rotation
         mouv = "rot"
 
-        print("Lancement d'une Rotation de %.0f°" % angle)
+        print("Lancement d'une Rotation de %.0f°" % angle * 180 / pi)
         # calcul des ticks/pas à parcourir pour tourner
 
-        distAngulaire = ((self.entreAxe/2) * angle * (pi / 180) * self.nbTicks) / self.pRoue
+        distAngulaire = ((self.entreAxe/2) * angle * self.nbTicks) / self.pRoue
 
+        print("fraction de tour = %.0f" % distAngulaire / self.nbTicks)
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
