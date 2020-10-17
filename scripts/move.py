@@ -65,22 +65,26 @@ class Move:
             / self.perimetreRoue
 
         # Début de la translation :
+        print("début du while")
         while 1:
-
-            if self.actionFait is False:                                              # Translation en cours
+            
+            if self.actionFait is False:
+                                                          # Translation en cours
                 axis0.controller.move_to_pos(target0)
                 axis1.controller.move_to_pos(target1)
-
+                print("target0 = %.0f et target1 = %.0f ".format(target0, target1))
                 # test
 
 
                 if axis0.encoder.pos_estimate - self.errorMax < target0 + distInit0_tics < axis0.encoder.pos_estimate + self.errorMax and axis1.encoder.pos_estimate - self.errorMax < target1 + distInit1_tics < axis1.encoder.pos_estimate + self.errorMax:
 
                     self.actionFait = True
-
+                    print("Action finie")
                 else:
+
                     target0 = target0/1.001
                     target1 = target1/1.001
+                    print("action en cours")
 
 # Attente fin de mouvement SI aucun obstacle détécté
 # self.wait_end_move(strMouv, axis0, target0, self.errorMax, senslist)
