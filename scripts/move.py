@@ -58,16 +58,18 @@ class Move:
         print("Lancement d'une Translation de %.0f mm" % distance)
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur de gauche:
-        target0 = axis0.encoder.pos_estimate - (self.nbTics * distance) \
-            / self.perimetreRoue
+        target0 = - (self.nbTics * distance) / self.perimetreRoue
+        #axis0.encoder.pos_estimate - (self.nbTics * distance) / self.perimetreRoue
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur 1 de droite:
-        target1 = axis1.encoder.pos_estimate + (self.nbTics * distance) \
-            / self.perimetreRoue
+        target1 = (self.nbTics * distance) / self.perimetreRoue
+        #axis1.encoder.pos_estimate + (self.nbTics * distance) / self.perimetreRoue
 
         # Début de la translation :
-        axis0.controller.move_incremental(target0, from_goal_point=False) #move_to_pos
-        axis1.controller.move_incremental(target1, from_goal_point=False) #move_to_pos
+        axis0.controller.move_incremental(target0, False)
+        #move_to_pos
+        axis1.controller.move_incremental(target1, False)
+        #move_to_pos
 
         # boucle de régulation de la position
         self.wait_end_move(strMouv, axis0, target0, self.errorMax)
