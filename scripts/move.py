@@ -79,8 +79,8 @@ class Move:
                     self.actionFait = True
 
                 else:
-                    target0 = target0/1.2
-                    target1 = target1/1.2
+                    target0 = target0/1.001
+                    target1 = target1/1.001
 
 # Attente fin de mouvement SI aucun obstacle détécté
 # self.wait_end_move(strMouv, axis0, target0, self.errorMax, senslist)
