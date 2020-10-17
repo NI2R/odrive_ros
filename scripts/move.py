@@ -223,10 +223,8 @@ class Move:
                 axis0.controller.move_to_pos(target0)
                 axis1.controller.move_to_pos(target1)
                 # Attente fin de mouvement SI aucun obstacle détécté
-                #self.wait_end_move(mouv, axis0, target0, self.errorMax,
-                                   senslist)
-                #self.wait_end_move(mouv, axis1, target1, self.errorMax,
-                                   senslist)
+                #self.wait_end_move(mouv, axis0, target0, self.errorMax, senslist)
+                #self.wait_end_move(mouv, axis1, target1, self.errorMax, senslist)
 
                 # print("Translation : Pas d'Obstacle")
 
