@@ -53,7 +53,5 @@ def Test_diametre_roue():
     odrv.axis1.controller.move_incremental(8192, False)
     time.sleep(5)
 
-def main():
 
-
-    Test_diametre_roue()
+Test_diametre_roue()
