@@ -72,7 +72,7 @@ def main():
     rospy.init_node('Odrive', anonymous=True)
     param.config()
     param.calib()
-    move = m.Move(param.odrv0)
+    move = m.Move(param.odrv)
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)
