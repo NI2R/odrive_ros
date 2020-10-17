@@ -8,7 +8,7 @@ from __future__ import print_function
 # import odrive.enums  # à checker
 from interfaceROS import Robot_properties
 from time import sleep
-from math import pi
+from math import pi, fabs
 
 
 class Move:
@@ -86,7 +86,7 @@ class Move:
             # , goal, "movAvg : ", movAvg)
 
             """ Fonctions pour l'OAS """
-            for i in range(len(Sen)):
+            """ for i in range(len(Sen)):
                 if senslist[i] is True:
                     if MCP3008.readadc(Sen[i]) > 700:  # 600 trop de detection
                         self.OBS = True
@@ -94,7 +94,7 @@ class Move:
                         # print("Obstacle détécté")
                         # self.detect_obs(axis, goal)
                         # "print("Values vaut : ", MCP3008.readadc(Sen[i])
-
+                        """
             for i in self.SenOn:
                 if i != 0:
                     Sen_count += 1
@@ -129,8 +129,8 @@ class Move:
 
             self.buffer = movAvg
             # print("seuil =", self.seuil)
-            elif Sen_count != 0:
-                return
+            # elif Sen_count != 0:
+                # return
 
         self.ActDone = True
 
