@@ -9,7 +9,7 @@ from __future__ import print_function
 from interfaceROS import Robot_properties
 from time import sleep
 from math import pi, fabs
-
+from time import time
 
 class Move:
     def __init__(self, odrv0):  # p1, p2
@@ -58,20 +58,22 @@ class Move:
                 # print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
+
+                inst0 = time()
                 distInst0 = \
                  (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst0)
 
-                sleep(1)
 
+                inst1 = time()
                 distInst1 = \
                  (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst1)
 
-                vitMoteur = (distInst1 - distInst0) / 1000
+                vitMoteur = (distInst1 - distInst0) / ((inst1-inst0) * 1000)
 
                 """ PUBLICATIONS ROS : """
-                self.Robot.update_Distance_parc(distInst0)
+                self.Robot.update_Distance_parc(distInst1)
 
                 if axis == 0:
                     self.Robot.update_Vitesse0(vitMoteur)
