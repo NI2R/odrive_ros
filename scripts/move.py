@@ -66,8 +66,8 @@ class Move:
             / self.perimetreRoue
 
         # Début de la translation :
-        axis0.controller.move_to_pos(target0)
-        axis1.controller.move_to_pos(target1)
+        axis0.controller.move_incremental(target0, from_goal_point=False) #move_to_pos
+        axis1.controller.move_incremental(target1, from_goal_point=False) #move_to_pos
 
         # boucle de régulation de la position
         self.wait_end_move(strMouv, axis0, target0, self.errorMax)
@@ -80,7 +80,7 @@ class Move:
         distanceFinale0 = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
         print("Distance Roue Gauche (mm) : %.4f " % distanceFinale0)
         distanceFinale1 = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
-        print("Distance Roue Droite (mm) : %.4f " % distanceFinale0)
+        print("Distance Roue Droite (mm) : %.4f " % distanceFinale1)
 
 
     def wait_end_move(self, strMouv, axis, goal, errorMax):
@@ -109,7 +109,7 @@ class Move:
 
             diff_step = fabs(axis.encoder.pos_estimate - axis.encoder.pos_estimate)
             print('diff_step = %d' % diff_step)
-
+            print('movAvg = %d' % movAvg)
             if diff_step < 10:
                 wd += 1
                 if wd > 200:
