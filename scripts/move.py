@@ -55,17 +55,17 @@ class Move:
             if mouv == "rot":
                 angleInst = (- 360.0 * self.pRoue * axis.encoder.pos_estimate)\
                  / (pi * self.entreAxe * self.nbTicks)
-                # print("Angle du Robot : %.2f°" % angleInst)
+                print("Angle du Robot : %.2f°" % angleInst)
 
             elif mouv == "trans":
                 distInst0 = \
-                 (axis.encoder.pos_estimate * self.pRoue) \
-                 / self.nbTicks
-                # print("Déplacement du Robot : %.2f mm" % distInst0)
+                 (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
+                print("Déplacement du Robot : %.2f mm" % distInst0)
 
                 sleep(1)
 
-                distInst1 = (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
+                distInst1 = \
+                 (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst1)
 
                 vitMoteur = (distInst1 - distInst0) / 1000
@@ -147,8 +147,7 @@ class Move:
         print("Lancement d'une Rotation de %.0f°" % angle)
         # calcul des ticks/pas à parcourir pour tourner
 
-        distAngulaire = ((self.entreAxe/2) * angle * (pi / 180) \
-                         * self.nbTicks)/self.pRoue
+        distAngulaire = ((self.entreAxe/2) * angle * (pi / 180) * self.nbTicks) / self.pRoue
 
 
         # Assignation de values avec valeur du capteur IR
