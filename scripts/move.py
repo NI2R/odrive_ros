@@ -144,12 +144,12 @@ class Move:
         # Flag Mouvement rotation
         mouv = "rot"
 
-        print("Lancement d'une Rotation de %.0f°" % angle * 180 / pi)
+        print("Lancement d'une Rotation de %.0f°" % (angle * 180 / pi))
         # calcul des ticks/pas à parcourir pour tourner
 
         distAngulaire = ((self.entreAxe/2) * angle * self.nbTicks) / self.pRoue
 
-        print("fraction de tour = %.0f" % distAngulaire / self.nbTicks)
+        print("fraction de tour = %.0f" % (distAngulaire / self.nbTicks)
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
