@@ -70,7 +70,7 @@ class Move:
         #self.wait_end_move(strMouv, axis1, target1, self.errorMax)
 
         print("Translation Terminée !")
-        sleep(5)
+        sleep(1)
 
         # Distance parcourue par les roues
         distanceFinale0 = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
@@ -250,8 +250,8 @@ class Move:
                 axis1.controller.move_to_pos(distAngulaire)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
-                self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
-                self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
+                # self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
+                # self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
                 # print("Rotation : Pas d'Obstacle")
 
             # fonction lié à l'OAS
@@ -264,7 +264,7 @@ class Move:
                 print("Rotation Terminée !")
                 self.actionFait = False
                 break
-
+        sleep(1)
 
     def stop(self):
 
