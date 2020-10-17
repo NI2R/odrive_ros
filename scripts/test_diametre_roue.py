@@ -47,9 +47,9 @@ def Test_diametre_roue():
     # Met les moteurs en boucle fermée
     odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
     odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-
+    time.sleep(10)
     print('lancement move_incremental')
-    odrv.axis0.controller.move_incremental(8192, False)
+    odrv.axis0.controller.move_incremental(-8192, False)
     odrv.axis1.controller.move_incremental(8192, False)
     time.sleep(5)
 
