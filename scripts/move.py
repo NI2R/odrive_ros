@@ -20,21 +20,86 @@ class Move:
         self.odrv = odrv0      # Assignation du odrive
 
         # Robot physical constant
-        self.nbTicks = 8192    # Nombre de tics pr un tour d'encoder
-        self.dRoue = 80     # Diamètre roue en mm
-        self.pRoue = self.dRoue * pi  # Périmètre roue en mm
-        self.entreAxe = 280    # entre-axe en mm
+        self.nbTics = 8192    # Nombre de tics pr un tour d'encoder
+        self.diametreRoue = 80     # Diamètre roue en mm
+        self.perimetreRoue = self.diametreRoue * pi  # Périmètre roue en mm
+        self.distanceEntreAxe = 280    # entre-axe en mm
 
         # coding features
         self.errorMax = 10      # unité ?
         self.OBS = False        # Init  Ostacle Detecté
-        self.ActDone = False     # Init Action Faite
+        self.actionFait = False     # Init Action Faite
         self.SenOn = list()
 
         # Appel de la classe Robot_properties dans interfaseROS.py
         self.Robot = Robot_properties()
 
-    def wait_end_move(self, mouv, axis, goal, errorMax, senslist):
+    def translation(self, distance):
+        ''' [Fonction qui permet d'avancer droit pour une distance
+            donnée en mm] '''
+
+        # Défintion des Aliases
+        axis0 = self.odrv.axis0
+        axis1 = self.odrv.axis1
+
+        # Définition du type de mouvement (Flag) :
+        strMouv = "trans"
+
+        # Def. de la distance parcouru par les roues avant nouveau deplacement
+        distInit0_tics = axis0.encoder.pos_estimate
+        distInit1_tics = axis1.encoder.pos_estimate
+
+        distInit0_mm = (distInit0_tics * self.perimetreRoue) \
+            / self.nbTics
+        distInit1_mm = (distInit1_tics * self.perimetreRoue) \
+            / self.nbTics
+
+        print("Lancement d'une Translation de %.0f mm" % distance)
+
+        # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur 0:
+        target0 = axis0.encoder.pos_estimate - (self.nbTics * distance) \
+            / self.perimetreRoue
+
+        # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur 1:
+        target1 = axis1.encoder.pos_estimate + (self.nbTics * distance) \
+            / self.perimetreRoue
+
+        # Début de la translation :
+        while 1:
+
+            if self.actionFait is False:                                              # Translation en cours
+                axis0.controller.move_to_pos(target0)
+                axis1.controller.move_to_pos(target1)
+
+                # test
+
+
+                if axis0.encoder.pos_estimate - self.errorMax < target0 + distInit0_tics < axis0.encoder.pos_estimate + self.errorMax and axis1.encoder.pos_estimate - self.errorMax < target1 + distInit1_tics < axis1.encoder.pos_estimate + self.errorMax:
+
+                    self.actionFait = True
+
+                else:
+                    target0 = target0/1.2
+                    target1 = target1/1.2
+
+# Attente fin de mouvement SI aucun obstacle détécté
+# self.wait_end_move(strMouv, axis0, target0, self.errorMax, senslist)
+# self.wait_end_move(strMouv, axis1, target1, self.errorMax, senslist)
+
+            else:                                                                   # Translation terminée
+                print("Translation Terminée !")
+
+                # Distance parcourue par les roues
+                distanceFinale0 = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
+                print("Distance Roue Gauche (mm) : %.4f " % distanceFinale0)
+
+                distanceFinale1 = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
+                print("Distance Roue Droite (mm) : %.4f " % distanceFinale0)
+
+                self.actionFait = False
+                break
+
+    def wait_end_move(self, strMouv, axis, goal, errorMax, senslist):
         ''' Fonction appelée à la fin des fonctions Move pour assurer
             l'execution complète du mouvement/déplacement. '''
         """ [EN TEST] CONDITIONS for Obstacle Avoidance System (OAS)"""
@@ -45,7 +110,7 @@ class Move:
         movAvg = abs(goal - axis.encoder.pos_estimate)
         diff_step = 0
         wd = 0
-        self.ActDone = False
+        self.actionFait = False
         # Pour lecture capteur en fonction du sens de Translation
         Sen = [0, 1, 2, 3, 4]
         self.SenOn = [0 for i in range(len(Sen))]
@@ -53,20 +118,20 @@ class Move:
         while movAvg >= errorMax:
             # Fonction pour afficher l'angle ou le déplacement instantannée
             # du robot
-            if mouv == "rot":
-                angleInst = (- 360.0 * self.pRoue * axis.encoder.pos_estimate)\
-                 / (pi * self.entreAxe * self.nbTicks)
+            if strMouv == "rot":
+                angleInst = (- 360.0 * self.perimetreRoue * axis.encoder.pos_estimate)\
+                 / (pi * self.distanceEntreAxe * self.nbTics)
                 # print("Angle du Robot : %.2f°" % angleInst)
 
-            elif mouv == "trans":
+            elif strMouv == "trans":
 
                 inst0 = time()
-                distInst0 = (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
+                distInst0 = (axis.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
                 # print("Déplacement du Robot : %.2f mm" % distInst0)
 
 
                 inst1 = time()
-                distInst1 = (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
+                distInst1 = (axis.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
                 # print("Déplacement du Robot : %.2f mm" % distInst1)
 
                 vitMoteur = (distInst1 - distInst0) / ((inst1-inst0) * 1000)
@@ -111,7 +176,7 @@ class Move:
                 if diff_step < 10:
                     wd += 1
                     if wd > 200:
-                        self.ActDone = True
+                        self.actionFait = True
                         return
                 else:
                     wd = 0
@@ -133,7 +198,7 @@ class Move:
             # elif Sen_count != 0:
                 # return
 
-        self.ActDone = True
+        self.actionFait = True
 
     def rotation(self, angle, senslist):
         ''' [ Fonction qui fait tourner le robot sur lui même
@@ -145,7 +210,7 @@ class Move:
         axis1 = self.odrv.axis1
 
         # Flag Mouvement rotation
-        mouv = "rot"
+        strMouv = "rot"
 
         # Convertion angle en degré :
         angleDeg = angle * 180 / pi
@@ -154,9 +219,9 @@ class Move:
         # calcul des ticks/pas à parcourir pour tourner
 
         # distance angulaire avec angle en radiant
-        distAngulaire = ((self.entreAxe/2) * angle * self.nbTicks) / self.pRoue
+        distAngulaire = ((self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
 
-        print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTicks))
+        print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
 
 
         # Assignation de values avec valeur du capteur IR
@@ -164,88 +229,28 @@ class Move:
 
         while 1:
 
-            if self.OBS is False and self.ActDone is False:
+            if self.OBS is False and self.actionFait is False:
                 axis0.controller.move_to_pos(distAngulaire)
                 axis1.controller.move_to_pos(distAngulaire)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
-                self.wait_end_move(mouv, axis0, distAngulaire, self.errorMax,
+                self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax,
                                    senslist)
-                self.wait_end_move(mouv, axis1, distAngulaire, self.errorMax,
+                self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax,
                                    senslist)
                 # print("Rotation : Pas d'Obstacle")
 
             # fonction lié à l'OAS
-            elif self.OBS is True and self.ActDone is False:
+            elif self.OBS is True and self.actionFait is False:
                 self.stop()
                 sleep(0.5)
                 self.OBS = False
                 print("Rotation : Obstacle")
             else:
                 print("Rotation Terminée !")
-                self.ActDone = False
+                self.actionFait = False
                 break
 
-    def translation(self, distance, senslist):
-        ''' [Fonction qui permet d'avancer droit pour une distance
-            donnée en mm] '''
-
-        # Variables Locales :
-        axis0 = self.odrv.axis0
-        axis1 = self.odrv.axis1
-        # Flag Mouvement Translation :
-        mouv = "trans"
-
-        # Def. de la distance parcouru par les roues avant nouveau deplacement
-        distInit0 = (axis0.encoder.pos_estimate * self.pRoue) \
-            / self.nbTicks
-        distInit1 = (axis1.encoder.pos_estimate * self.pRoue) \
-            / self.nbTicks
-
-        print("Lancement d'une Translation de %.0f mm" % distance)
-
-        # Controle de la Position Longit en Absolu:
-        target0 = axis0.encoder.pos_estimate - (self.nbTicks * distance) \
-            / self.pRoue
-
-        # Distance / Perimètre = nb tour a parcourir
-        target1 = axis1.encoder.pos_estimate + (self.nbTicks * distance) \
-            / self.pRoue
-
-        # Action ! :
-        """ [A inclure fonction évitement (OBS = True)] """
-        """--------------------------------------------"""
-        while 1:  # [A tester] (a la place de condition en dessous)
-            # axis0.encoder.pos_estimate != target0 :
-            # or axis1.encoder.pos_estimate != target1:
-
-            if self.OBS is False and self.ActDone is False:
-                axis0.controller.move_to_pos(target0)
-                axis1.controller.move_to_pos(target1)
-                # Attente fin de mouvement SI aucun obstacle détécté
-                #self.wait_end_move(mouv, axis0, target0, self.errorMax, senslist)
-                #self.wait_end_move(mouv, axis1, target1, self.errorMax, senslist)
-
-                # print("Translation : Pas d'Obstacle")
-
-            elif self.OBS is True and self.ActDone is False:
-                self.stop()
-                sleep(0.5)
-                self.OBS = False
-                print("Translation : Obstacle")
-            else:
-                print("Translation Terminée !")
-                # Calcul et Affichage des nouveaux déplacements
-                distRe0 = - distInit0 + \
-                    (axis0.encoder.pos_estimate * self.pRoue)\
-                    / self.nbTicks
-                print("Distance Roue Gauche : %.4f " % distRe0)
-                distRe1 = - distInit1 + \
-                    (axis1.encoder.pos_estimate * self.pRoue)\
-                    / self.nbTicks
-                print("Distance Roue Droite : %.4f " % distRe1)
-                self.ActDone = False
-                break
 
     def stop(self):
 
