@@ -183,8 +183,8 @@ class Move:
             donnée en mm] '''
 
         # Variables Locales :
-        axis0 = self.odrv0.axis0
-        axis1 = self.odrv0.axis1
+        axis0 = self.odrv.axis0
+        axis1 = self.odrv.axis1
         # Flag Mouvement Translation :
         mouv = "trans"
 
