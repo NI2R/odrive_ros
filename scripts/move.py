@@ -156,7 +156,8 @@ class Move:
         # distance angulaire avec angle en radiant
         distAngulaire = ((self.entreAxe/2) * angle * self.nbTicks) / self.pRoue
 
-        print("fraction de tour = %.2f" % (distAngulaire / self.nbTicks))
+        print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTicks))
+
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
@@ -222,9 +223,9 @@ class Move:
                 axis0.controller.move_to_pos(target0)
                 axis1.controller.move_to_pos(target1)
                 # Attente fin de mouvement SI aucun obstacle détécté
-                self.wait_end_move(mouv, axis0, target0, self.errorMax,
+                #self.wait_end_move(mouv, axis0, target0, self.errorMax,
                                    senslist)
-                self.wait_end_move(mouv, axis1, target1, self.errorMax,
+                #self.wait_end_move(mouv, axis1, target1, self.errorMax,
                                    senslist)
 
                 # print("Translation : Pas d'Obstacle")
