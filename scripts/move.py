@@ -11,6 +11,7 @@ from time import sleep
 from math import pi, fabs
 from time import time
 
+
 class Move:
     def __init__(self, odrv0):  # p1, p2
         # self.Treat = Treatment()
@@ -60,14 +61,12 @@ class Move:
             elif mouv == "trans":
 
                 inst0 = time()
-                distInst0 = \
-                 (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
+                distInst0 = (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst0)
 
 
                 inst1 = time()
-                distInst1 = \
-                 (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
+                distInst1 = (axis.encoder.pos_estimate * self.pRoue) / self.nbTicks
                 # print("Déplacement du Robot : %.2f mm" % distInst1)
 
                 vitMoteur = (distInst1 - distInst0) / ((inst1-inst0) * 1000)

@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*-coding:Latin-1 -*
-
-#import sys
-#import os
+from __future__ import print_function
 import rospy
-from math import pi
+
 
 import param as p
 import move as m
@@ -46,33 +44,34 @@ class Robot_properties:
     """ OUTPUTS """
 
     def update_Vitesse0(self, vitesse0):
-        print("vitesse roue gauche en m/s: " % vitesse0)
         # convertir en Twist
         toTwist = Twist()
         toTwist.linear.x = vitesse0
+        print("vitesse roue gauche en m/s: " % vitesse0)
         self.pubVitesse0.publish(toTwist)
 
     def update_Vitesse1(self, vitesse1):
-        print("vitesse roue droite en m/s: " % vitesse1)
         # convertir en Twist
         toTwist = Twist()
         toTwist.linear.x = vitesse1
+        print("vitesse roue droite en m/s: " % vitesse1)
         self.pubVitesse1.publish(toTwist)
 
     def update_Distance_parc(self, Distance):
-        print("Distance parcourue en mm :" % Distance)
         # convertir en float32
         toFloat32 = Float32()
         toFloat32.data = Distance
+        print("Distance parcourue en mm :" % Distance)
         self.pubDistance.publish(toFloat32)
 
 
 def main():
+    rospy.init_node('Odrive', anonymous=True)
     param = p.Param()
     param.config()
     param.calib()
     move = m.Move(param.odrv)
-    rospy.init_node('Odrive', anonymous=True)
+    rospy.sleep(10)
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)
