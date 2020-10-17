@@ -67,12 +67,13 @@ class Move:
         # Début de la translation :
         print("début du while")
         while 1:
-            
+
             if self.actionFait is False:
                                                           # Translation en cours
                 axis0.controller.move_to_pos(target0)
                 axis1.controller.move_to_pos(target1)
-                print("target0 = %.0f et target1 = %.0f ".format(target0, target1))
+                sleep(1)
+                print("target0 = %d et target1 = %d ".format(target0, target1))
                 # test
 
 
