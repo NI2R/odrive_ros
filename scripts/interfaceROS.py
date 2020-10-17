@@ -69,10 +69,10 @@ class Robot_properties:
 
 def main():
     param = p.Param()
-    rospy.init_node('Odrive', anonymous=True)
     param.config()
     param.calib()
     move = m.Move(param.odrv)
+    rospy.init_node('Odrive', anonymous=True)
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)

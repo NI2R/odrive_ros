@@ -138,15 +138,21 @@ class Move:
         ''' [ Fonction qui fait tourner le robot sur lui même
             d'un angle donné en degré ] '''
 
-        # Variables Locales :
+        """ --- Variables Locales : --- """
+        # Aliases :
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
+
         # Flag Mouvement rotation
         mouv = "rot"
 
-        print("Lancement d'une Rotation de %.0f°" % (angle * 180 / pi))
+        # Convertion angle en degré :
+        angleDeg = angle * 180 / pi
+
+        print("Lancement d'une Rotation de %.2f°" % angleDeg)
         # calcul des ticks/pas à parcourir pour tourner
 
+        # distance angulaire avec angle en radiant
         distAngulaire = ((self.entreAxe/2) * angle * self.nbTicks) / self.pRoue
 
         print("fraction de tour = %.0f" % (distAngulaire / self.nbTicks))
