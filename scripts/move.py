@@ -155,7 +155,7 @@ class Move:
         # distance angulaire avec angle en radiant
         distAngulaire = ((self.entreAxe/2) * angle * self.nbTicks) / self.pRoue
 
-        print("fraction de tour = %.0f" % (distAngulaire / self.nbTicks))
+        print("fraction de tour = %.2f" % (distAngulaire / self.nbTicks))
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
