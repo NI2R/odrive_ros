@@ -246,8 +246,8 @@ class Move:
 
         if self.actionFait is False:
 
-            axis0.controller.move_incremental(distAngulaire)
-            axis1.controller.move_incremental(distAngulaire)
+            axis0.controller.move_incremental(distAngulaire, False)
+            axis1.controller.move_incremental(distAngulaire, False)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
                 # self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
