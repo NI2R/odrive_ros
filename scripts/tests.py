@@ -78,7 +78,7 @@ def Test_diametre_roue(odrv):
 
 
 print("finding an odrive...")
-odrv = odrive.find_any(serial_number="365C33693037")
+odrv = odrive.find_any() # serial_number="365C33693037"
 print('Odrive found ! ')
 Config(odrv)
 Calibration(odrv)
