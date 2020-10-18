@@ -263,7 +263,7 @@ class Move:
         else:
             print("Rotation Terminée !")
             self.actionFait = False
-            break
+
         sleep(1)
 
     def stop(self):
