@@ -221,7 +221,7 @@ class Move:
             d'un angle donné en degré ] '''
 
         """ --- Variables Locales : --- """
-        # Aliases :
+        # Définition des Aliases :
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
 
@@ -243,27 +243,27 @@ class Move:
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
 
-        while 1:
 
-            if self.OBS is False and self.actionFait is False:
-                axis0.controller.move_to_pos(distAngulaire)
-                axis1.controller.move_to_pos(distAngulaire)
+        if self.actionFait is False:
+
+            axis0.controller.move_incremental(distAngulaire)
+            axis1.controller.move_incremental(distAngulaire)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
                 # self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
                 # self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
                 # print("Rotation : Pas d'Obstacle")
 
-            # fonction lié à l'OAS
-            elif self.OBS is True and self.actionFait is False:
-                self.stop()
-                sleep(0.5)
-                self.OBS = False
-                print("Rotation : Obstacle")
-            else:
-                print("Rotation Terminée !")
-                self.actionFait = False
-                break
+            # fonction lié à l'OA
+        elif self.OBS is True and self.actionFait is False:
+            self.stop()
+            sleep(0.5)
+            self.OBS = False
+            print("Rotation : Obstacle")
+        else:
+            print("Rotation Terminée !")
+            self.actionFait = False
+            break
         sleep(1)
 
     def stop(self):
