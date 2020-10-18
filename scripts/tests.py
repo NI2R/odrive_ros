@@ -58,13 +58,13 @@ def Test_move_incremental(odrv, distance):
     distance_tics_G = - (nb_tics * distance) / perimetre_roue_mm
     distance_tics_D = (nb_tics * distance) / perimetre_roue_mm
 
-    print('test  move_incremental  bloquant ou non')
+    print('test  move_incremental  allé')
 
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
-    print("essai de faire un truc pendant que je tourne")
-    for i in range(0, 100):
-        print('i = %d' % i)
+    print("test move_incremental retour")
+    odrv.axis0.controller.move_incremental(distance_tics_G, False)
+    odrv.axis1.controller.move_incremental(distance_tics_D, False)    
 
     print("j'attends 5sec avant de finir")
     time.sleep(5)
@@ -78,7 +78,7 @@ def Test_diametre_roue(odrv):
 
 
 print("finding an odrive...")
-odrv = odrive.find_any() # serial_number="365C33693037"
+odrv = odrive.find_any()
 print('Odrive found ! ')
 Config(odrv)
 Calibration(odrv)
