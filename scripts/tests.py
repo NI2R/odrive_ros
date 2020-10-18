@@ -62,9 +62,12 @@ def Test_move_incremental(odrv, distance):
 
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
+    print("attend idle state")
+    while odrv.axis0.current_state != 1 and odrv.axis1.current_state != 1:
+        time.sleep(0.2)
     print("test move_incremental retour")
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
-    odrv.axis1.controller.move_incremental(distance_tics_D, False)    
+    odrv.axis1.controller.move_incremental(distance_tics_D, False)
 
     print("j'attends 5sec avant de finir")
     time.sleep(5)
