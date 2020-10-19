@@ -71,7 +71,7 @@ def main():
     param.config()
     param.calib()
     move = m.Move(param.odrv)
-    rospy.sleep(5)
+    rospy.sleep(1)
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)
