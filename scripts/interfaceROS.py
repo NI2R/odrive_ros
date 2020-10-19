@@ -75,6 +75,8 @@ def main():
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)
+        # pour les tests
+        param.reboot()
 
 
 if __name__ == '__main__':

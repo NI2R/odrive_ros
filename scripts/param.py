@@ -56,3 +56,8 @@ class Param:
         # Met les moteurs en boucle fermée
         self.odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
         self.odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+
+    def reboot(self):
+
+        # redémarrage de la odrive :
+        odrv.reboot()
