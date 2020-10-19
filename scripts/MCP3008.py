@@ -19,19 +19,19 @@ spi.mode =0b00
 #spi.cshigh = True
 
 # 5 sensors, ID from 0 to 4 included
-# Sensor #1 : Front Left
-# Sensor #2 : Front Right
-# Sensor #3 : Front Center
-# Sensor #4 : Back Left
-# Sensor #5 : Back Right
+# Sensor #0 : Front Left
+# Sensor #1 : Front Right
+# Sensor #2 : Front Center
+# Sensor #3 : Back Left
+# Sensor #4 : Back Right
 
 def readadc(sensor_id, mean_n_loops=5):
 	if sensor_id > 4 or sensor_id < 0 or mean_n_loops < 1:
 		return -1
-    ret = 0
+	ret = 0
 	for i in range(mean_n_loops):
 		resp = spi.xfer2([0x01, (0x08 + sensor_id) << 4, 0x00])
-        ret += ((resp[1] & 0x03) << 8) + resp[2]
+		ret += ((resp[1] & 0x03) << 8) + resp[2]
 		time.sleep(delay_loop)
 	return ret/mean_n_loops
 
