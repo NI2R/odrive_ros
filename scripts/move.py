@@ -167,9 +167,9 @@ class Move:
                 movAvg += avg[i] / nb
 
             diff_step = fabs(axis.encoder.pos_estimate - axis.encoder.pos_estimate)
-            #print('diff_step = %d' % diff_step)
+            print('diff_step = %d' % diff_step)
             #print('movAvg = %d' % movAvg)
-            if diff_step < 10:
+            if diff_step < 5:
                 wd += 1
                 if wd > 200:
                     self.actionFait = True
