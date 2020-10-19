@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# # -*-coding:Latin-1 -*
+# -*-coding:Latin-1 -*
 
 import spidev
 import time
