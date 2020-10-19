@@ -51,7 +51,6 @@ class Param:
 
         # Attente fin de la calib, et retour état par défaut IDLE_STATE
         while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
-            print("Etat = %d" %self.odrv.axis0.current_state)
             time.sleep(0.2)
 
         # Met les moteurs en boucle fermée
