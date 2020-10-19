@@ -58,8 +58,8 @@ class Move:
         target1 = (self.nbTics * distance) / self.perimetreRoue
 
         # Début de la translation :
-        axis0.controller.move_incremental(target0, False)
-        axis1.controller.move_incremental(target1, False)
+        axis0.controller.move_incremental(target0, True)
+        axis1.controller.move_incremental(target1, True)
 
         # boucle de régulation de la position
         self.wait_end_move(strMouv, axis0, target0, self.errorMax)
