@@ -111,8 +111,8 @@ class Move:
             axis1.controller.move_incremental(distAngulaire, False)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
-            self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
-            self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
+            #self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
+            #self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
                 # print("Rotation : Pas d'Obstacle")
 
             # fonction lié à l'OAS
