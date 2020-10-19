@@ -2,14 +2,10 @@
 # -*-coding:Latin-1 -*
 
 from __future__ import print_function
-
-# import MCP3008
-# import odrive #pas utilisé ?
-# import odrive.enums  # à checker
+import MCP3008
 from interfaceROS import Robot_properties
 from time import sleep
 from math import pi, fabs
-from time import time
 
 
 class Move:
@@ -66,8 +62,8 @@ class Move:
         axis1.controller.move_incremental(target1, False)
 
         # boucle de régulation de la position
-        #self.wait_end_move(strMouv, axis0, target0, self.errorMax)
-        #self.wait_end_move(strMouv, axis1, target1, self.errorMax)
+        self.wait_end_move(strMouv, axis0, target0, self.errorMax)
+        self.wait_end_move(strMouv, axis1, target1, self.errorMax)
 
         print("Translation Terminée !")
         sleep(1)
@@ -78,72 +74,72 @@ class Move:
         distanceFinale1 = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
         print("Distance Roue Droite (mm) : %.4f " % distanceFinale1)
 
-        def rotation(self, angle, senslist):
-            ''' [ Fonction qui fait tourner le robot sur lui même
-                d'un angle donné en degré ] '''
+    def rotation(self, angle, senslist):
+        ''' [ Fonction qui fait tourner le robot sur lui même
+            d'un angle donné en degré ] '''
 
-            """ --- Variables Locales : --- """
-            # Définition des Aliases :
-            axis0 = self.odrv.axis0
-            axis1 = self.odrv.axis1
+        """ --- Variables Locales : --- """
+        # Définition des Aliases :
+        axis0 = self.odrv.axis0
+        axis1 = self.odrv.axis1
 
-            # Flag Mouvement rotation
-            strMouv = "rot"
+        # Flag Mouvement rotation
+        strMouv = "rot"
 
-            # Convertion angle en degré :
-            angleDeg = angle * 180 / pi
+        # Convertion angle en degré :
+        angleDeg = angle * 180 / pi
 
-            print("Lancement d'une Rotation de %.2f°" % angleDeg)
-            # calcul des ticks/pas à parcourir pour tourner
+        print("Lancement d'une Rotation de %.2f°" % angleDeg)
+        # calcul des ticks/pas à parcourir pour tourner
 
-            # distance angulaire avec angle en radiant
-            distAngulaire = ((self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
+        # distance angulaire avec angle en radiant
+        distAngulaire = ((self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
 
-            print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
-
-
-            # Assignation de values avec valeur du capteur IR
-            # values = MCP3008.readadc(1)
+        print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
 
 
-            if self.actionFait is False:
+        # Assignation de values avec valeur du capteur IR
+        # values = MCP3008.readadc(1)
 
-                axis0.controller.move_incremental(distAngulaire, False)
-                axis1.controller.move_incremental(distAngulaire, False)
 
-                    # Attente fin de mouvement SI aucun obstacle détécté
-                    # self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
-                    # self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
-                    # print("Rotation : Pas d'Obstacle")
+        if self.actionFait is False:
 
-                # fonction lié à l'OA
-            elif self.OBS is True and self.actionFait is False:
-                self.stop()
-                sleep(0.5)
-                self.OBS = False
-                print("Rotation : Obstacle")
-            else:
-                print("Rotation Terminée !")
-                self.actionFait = False
+            axis0.controller.move_incremental(distAngulaire, False)
+            axis1.controller.move_incremental(distAngulaire, False)
 
-            sleep(1)
+                # Attente fin de mouvement SI aucun obstacle détécté
+            self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
+            self.wait_end_move(strMouv, axis1, distAngulaire, self.errorMax)
+                # print("Rotation : Pas d'Obstacle")
 
-        def stop(self):
+            # fonction lié à l'OAS
+        # elif self.OBS is True and self.actionFait is False:
+        #     self.stop()
+        #     sleep(0.5)
+        #     self.OBS = False
+        #     print("Rotation : Obstacle")
+        # else:
+        #     print("Rotation Terminée !")
+        #     self.actionFait = False
+        self.actionFait = False
+        sleep(1)
 
-            # Variables locales :
-            axis0 = self.odrv0.axis0
-            axis1 = self.odrv0.axis1
+    def stop(self):
 
-            # Met la vitessea des roues à 0.
-            print("Le robot s'arrête")
-            # axis0.controller.speed(0)
-            # axis1.controller.speed(0)
-            """ ou  POUR ARReTER LES MOTEURS : """
+        # Variables locales :
+        axis0 = self.odrv0.axis0
+        axis1 = self.odrv0.axis1
 
-            axis0.controller.set_vel_setpoint(0, 0)
-            axis1.controller.set_vel_setpoint(0, 0)
-            axis0.controller.pos_setpoint = axis0.encoder.pos_estimate
-            axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
+        # Met la vitessea des roues à 0.
+        print("Le robot s'arrête")
+        # axis0.controller.speed(0)
+        # axis1.controller.speed(0)
+        """ ou  POUR ARReTER LES MOTEURS : """
+
+        axis0.controller.set_vel_setpoint(0, 0)
+        axis1.controller.set_vel_setpoint(0, 0)
+        axis0.controller.pos_setpoint = axis0.encoder.pos_estimate
+        axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
 
 
     def wait_end_move(self, strMouv, axis, goal, errorMax):
