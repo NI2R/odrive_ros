@@ -63,7 +63,7 @@ class Move:
 
         # boucle de régulation de la position
 
-        while axis0.controller.pos_estimate != target0 and axis1.controller.pos_estimate != target1:
+        while axis0.encoder.pos_estimate != target0 and axis1.encoder.pos_estimate != target1:
             sleep(0.2)
         #self.wait_end_move(strMouv, axis0, target0, self.errorMax)
         #self.wait_end_move(strMouv, axis1, target1, self.errorMax)
