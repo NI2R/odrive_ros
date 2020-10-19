@@ -44,13 +44,14 @@ class Param:
 
         # Lance la calibration moteur si pas déjà faite
         print("starting calibration...")
-        self.odrv.axis0.motor.config.pre_calibrated = False
-        self.odrv.axis1.motor.config.pre_calibrated = False
+        #self.odrv.axis0.motor.config.pre_calibrated = False
+        #self.odrv.axis1.motor.config.pre_calibrated = False
         self.odrv.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         self.odrv.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 
         # Attente fin de la calib, et retour état par défaut IDLE_STATE
         while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
+            print("Etat = %d" %self.odrv.axis0.current_state)
             time.sleep(0.2)
 
         # Met les moteurs en boucle fermée
