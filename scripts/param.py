@@ -13,7 +13,6 @@ class Param:
     def __init__(self):
         print("finding an odrive...")
         self.odrv = odrive.find_any()
-        self.reboot = self.odrv.reboot()
         print('Odrive found ! ')
 
     def config(self):
