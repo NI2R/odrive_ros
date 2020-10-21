@@ -56,11 +56,14 @@ class Move:
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur 1 de droite:
         target1 = (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
-
+        print("pos_estimate 0: %d" % axis0.encoder.pos_estimate )
+        print("target0 : %d" % target0)
+        print("pos_estimate 1: %d" % axis1.encoder.pos_estimate )
+        print("target1 : %d" % target1)
         # Début de la translation :
         axis0.controller.move_to_pos(target0)
         axis1.controller.move_to_pos(target1)
-        sleep(10)
+        sleep(5)
         # boucle de régulation de la position
 
         #while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
