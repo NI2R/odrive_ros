@@ -2,7 +2,7 @@
 # -*-coding:Latin-1 -*
 
 from __future__ import print_function
-import MCP3008
+#import MCP3008
 from interfaceROS import Robot_properties
 from time import sleep
 from math import pi, fabs
@@ -52,21 +52,21 @@ class Move:
         print("Lancement d'une Translation de %.0f mm" % distance)
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur de gauche:
-        target0 = - (self.nbTics * distance) / self.perimetreRoue
+        target0 = - (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur 1 de droite:
-        target1 = (self.nbTics * distance) / self.perimetreRoue
+        target1 = (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
 
         # Début de la translation :
-        axis0.controller.move_incremental(target0, True)
-        axis1.controller.move_incremental(target1, True)
+        axis0.controller.move_to_pose(target0)
+        axis1.controller.move_to_pose(target1)
 
         # boucle de régulation de la position
 
-        while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
-            sleep(0.001)
-        #self.wait_end_move(strMouv, axis0, target0, self.errorMax)
-        #self.wait_end_move(strMouv, axis1, target1, self.errorMax)
+        #while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
+        #    sleep(0.001)
+        self.wait_end_move(strMouv, axis0, target0, self.errorMax)
+        self.wait_end_move(strMouv, axis1, target1, self.errorMax)
 
         print("Translation Terminée !")
         sleep(1)

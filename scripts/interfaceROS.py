@@ -75,8 +75,8 @@ def main():
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)
-        # pour les tests
-        param.reboot()
+        # pour les tests qaund la cailb ne se lance pas au debut du main
+        # param.reboot()
 
 
 if __name__ == '__main__':
