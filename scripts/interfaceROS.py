@@ -76,7 +76,7 @@ def main():
         move.run()
         rospy.sleep(1)
         # pour les tests qaund la cailb ne se lance pas au debut du main
-        # param.reboot()
+        param.reboot()
 
 
 if __name__ == '__main__':
