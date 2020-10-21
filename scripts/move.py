@@ -58,8 +58,8 @@ class Move:
         target1 = (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
 
         # Début de la translation :
-        axis0.controller.move_to_pose(target0)
-        axis1.controller.move_to_pose(target1)
+        axis0.controller.move_to_pos(target0)
+        axis1.controller.move_to_pos(target1)
 
         # boucle de régulation de la position
 
