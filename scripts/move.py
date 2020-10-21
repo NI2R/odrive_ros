@@ -66,8 +66,8 @@ class Move:
         axis1.controller.move_incremental(target1, False)
 
         # boucle de régulation de la position
-        #self.wait_end_move(strMouv, axis0, target0, self.errorMax)
-        #self.wait_end_move(strMouv, axis1, target1, self.errorMax)
+        self.wait_end_move(strMouv, axis0, target0, self.errorMax)
+        self.wait_end_move(strMouv, axis1, target1, self.errorMax)
 
         print("Translation Terminée !")
         sleep(1)
