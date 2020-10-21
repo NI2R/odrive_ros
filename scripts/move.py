@@ -128,7 +128,7 @@ class Move:
 
             sleep(1)
 
-        def stop(self):
+    def stop(self):
 
             # Variables locales :
             axis0 = self.odrv0.axis0
