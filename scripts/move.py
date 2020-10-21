@@ -78,7 +78,7 @@ class Move:
         distanceFinale1 = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
         print("Distance Roue Droite (mm) : %.4f " % distanceFinale1)
 
-        def rotation(self, angle, senslist):
+    def rotation(self, angle, senslist):
             ''' [ Fonction qui fait tourner le robot sur lui même
                 d'un angle donné en degré ] '''
 
