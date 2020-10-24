@@ -35,8 +35,7 @@ while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
 print("Activation état Boucle fermée")
 odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-while odrv0.axis0.current_state == 8 and odrv0.axis1.current_state == 8:
-    sleep(0.1)
+sleep(0.5)
 
 print("Lancement move_to_pos(0) ")
 odrv0.axis0.controller.move_to_pos(0)
