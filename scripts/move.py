@@ -63,8 +63,8 @@ class Move:
         axis1.controller.move_to_pos(target1)
 
         # boucle de régulation de la position
-        #while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
-        #    sleep(0.001)
+        while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
+            sleep(0.001)
 
         # fonction pour réguler la fonction move_to_pos(nb_tics_distance)
         #self.wait_end_move(strMouv, axis0, target0, self.errorMax)
@@ -269,12 +269,12 @@ class Move:
 
     def run(self):
 
-        print("----------------<- 1 ROTATION ->----------------")
+        #print("----------------<- 1 ROTATION ->----------------")
         #self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
-        sleep(0.5)
+        #sleep(0.5)
         print("---------------<- 2 TRANSLATION ->---------------")
         self.translation(self.Robot.Dist_rect)
         sleep(0.5)
-        print("----------------<- 3 ROTATION ->----------------")
+        #print("----------------<- 3 ROTATION ->----------------")
         #self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
         print("=================================================")
