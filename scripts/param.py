@@ -12,7 +12,7 @@ from math import *
 class Param:
     def __init__(self):
         print("finding an odrive...")
-        self.odrv = odrive.find_any()
+        self.odrv = odrive.find_any(serial_number="365C33693037")
         print('Odrive found ! ')
 
     def config(self):
