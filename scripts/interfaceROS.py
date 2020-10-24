@@ -18,9 +18,9 @@ class Robot_properties:
         self.Angle_fi = 0
         self.Dist_rect = 0
 
-        self.publish_Distance = 'odriveDistance_parcourue'
-        self.publish_Vitesse0 = 'odriveVitesse0'  # nom du topic que je publie
-        self.publish_Vitesse1 = 'odriveVitesse1'
+        self.publish_Distance = '/odriveDistance_parcourue'
+        self.publish_Vitesse0 = '/odriveVitesse_RG'  # nom du topic que je publie
+        self.publish_Vitesse1 = '/odriveVitesse_RD'
 
         self.pubDistance = rospy.Publisher(self.publish_Distance, Float32, queue_size=1)
         self.pubVitesse0 = rospy.Publisher(self.publish_Vitesse0, Twist, queue_size=1)
@@ -76,7 +76,7 @@ def main():
         move.run()
         rospy.sleep(1)
         # pour les tests qaund la cailb ne se lance pas au debut du main
-        param.reboot()
+        #param.reboot()
 
 
 if __name__ == '__main__':
