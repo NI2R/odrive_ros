@@ -14,17 +14,17 @@ odrv0.erase_configuration()
 sleep(5)
 '''
 
-print("Lancement du calibration complète  moteurs + encoders ")
+print("Lancement d'une calibration complète  moteurs + encoders ")
 odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
-while odrv0.axis0.current_state is 3 and odrv0.axis1.current_state is 3:
-    time.sleep(0.5)
+while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
+    sleep(0.2)
 
 print("Activation état Boucle fermée")
 odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 while odrv0.axis0.current_state is 8 and odrv0.axis1.current_state is 8:
-    time.sleep(0.1)
+    sleep(0.1)
 
 print("Lancement move_to_pos(0) ")
 odrv0.axis0.controller.move_to_pos(0)
