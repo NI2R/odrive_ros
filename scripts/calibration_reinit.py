@@ -9,9 +9,9 @@ from time import sleep
 print("Recherche Odrive...")
 odrv0 = odrive.find_any(serial_number="365C33693037")
 
-print("Effacement de la configuration précédente")
-odrv0.erase_configuration()
-sleep(10)
+#print("Effacement de la configuration précédente")
+#odrv0.erase_configuration()
+#sleep(5)
 
 #print("Définition du mode Index Signal encoders = FALSE")
 #odrv0.axis0.encoder.config.use_index = False
