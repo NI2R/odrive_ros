@@ -8,11 +8,11 @@ from time import sleep
 
 print("Recherche Odrive...")
 odrv0 = odrive.find_any()
-'''
+
 print("Effacement de la configuration précédente")
 odrv0.erase_configuration()
 sleep(5)
-'''
+
 
 print("Lancement d'une calibration complète  moteurs + encoders ")
 odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
