@@ -17,7 +17,7 @@ sleep(5)
 print("Lancement d'une calibration complète  moteurs + encoders ")
 odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
-while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
+while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
     sleep(0.2)
 
 print("Activation état Boucle fermée")
