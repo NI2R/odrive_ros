@@ -67,9 +67,9 @@ class Move:
         #    sleep(0.001)
 
         # fonction pour réguler la fonction move_to_pos(nb_tics_distance)
-        self.wait_end_move(strMouv, axis0, target0, self.errorMax)
-        self.wait_end_move(strMouv, axis1, target1, self.errorMax)
-
+        #self.wait_end_move(strMouv, axis0, target0, self.errorMax)
+        #self.wait_end_move(strMouv, axis1, target1, self.errorMax)
+        sleep(10)
         print("Translation Terminée !")
         sleep(1)
 

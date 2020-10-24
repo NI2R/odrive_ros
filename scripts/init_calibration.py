@@ -9,14 +9,12 @@ from time import sleep
 print("Recherche Odrive...")
 odrv0 = odrive.find_any(serial_number="365C33693037")
 
-#print("Effacement de la configuration précédente")
-#odrv0.erase_configuration()
-#sleep(5)
+""" /!\ PREREQUIS : dans odrivetools lancer 'odrv0.erase_configuration()' & 'odrv0.reboot()' """
 
-#print("Définition du mode Index Signal encoders = FALSE")
-#odrv0.axis0.encoder.config.use_index = False
-#odrv0.axis1.encoder.config.use_index = False
-#sleep(0.5)
+print("Définition du mode Index Signal encoders = FALSE")
+odrv0.axis0.encoder.config.use_index = False
+odrv0.axis1.encoder.config.use_index = False
+sleep(0.5)
 
 print("Lancement d'une calibration complète  moteurs + encoders ")
 odrv0.axis0.requested_state = 3 #AXIS_STATE_FULL_CALIBRATION_SEQUENCE
