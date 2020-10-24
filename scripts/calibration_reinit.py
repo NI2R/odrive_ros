@@ -23,7 +23,7 @@ while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
 print("Activation état Boucle fermée")
 odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-while odrv0.axis0.current_state is 8 and odrv0.axis1.current_state is 8:
+while odrv0.axis0.current_state == 8 and odrv0.axis1.current_state == 8:
     sleep(0.1)
 
 print("Lancement move_to_pos(0) ")
@@ -55,8 +55,8 @@ sleep(0.5)
 print("Lancement de la recherche d'index pour chaque encoders")
 odrv0.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
 odrv0.axis1.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
-while odrv0.axis0.current_state is 7 and odrv0.axis1.current_state is 7:
-    time.sleep(0.1)
+while odrv0.axis0.current_state == 7 and odrv0.axis1.current_state == 7:
+    sleep(0.1)
 print("Définition de l'état pré-calibred encodeurs")
 odrv0.axis0.encoder.config.pre_calibrated = True
 odrv0.axis1.encoder.config.pre_calibrated = True
