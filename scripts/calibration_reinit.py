@@ -81,7 +81,7 @@ sleep(0.5)
 print("Force mode Boucle fermée au démarrage")
 odrv0.axis0.config.startup_closed_loop_control = True
 odrv0.axis1.config.startup_closed_loop_control = True
-prnt("Force Encoder_index_search au demarrage")
+print("Force Encoder_index_search au demarrage")
 odrv0.axis0.config.startup_encoder_index_search = True
 odrv0.axis1.config.startup_encoder_index_search = True
 
