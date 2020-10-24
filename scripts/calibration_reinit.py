@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*-coding:Latin-1 -*
 
 from __future__ import print_function
 import odrive
@@ -10,6 +11,17 @@ odrv0 = odrive.find_any()
 print("Effacement de la configuration précédente")
 odrv0.erase_configuration()
 sleep(3)
+
+print("Lancement de la calibration pour chaque moteur")
+odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION
+odrv0.axis1.requested_state = AXIS_STATE_MOTOR_CALIBRATION
+while odrv0.axis0.requested_state is 4 and odrv0.axis1.requested_state is 4:
+    sleep(0.5)
+print("Définition de l'état pré-calibré pour chaque moteur")
+odrv0.axis0.motor.config.pre_calibrated = True
+odrv0.axis1.motor.config.pre_calibrated = True
+sleep(0.5)
+
 print("Définition du mode Index Signal pour chaque encodeurs")
 odrv0.axis0.encoder.config.use_index = True
 odrv0.axis1.encoder.config.use_index = True
@@ -23,15 +35,7 @@ print("Définition de l'état pré-calibré pour chaque encodeur")
 odrv0.axis0.encoder.config.pre_calibrated = True
 odrv0.axis1.encoder.config.pre_calibrated = True
 sleep(0.5)
-'''
-print("Lancement de la recherche d'index sur chaque encodeur")
-odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION
-odrv0.axis1.requested_state = AXIS_STATE_MOTOR_CALIBRATION
-'''
-print("Définition de l'état pré-calibré pour chaque moteur")
-odrv0.axis0.motor.config.pre_calibrated = True
-odrv0.axis1.motor.config.pre_calibrated = True
-sleep(0.5)
+
 print("sauvegarde de la calibration et reboot")
 odrv0.save_configuration()
 sleep(2)
