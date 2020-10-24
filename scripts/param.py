@@ -5,7 +5,7 @@ from __future__ import print_function
 
 import odrive
 from odrive.enums import *
-import time
+from time import sleep
 from math import *
 
 
