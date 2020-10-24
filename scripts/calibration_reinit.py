@@ -73,10 +73,11 @@ odrv0.axis0.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
 odrv0.axis1.requested_state = AXIS_STATE_ENCODER_INDEX_SEARCH
 while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
     sleep(0.1)
+    
 print("Définition de l'état pré-calibred encodeurs")
 odrv0.axis0.encoder.config.pre_calibrated = True
 odrv0.axis1.encoder.config.pre_calibrated = True
-sleep(0.5)
+sleep(1)
 
 print("Force mode Boucle fermée au démarrage")
 odrv0.axis0.config.startup_closed_loop_control = True
