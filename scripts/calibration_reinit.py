@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 import odrive
-from odrive.enums import *
+import odrive.enums
 from time import sleep
 
 print("Recherche Odrive...")
@@ -13,16 +13,16 @@ print("Effacement de la configuration précédente")
 odrv0.erase_configuration()
 sleep(5)
 
-print("Définition du mode Index Signal encoders = FALSE")
-odrv0.axis0.encoder.config.use_index = False
-odrv0.axis1.encoder.config.use_index = False
-sleep(0.5)
+#print("Définition du mode Index Signal encoders = FALSE")
+#odrv0.axis0.encoder.config.use_index = False
+#odrv0.axis1.encoder.config.use_index = False
+#sleep(0.5)
 
 print("Lancement d'une calibration complète  moteurs + encoders ")
-odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
-odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+odrv0.axis0.requested_state = 3 #AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+odrv0.axis1.requested_state = 3 #AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
-    sleep(0.2)
+    sleep(0.1)
 
 print("Définition de l'état pre-calibrated moteurs")
 odrv0.axis0.motor.config.pre_calibrated = True
