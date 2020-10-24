@@ -7,7 +7,7 @@ from odrive.enums import *
 from time import sleep
 
 print("Recherche Odrive...")
-odrv0 = odrive.find_any('365C33693037')
+odrv0 = odrive.find_any("365C33693037")
 """
 print("Effacement de la configuration précédente")
 odrv0.erase_configuration()
