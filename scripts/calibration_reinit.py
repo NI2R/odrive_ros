@@ -8,11 +8,11 @@ from time import sleep
 
 print("Recherche Odrive...")
 odrv0 = odrive.find_any(serial_number="365C33693037")
-"""
+
 print("Effacement de la configuration précédente")
 odrv0.erase_configuration()
 sleep(5)
-"""
+
 print("Définition du mode Index Signal encoders = FALSE")
 odrv0.axis0.encoder.config.use_index = False
 odrv0.axis1.encoder.config.use_index = False
@@ -26,6 +26,7 @@ odrv0.axis0.motor.config.pre_calibrated = False
 odrv0.axis1.motor.config.pre_calibrated = False
 sleep(0.5)
 
+"""
 print("Lancement d'une calibration complète  moteurs + encoders ")
 odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
@@ -49,8 +50,9 @@ odrv0.axis0.requested_state = AXIS_STATE_IDLE
 odrv0.axis1.requested_state = AXIS_STATE_IDLE
 while odrv0.axis0.current_state != 1 and odrv0.axis1.current_state != 1:
     sleep(0.2)
+"""
 
-'''
+
 print("Lancement de la calibration moteurs")
 odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION
 odrv0.axis1.requested_state = AXIS_STATE_MOTOR_CALIBRATION
@@ -60,7 +62,7 @@ print("Définition de l'état pre-calibrated moteurs")
 odrv0.axis0.motor.config.pre_calibrated = True
 odrv0.axis1.motor.config.pre_calibrated = True
 sleep(0.5)
-'''
+
 
 print("Définition du mode Index Signal encoders")
 odrv0.axis0.encoder.config.use_index = True
