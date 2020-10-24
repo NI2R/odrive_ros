@@ -86,7 +86,7 @@ odrv0.axis1.config.startup_encoder_index_search = True
 print("sauvegarde de la calibration")
 print("REBOOT!")
 odrv0.save_configuration()
-sleep(2)
+sleep(5)
 odrv0.reboot()
 
 """
