@@ -7,12 +7,12 @@ from odrive.enums import *
 from time import sleep
 
 print("Recherche Odrive...")
-odrv0 = odrive.find_any()
-
+odrv0 = odrive.find_any('365C33693037')
+"""
 print("Effacement de la configuration précédente")
 odrv0.erase_configuration()
 sleep(5)
-
+"""
 print("Définition du mode Index Signal encoders = FALSE")
 odrv0.axis0.encoder.config.use_index = False
 odrv0.axis1.encoder.config.use_index = False
