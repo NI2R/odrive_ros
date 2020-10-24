@@ -21,9 +21,9 @@ print("Définition de l'état pré-calibred encodeurs = FALSE")
 odrv0.axis0.encoder.config.pre_calibrated = False
 odrv0.axis1.encoder.config.pre_calibrated = False
 sleep(0.5)
-print("Définition de l'état pre-calibrated moteurs")
-odrv0.axis0.motor.config.pre_calibrated = True
-odrv0.axis1.motor.config.pre_calibrated = True
+print("Définition de l'état pre-calibrated moteurs = FALSE")
+odrv0.axis0.motor.config.pre_calibrated = False
+odrv0.axis1.motor.config.pre_calibrated = False
 sleep(0.5)
 
 print("Lancement d'une calibration complète  moteurs + encoders ")
@@ -37,13 +37,12 @@ odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 sleep(0.5)
 
-while odrv0.axis0.encoder.shadow_count != 0 and odrv0.axis1.encoder.shadow_count != 0:
-    print("Lancement move_to_pos(0) ")
-    odrv0.axis0.controller.move_to_pos(0)
-    odrv0.axis1.controller.move_to_pos(0)
-    sleep(3)
-    print("Position de l'encoder 0 : %d " % odrv0.axis0.encoder.shadow_count)
-    print("Position de l'encoder 1 : %d " % odrv0.axis1.encoder.shadow_count)
+print("Lancement move_to_pos(0) ")
+odrv0.axis0.controller.move_to_pos(0)
+odrv0.axis1.controller.move_to_pos(0)
+sleep(3)
+print("Position de l'encoder 0 : %d " % odrv0.axis0.encoder.shadow_count)
+print("Position de l'encoder 1 : %d " % odrv0.axis1.encoder.shadow_count)
 
 print("Mise en état par défaut ")
 odrv0.axis0.requested_state = AXIS_STATE_IDLE
@@ -80,8 +79,12 @@ sleep(0.5)
 print("Force mode Boucle fermée au démarrage")
 odrv0.axis0.config.startup_closed_loop_control = True
 odrv0.axis1.config.startup_closed_loop_control = True
+prnt("Force Encoder_index_search au demarrage")
+odrv0.axis0.config.startup_encoder_index_search = True
+odrv0.axis1.config.startup_encoder_index_search = True
 
-print("sauvegarde de la calibration et reboot")
+print("sauvegarde de la calibration")
+print("REBOOT!")
 odrv0.save_configuration()
 sleep(2)
 odrv0.reboot()
