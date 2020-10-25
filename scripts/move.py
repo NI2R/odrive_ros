@@ -111,8 +111,10 @@ class Move:
 
         if self.actionFait is False:
 
-            axis0.controller.move_incremental(distAngulaire, False)
-            axis1.controller.move_incremental(distAngulaire, False)
+            axis0.controller.move_to_pos(distAngulaire)
+            axis1.controller.move_to_pos(distAngulaire)
+            while axis0.encoder.pos_estimate < abs(distAngulaire+self.errorMax) or axis1.encoder.pos_estimate < abs(distAngulaire+self.errorMax):
+                sleep(0.001)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
             #self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
@@ -271,12 +273,12 @@ class Move:
 
     def run(self):
 
-        #print("----------------<- 1 ROTATION ->----------------")
-        #self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
-        #sleep(0.5)
+        print("----------------<- 1 ROTATION ->----------------")
+        self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
+        sleep(0.5)
         print("---------------<- 2 TRANSLATION ->---------------")
         self.translation(self.Robot.Dist_rect)
         sleep(0.5)
-        #print("----------------<- 3 ROTATION ->----------------")
-        #self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
+        print("----------------<- 3 ROTATION ->----------------")
+        self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
         print("=================================================")
