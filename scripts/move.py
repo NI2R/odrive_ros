@@ -53,7 +53,7 @@ class Move:
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur de gauche:
         target0 = - (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
-        target1 = (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
+        #target1 = (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("target0 : %d" % target0)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
