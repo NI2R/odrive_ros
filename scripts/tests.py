@@ -113,12 +113,9 @@ def Test_diametre_roue(odrv):
     time.sleep(5)
 
 
-print("finding an odrive...")
-odrv = odrive.find_any()
-print('Odrive found ! ')
 param = param.Param()
 param.config()
 param.raz_encoders()
-Test_move_incremental(odrv,500)
+Test_move_incremental(param.odrv,500)
 #Test_move_to_pos(odrv,500)
 # Test_diametre_roue(odrv)
