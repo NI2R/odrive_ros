@@ -119,7 +119,7 @@ class Move:
 
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
-        angleRobotFin = (axis0.encoder.pos_estimate * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
+        #angleRobotFin = (axis0.encoder.pos_estimate * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
 
 
                 # Attente fin de mouvement SI aucun obstacle détécté
