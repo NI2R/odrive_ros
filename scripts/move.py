@@ -60,7 +60,7 @@ class Move:
         print("target1 : %d" % target1)
         # Début de la translation :
         axis0.controller.move_to_pos(target0)
-        #axis1.controller.move_to_pos(target1)
+        axis1.controller.move_to_pos(target1)
 
         # boucle de régulation de la position
         #while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
