@@ -100,7 +100,7 @@ class Move:
         # calcul des ticks/pas à parcourir pour tourner
 
         # distance angulaire avec angle en radiant
-        distAngulaire = ((self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
+        distAngulaire = (axis0.encoder.pos_estimate + (self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
 
         print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
 
