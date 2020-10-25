@@ -55,26 +55,21 @@ def Test_move_incremental(odrv, distance):
     perimetre_roue_mm = diametre_roue_mm * pi
     distance_tics_G = - (nb_tics * distance) / perimetre_roue_mm
     distance_tics_D = (nb_tics * distance) / perimetre_roue_mm
+    errorMax = 2.5
 
     print('test  move_incremental  allé')
+    print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
+    print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
+
 
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
-    print("attend idle state")
-    print("control_mode  gauche : ", odrv.axis0.controller.control_mode)
-    print("control_mode droite : ", odrv.axis1.controller.control_mode)
-    print("_______")
-    while odrv.axis0.controller.control_mode != 1 and odrv.axis1.controller.conrtrol_mode != 1:
 
-        print("control_mode gauche : ", odrv.axis0.controller.control_mode)
-        print("control_mode droite : ", odrv.axis1.controller.control_mode)
-        time.sleep(0.2)
+    while axis0.encoder.shadow_count > (distance_tics_G - errorMax) or axis1.encoder.pos_estimate < (distance_tics_D + errorMax):
+        sleep(0.001)
 
-
-    print("test move_incremental retour")
-    odrv.axis0.controller.move_incremental(distance_tics_G, False)
-    odrv.axis1.controller.move_incremental(distance_tics_D, False)
-
+    print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
+    print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
     print("j'attends 5sec avant de finir")
     time.sleep(5)
 
@@ -122,6 +117,6 @@ odrv = odrive.find_any()
 print('Odrive found ! ')
 Config(odrv)
 Calibration(odrv)
-#Test_move_incremental(odrv,200)
-Test_move_to_pos(odrv,500)
+Test_move_incremental(odrv,500)
+#Test_move_to_pos(odrv,500)
 # Test_diametre_roue(odrv)

@@ -22,7 +22,7 @@ class Move:
         self.distanceEntreAxe = 280    # entre-axe en mm
 
         # coding features
-        self.errorMax = 5      # unité ?
+        self.errorMax = 2.5      # unité ?
         self.OBS = False        # Init  Ostacle Detecté
         self.actionFait = False     # Init Action Faite
         self.SenOn = list()
@@ -52,18 +52,19 @@ class Move:
         print("Lancement d'une Translation de %.0f mm" % distance)
 
         # Définition de la distance à parcourir en tics vis à vis de la position actuelle avec le moteur de gauche:
-        target0 = - (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
-        target1 = (axis0.encoder.pos_estimate + self.nbTics * distance) / self.perimetreRoue
-        print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
+        target0 = - (axis0.encoder.shadow_count + self.nbTics * distance) / self.perimetreRoue
+        target1 = (axis0.encoder.shadow_count + self.nbTics * distance) / self.perimetreRoue
+
+        print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
         print("target0 : %d" % target0)
-        print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
+        print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
         print("target1 : %d" % target1)
         # Début de la translation :
         axis0.controller.move_to_pos(target0)
         axis1.controller.move_to_pos(target1)
 
         # boucle de régulation de la position
-        while axis0.encoder.pos_estimate > abs(target0-self.errorMax) or axis1.encoder.pos_estimate < abs(target1+self.errorMax):
+        while axis0.encoder.shadow_count > (target0-self.errorMax) or axis1.encoder.pos_estimate < (target1+self.errorMax):
             sleep(0.001)
 
         # fonction pour réguler la fonction move_to_pos(nb_tics_distance)
@@ -100,7 +101,7 @@ class Move:
         # calcul des ticks/pas à parcourir pour tourner
 
         # distance angulaire avec angle en radiant
-        distAngulaire = (axis0.encoder.pos_estimate + (self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
+        distAngulaire = (axis0.encoder.shodow_count + (self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
 
         print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
 
