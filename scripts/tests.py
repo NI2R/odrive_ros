@@ -65,8 +65,11 @@ def Test_move_incremental(odrv, distance):
     print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
     print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
     print('---')
-    print("disitance initinal RG (mm) = %.2f" % distInitG_mm)
-    print("disitance initinal RD (mm) = %.2f" % distInitD_mm)
+    distanceInit_G = odrv.axis0.encoder.shadow_count * perimetre_roue_mm / nb_tics
+    print("Distance Initiale Roue Gauche (mm) : %.4f " % distanceInit_G)
+    distanceInit_D = odrv.axis1.encoder.shadow_count * perimetre_roue_mm / nb_tics
+    print("Distance Initiale Roue Droite (mm) : %.4f " % distanceInit_D)
+
     print('----- depart mvt -----')
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
@@ -83,15 +86,14 @@ def Test_move_incremental(odrv, distance):
     print('----- fin mvt -----')
     print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
     print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
-    #print("j'attends 5sec avant de finir")
-    #time.sleep(5)
-
-    # Distance parcourue par les roues
+    print('---')
     distanceFinaleG = odrv.axis0.encoder.shadow_count * perimetre_roue_mm / nb_tics
     print("Distance finale Roue Gauche (mm) : %.4f " % distanceFinaleG)
     distanceFinaleD = odrv.axis1.encoder.shadow_count * perimetre_roue_mm / nb_tics
     print("Distance Roue Droite (mm) : %.4f " % distanceFinaleD)
-
+    print('---')
+    print('Delta pos RG (mm) = %.3f' % (distanceFinaleG - distanceInit_G))
+    print('Delta pos RD (mm) = %.3f' % (distanceFinaleD - distanceInit_D))
 
 def Test_move_to_pos(odrv, distance):
 
