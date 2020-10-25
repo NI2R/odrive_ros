@@ -60,24 +60,27 @@ def Test_move_incremental(odrv, distance):
     distInitG_mm = (distance_tics_G * perimetre_roue_mm) / nb_tics
     distInitD_mm = (distance_tics_D * perimetre_roue_mm) / nb_tics
     errorMax = 2.5
-    print('test  move_incremental')
+    print('___________________________________________')
+    print('--------- test  move_incremental ----------')
     print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
     print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
-    print('________')
+    print('---')
     print("disitance initinal RG (mm) = %.2f" % distInitG_mm)
     print("disitance initinal RD (mm) = %.2f" % distInitD_mm)
-
+    print('----- depart mvt -----')
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
     wd = 0
     while abs(odrv.axis0.encoder.shadow_count) < abs(distance_tics_G) or abs(odrv.axis1.encoder.shadow_count) < abs(distance_tics_D):
         time.sleep(0.01)
         wd += 1
+        print("watchdog = %d" % wd)
         if wd > 1000:
             timeout = True
             break
     timeout = False
 
+    print('----- fin mvt -----')
     print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
     print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
     print("j'attends 5sec avant de finir")
