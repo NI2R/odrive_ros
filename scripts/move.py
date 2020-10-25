@@ -22,7 +22,7 @@ class Move:
         self.distanceEntreAxe = 280    # entre-axe en mm
 
         # coding features
-        self.errorMax = 10      # unité ?
+        self.errorMax = 5      # unité ?
         self.OBS = False        # Init  Ostacle Detecté
         self.actionFait = False     # Init Action Faite
         self.SenOn = list()
@@ -115,6 +115,17 @@ class Move:
             axis1.controller.move_to_pos(distAngulaire)
             while axis0.encoder.shadow_count < distAngulaire or axis1.encoder.shadow_count < distAngulaire:
                 sleep(0.001)
+
+        print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
+        print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
+
+        sleep(1)
+
+        # Distance parcourue par les roues
+        distanceFinale0 = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
+        print("Distance Roue Gauche (mm) : %.4f " % distanceFinale0)
+        distanceFinale1 = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
+        print("Distance Roue Droite (mm) : %.4f " % distanceFinale1)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
             #self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
