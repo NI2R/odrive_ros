@@ -22,7 +22,7 @@ class Move:
         self.distanceEntreAxe = 280    # entre-axe en mm
 
         # coding features
-        self.errorMax = 2.5      # unité ?
+        self.errorMax = 1.5      # unité ?
         self.OBS = False        # Init  Ostacle Detecté
         self.actionFait = False     # Init Action Faite
         self.SenOn = list()
@@ -64,7 +64,7 @@ class Move:
         axis1.controller.move_to_pos(target1)
 
         # boucle de régulation de la position
-        while axis0.encoder.shadow_count > (target0-self.errorMax) or axis1.encoder.pos_estimate < (target1+self.errorMax):
+        while abs(axis0.encoder.shadow_count) > abs(target0-self.errorMax) or abs(axis1.encoder.pos_estimate) < abs(target1+self.errorMax):
             sleep(0.001)
 
         # fonction pour réguler la fonction move_to_pos(nb_tics_distance)
@@ -109,12 +109,12 @@ class Move:
         # values = MCP3008.readadc(1)
 
 
-        if self.actionFait is False:
 
-            axis0.controller.move_incremental(distAngulaire, False)
-            axis1.controller.move_incremental(distAngulaire, False)
-            while abs(axis0.encoder.shadow_count) < abs(distAngulaire) or abs(axis1.encoder.shadow_count) < abs(distAngulaire):
-                sleep(0.001)
+
+        axis0.controller.move_incremental(distAngulaire, False)
+        axis1.controller.move_incremental(distAngulaire, False)
+        while abs(axis0.encoder.shadow_count) < abs(distAngulaire+self.errorMax) or abs(axis1.encoder.shadow_count) < abs(distAngulaire+self.errorMax):
+            sleep(0.001)
 
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
@@ -134,7 +134,7 @@ class Move:
         # else:
         #     print("Rotation Terminée !")
         #     self.actionFait = False
-        self.actionFait = False
+        #self.actionFait = False
         sleep(1)
 
     def stop(self):
