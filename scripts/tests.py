@@ -7,6 +7,7 @@ import odrive
 from odrive.enums import *  # a checker
 import time
 from math import pi
+import param
 
 
 def Config(odrv):
@@ -115,8 +116,9 @@ def Test_diametre_roue(odrv):
 print("finding an odrive...")
 odrv = odrive.find_any()
 print('Odrive found ! ')
-Config(odrv)
-Calibration(odrv)
+param = param.Param()
+param.config()
+param.raz_encoders()
 Test_move_incremental(odrv,500)
 #Test_move_to_pos(odrv,500)
 # Test_diametre_roue(odrv)
