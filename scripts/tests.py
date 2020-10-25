@@ -71,7 +71,7 @@ def Test_move_incremental(odrv, distance):
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
     wd = 0
-    while odrv.axis0.controller.vel_estimate != 0 & odrv.axis1.controller.vel_estimate != 0:
+    while odrv.axis0.encoder.vel_estimate != 0 & odrv.axis1.encoder.vel_estimate != 0:
         time.sleep(0.01)
         wd += 1
         print("watchdog = %d" % wd)
@@ -133,7 +133,7 @@ def Test_diametre_roue(odrv):
 
 param = param.Param()
 param.config()
-param.raz_encoders()
+#param.raz_encoders()
 
 for i in range(0,10):
     Test_move_incremental(param.odrv,500)
