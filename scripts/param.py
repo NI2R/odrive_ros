@@ -17,8 +17,8 @@ class Param:
 
     def config(self):
         # 40Amp max dans le moteur (gros couple et sécurité pour pas fumer le moteur)
-        self.odrv.axis0.motor.config.current_lim = 10
-        self.odrv.axis1.motor.config.current_lim = 10
+        self.odrv.axis0.motor.config.current_lim = 40
+        self.odrv.axis1.motor.config.current_lim = 40
 
         # vmax en tick/s les encodeurs font 8192 tick/tours
         # controller.*.vel_limite prend le pas sur trap_traj.*.vel_limt
