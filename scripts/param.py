@@ -43,7 +43,7 @@ class Param:
         self.odrv.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         self.odrv.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
-            time.sleep(0.2)
+            sleep(0.2)
 
         # Met les moteurs en boucle fermée
         self.odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
