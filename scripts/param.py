@@ -39,15 +39,15 @@ class Param:
 
         # Calibration sauvegardée et lancée au démarrage...
         # Lance la calibration moteur si pas déjà faite
-        #print("starting calibration...")
-        #self.odrv.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
-        #self.odrv.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
-        #while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
-        #    time.sleep(0.2)
+        print("starting calibration...")
+        self.odrv.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+        self.odrv.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+        while self.odrv.axis0.current_state != 1 and self.odrv.axis1.current_state != 1:
+            time.sleep(0.2)
 
         # Met les moteurs en boucle fermée
-        #self.odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-        #self.odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+        self.odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+        self.odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
         # Forcer la position zero des encoders
         for i in range(0, 5):
