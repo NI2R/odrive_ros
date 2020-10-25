@@ -53,12 +53,12 @@ class Param:
 
     def raz_encoders(self):
         # Forcer la position zero des encoders
-        for i in range(0, 5):
-            self.odrv.axis0.controller.move_to_pos(0)
-            self.odrv.axis1.controller.move_to_pos(0)
-            print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
-            print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
-            sleep(1)
+
+        self.odrv.axis0.controller.move_to_pos(0)
+        self.odrv.axis1.controller.move_to_pos(0)
+        print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
+        print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
+        sleep(1)
 
     def reboot(self):
 

@@ -70,7 +70,7 @@ def main():
     param = p.Param()
     param.config()
     #param.calib()
-    param.raz_encoders()
+    #param.raz_encoders()
     move = m.Move(param.odrv)
     rospy.sleep(1)
     while not rospy.is_shutdown():
