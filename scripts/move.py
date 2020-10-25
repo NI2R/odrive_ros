@@ -113,7 +113,7 @@ class Move:
 
             axis0.controller.move_to_pos(distAngulaire)
             axis1.controller.move_to_pos(distAngulaire)
-            while axis0.encoder.pos_estimate < abs(distAngulaire+self.errorMax) or axis1.encoder.pos_estimate < abs(distAngulaire+self.errorMax):
+            while axis0.encoder.shadow_count < distAngulaire or axis1.encoder.shadow_count < distAngulaire:
                 sleep(0.001)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
