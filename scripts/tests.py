@@ -59,18 +59,18 @@ def Test_move_incremental(odrv, distance):
     errorMax = 2.5
 
     print('test  move_incremental  allé')
-    print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
-    print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
+    print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
+    print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
 
 
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
 
-    while axis0.encoder.shadow_count > (distance_tics_G - errorMax) or axis1.encoder.pos_estimate < (distance_tics_D + errorMax):
+    while odrv.axis0.encoder.shadow_count > (distance_tics_G - errorMax) or odrv.axis1.encoder.pos_estimate < (distance_tics_D + errorMax):
         sleep(0.001)
 
-    print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
-    print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
+    print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
+    print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
     print("j'attends 5sec avant de finir")
     time.sleep(5)
 
