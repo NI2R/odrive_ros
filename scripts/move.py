@@ -119,13 +119,6 @@ class Move:
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
 
-        sleep(1)
-
-        # Distance parcourue par les roues
-        distanceFinale0 = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
-        print("Distance Roue Gauche (mm) : %.4f " % distanceFinale0)
-        distanceFinale1 = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
-        print("Distance Roue Droite (mm) : %.4f " % distanceFinale1)
 
                 # Attente fin de mouvement SI aucun obstacle détécté
             #self.wait_end_move(strMouv, axis0, distAngulaire, self.errorMax)
