@@ -113,7 +113,7 @@ class Move:
 
             axis0.controller.move_incremental(distAngulaire, False)
             axis1.controller.move_incremental(distAngulaire, False)
-            while axis0.encoder.shadow_count < distAngulaire or axis1.encoder.shadow_count < distAngulaire:
+            while abs(axis0.encoder.shadow_count) < abs(distAngulaire) or abs(axis1.encoder.shadow_count) < abs(distAngulaire):
                 sleep(0.001)
 
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
