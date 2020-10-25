@@ -62,8 +62,8 @@ class Move:
         print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
         print("target1 : %d" % target1)
         # Début de la translation :
-        axis0.controller.move_incremental(target0, False)
-        axis1.controller.move_incremental(target1, False)
+        axis0.controller.move_incremental(target0, True)
+        axis1.controller.move_incremental(target1, True)
         sleep(1)
         wd = 0
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
