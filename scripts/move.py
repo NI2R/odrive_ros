@@ -101,8 +101,7 @@ class Move:
         # calcul des ticks/pas à parcourir pour tourner
 
         # distance angulaire avec angle en radiant
-        distAngulaire = (axis0.encoder.shodow_count + (self.distanceEntreAxe/2) * angle * self.nbTics) / self.perimetreRoue
-
+        distAngulaire = (self.distanceEntreAxe/2) * angle * self.nbTics / self.perimetreRoue
         print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
 
 
@@ -112,8 +111,8 @@ class Move:
 
         if self.actionFait is False:
 
-            axis0.controller.move_to_pos(distAngulaire)
-            axis1.controller.move_to_pos(distAngulaire)
+            axis0.controller.move_incremental(distAngulaire, False)
+            axis1.controller.move_incremental(distAngulaire, False)
             while axis0.encoder.shadow_count < distAngulaire or axis1.encoder.shadow_count < distAngulaire:
                 sleep(0.001)
 
