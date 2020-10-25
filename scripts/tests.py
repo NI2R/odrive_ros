@@ -71,7 +71,7 @@ def Test_move_incremental(odrv, distance):
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
     wd = 0
-    while odrv.axis0.encoder.vel_estimate != 0 & odrv.axis1.encoder.vel_estimate != 0:
+    while float(odrv.axis0.encoder.vel_estimate) != 0 & float(odrv.axis1.encoder.vel_estimate) != 0:
         time.sleep(0.01)
         wd += 1
         print("watchdog = %d" % wd)
