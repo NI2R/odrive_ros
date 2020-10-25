@@ -70,6 +70,7 @@ def Test_move_incremental(odrv, distance):
     print('----- depart mvt -----')
     odrv.axis0.controller.move_incremental(distance_tics_G, False)
     odrv.axis1.controller.move_incremental(distance_tics_D, False)
+    sleep(1)
     wd = 0
     while float(odrv.axis0.encoder.vel_estimate) != 0 and float(odrv.axis1.encoder.vel_estimate) != 0:
         time.sleep(0.01)
