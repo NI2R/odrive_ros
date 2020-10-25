@@ -49,6 +49,9 @@ class Param:
         self.odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
         self.odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
+
+
+    def raz_encoders(self):
         # Forcer la position zero des encoders
         for i in range(0, 5):
             self.odrv.axis0.controller.move_to_pos(0)
