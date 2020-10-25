@@ -92,6 +92,7 @@ def Test_move_incremental(odrv, distance):
     distanceFinaleD = odrv.axis1.encoder.shadow_count * perimetre_roue_mm / nb_tics
     print("Distance Roue Droite (mm) : %.4f " % distanceFinaleD)
     print('---')
+    time.sleep(1)
     print('Delta pos RG (mm) = %.3f' % (distanceFinaleG - distanceInit_G))
     print('Delta pos RD (mm) = %.3f' % (distanceFinaleD - distanceInit_D))
 
