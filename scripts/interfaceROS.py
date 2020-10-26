@@ -70,14 +70,13 @@ def main():
     param = p.Param()
     param.config()
     #param.calib()
-    #param.raz_encoders()
+    param.raz_encoders()
     move = m.Move(param.odrv)
     rospy.sleep(1)
     while not rospy.is_shutdown():
         move.run()
         rospy.sleep(1)
-        # pour les tests qaund la cailb ne se lance pas au debut du main
-        #param.reboot()
+
 
 
 if __name__ == '__main__':

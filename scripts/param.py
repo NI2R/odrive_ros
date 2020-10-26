@@ -38,7 +38,7 @@ class Param:
     def calib(self):
 
         # Calibration sauvegardée et lancée au démarrage...
-        # Lance la calibration moteur si pas déjà faite
+        # A intégrer: Lance la calibration moteur si pas déjà faite
         print("starting calibration...")
         self.odrv.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
         self.odrv.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
@@ -49,16 +49,26 @@ class Param:
         self.odrv.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
         self.odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 
-
-
     def raz_encoders(self):
-        # Forcer la position zero des encoders
 
-        self.odrv.axis0.controller.move_to_pos(0)
-        self.odrv.axis1.controller.move_to_pos(0)
-        print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
-        print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
-        sleep(1)
+        # Forcer la position zero des encoders
+        print("Remise à zéro des moteurs")
+        test = input("Le robot est-il en l'air ? : [ESPACE] pour continuer")
+        if test == ' ':
+            self.odrv.axis0.controller.move_to_pos(0)
+            self.odrv.axis1.controller.move_to_pos(0)
+            sleep(1)
+            wd = 0
+            while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
+                sleep(0.01)
+                wd += 1
+                #print("watchdog = %d" % wd)
+                if wd > 200:
+                    break
+
+            print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
+            print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
+            print('fin de la remise à zéro')
 
     def reboot(self):
 
