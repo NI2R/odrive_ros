@@ -55,7 +55,7 @@ class Param:
         print("Remise à zéro des moteurs")
         test = str(input("Le robot est-il en l'air ? : [y] pour continuer \n"))
         print(test)
-        if test == y :
+        if test == "y" :
             self.odrv.axis0.controller.move_to_pos(0)
             self.odrv.axis1.controller.move_to_pos(0)
             sleep(1)
