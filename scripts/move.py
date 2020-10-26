@@ -109,8 +109,8 @@ class Move:
         # distance angulaire en tics avec angle en radiant
         distAngulaire = (self.distanceEntreAxe/2) * angle * self.nbTics / self.perimetreRoue
         print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
-        angleRobot = (distAngulaire * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
-        print("angle parcourue par le robot = %.2f" % angleRobot)
+        #angleRobot = (distAngulaire * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
+        #print("angle parcourue par le robot = %.2f" % angleRobot)
 
         # Assignation de values avec valeur du capteur IR
         # values = MCP3008.readadc(1)
@@ -127,8 +127,8 @@ class Move:
 
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
-        angleRobotFin = (axis0.encoder.pos_estimate * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
-        print("angle parcourue par le robot = %.2f" % angleRobotFin)
+        #angleRobotFin = (axis0.encoder.pos_estimate * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
+        #print("angle parcourue par le robot = %.2f" % angleRobotFin)
 
 
             # fonction lié à l'OAS
