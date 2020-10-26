@@ -7,7 +7,7 @@ import odrive.enums
 from time import sleep
 
 print("Recherche Odrive...")
-odrv0 = odrive.find_any(serial_number="365C33693037")
+odrv0 = odrive.find_any()
 
 """ /!\ PREREQUIS : dans odrivetools lancer 'odrv0.erase_configuration()' & 'odrv0.reboot()' """
 
