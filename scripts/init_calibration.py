@@ -16,6 +16,13 @@ odrv0.axis0.encoder.config.use_index = False
 odrv0.axis1.encoder.config.use_index = False
 sleep(0.5)
 
+print(" Définition des limites en courant et tension")
+odrv0.axis0.motor.config.calibration_current = 20 # init: 10
+odrv0.axis1.motor.config.calibration_current = 20
+odrv0.axis0.motor.config.resistance_calib_max_voltage = 4 #init: 2
+odrv0.axis0.motor.config.resistance_calib_max_voltage = 4 #init: 2
+
+
 print("Lancement d'une calibration complète  moteurs + encoders ")
 odrv0.axis0.requested_state = 3 #AXIS_STATE_FULL_CALIBRATION_SEQUENCE
 odrv0.axis1.requested_state = 3 #AXIS_STATE_FULL_CALIBRATION_SEQUENCE
@@ -41,9 +48,9 @@ odrv0.axis0.config.startup_closed_loop_control = True
 odrv0.axis1.config.startup_closed_loop_control = True
 
 # Si besoin, pas indispensable
-#print("Force la calib moteur au démarrage")
-#odrv0.axis0.config.startup_motor_calibration = True
-#odrv0.axis1.config.startup_motor_calibration = True
+print("Force la calib moteur au démarrage")
+odrv0.axis0.config.startup_motor_calibration = True
+odrv0.axis1.config.startup_motor_calibration = True
 
 print("sauvegarde de la calibration")
 odrv0.save_configuration()
