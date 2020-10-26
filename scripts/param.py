@@ -53,20 +53,21 @@ class Param:
 
         # Forcer la position zero des encoders
         print("Remise à zéro des moteurs")
-        test = 'n'
         test = str(input("Le robot est-il en l'air ? : [y] pour continuer \n"))
         print(test)
-        if test == 'y' :
+        if test == y :
             self.odrv.axis0.controller.move_to_pos(0)
             self.odrv.axis1.controller.move_to_pos(0)
             sleep(1)
             wd = 0
-            while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
+            while int(self.odrv.axis0.encoder.vel_estimate) != 0 and int(self.odrv.axis1.encoder.vel_estimate) != 0:
                 sleep(0.01)
                 wd += 1
                 #print("watchdog = %d" % wd)
                 if wd > 200:
                     break
+        else :
+            print("arrêt de la remise à zero")
 
         print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
         print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
