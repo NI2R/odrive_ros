@@ -53,8 +53,9 @@ class Param:
 
         # Forcer la position zero des encoders
         print("Remise à zéro des moteurs")
-        test = input("Le robot est-il en l'air ? : [Y] pour continuer")
-        if test == 'Y':
+        test = 'n'
+        test = input("Le robot est-il en l'air ? : [y] pour continuer")
+        if test == 'y' :
             self.odrv.axis0.controller.move_to_pos(0)
             self.odrv.axis1.controller.move_to_pos(0)
             sleep(1)
