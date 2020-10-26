@@ -66,9 +66,9 @@ class Param:
                 if wd > 200:
                     break
 
-            print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
-            print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
-            print('fin de la remise à zéro')
+        print("Axis0 pos_estimate = %0f" % self.odrv.axis0.encoder.pos_estimate)
+        print("Axis1 pos_estimate = %0f" % self.odrv.axis1.encoder.pos_estimate)
+        print('fin de la remise à zéro')
 
     def reboot(self):
 
