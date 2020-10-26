@@ -17,7 +17,7 @@ class Move:
 
         # Robot physical constant
         self.nbTics = 8192    # Nombre de tics pr un tour d'encoder
-        self.diametreRoue = 80     # Diamètre roue en mm
+        self.diametreRoue = 77     # Diamètre roue en mm
         self.perimetreRoue = self.diametreRoue * pi  # Périmètre roue en mm
         self.distanceEntreAxe = 280    # entre-axe en mm
 
@@ -70,7 +70,7 @@ class Move:
         sleep(1)
         wd = 0
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
-            sleep(0.01)
+            sleep(0.1)
             wd += 1
             #print("watchdog = %d" % wd)
             if wd > 200:
@@ -82,8 +82,6 @@ class Move:
         print("Translation Terminée !")
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
-
-        sleep(1)
 
         # Distance parcourue par les roues
         distanceFinale0 = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
@@ -119,7 +117,7 @@ class Move:
         sleep(1)
         wd = 0
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
-            sleep(0.01)
+            sleep(0.1)
             wd += 1
             #print("watchdog = %d" % wd)
             if wd > 200:
@@ -141,7 +139,7 @@ class Move:
         #     print("Rotation Terminée !")
         #     self.actionFait = False
         #self.actionFait = False
-        sleep(1)
+
 
     def stop(self):
 
