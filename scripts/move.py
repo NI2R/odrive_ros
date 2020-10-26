@@ -163,7 +163,6 @@ class Move:
     def run(self):
 
         print("----------------<- 1 ROTATION ->----------------")
-        if self.Angle_int != self.Robot.Angle_int
         self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
         sleep(0.5)
         print("---------------<- 2 TRANSLATION ->---------------")
