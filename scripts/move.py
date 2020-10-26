@@ -30,9 +30,9 @@ class Move:
 
         # Appel de la classe Robot_properties dans interfaseROS.py
         self.Robot = Robot_properties()
-        self.Angle_int = self.Robot.Angle_int
-        self.Angle_fi = self.Robot.Angle_fi
-        self.Distance_rect = self.Robot.Distance_rect
+        #self.Angle_int = self.Robot.Angle_int
+        #self.Angle_fi = self.Robot.Angle_fi
+        #self.Distance_rect = self.Robot.Distance_rect
 
     def translation(self, distance, senslist):
         ''' [Fonction qui permet d'avancer droit pour une distance
