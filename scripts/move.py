@@ -54,8 +54,8 @@ class Move:
         # Publication distance parcourue
         self.Robot.update_Distance_parc(self.distanceRobot_mm)
         # Publication vitesse moteurs:
-        self.vitesse0_ms = - axis0.controller.vel_estimate / (self.perimetreRoue/1000)
-        self.vitesse1_ms = axis1.controller.vel_estimate / (self.perimetreRoue/1000)
+        self.vitesse0_ms = - axis0.encoder.vel_estimate / (self.perimetreRoue/1000)
+        self.vitesse1_ms = axis1.encoder.vel_estimate / (self.perimetreRoue/1000)
         print("Vitesse roue gauche (m/s) : %d " % self.vitesse0_ms)
         print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
         self.Robot.update_Vitesse0(self.vitesse0_ms)
