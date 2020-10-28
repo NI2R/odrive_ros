@@ -86,12 +86,13 @@ class Move:
         print(sharp_list)
         for i in range(len(self.sharp_list)):
             if sharp_list[i] is True:
-                if MCP3008.readadc(sharp_list[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
+                print("Test of", self.sharp_list[i])
+                if MCP3008.readadc(self.sharp_list[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
                     self.SenOn[i] = 1
                     self.OBS = True
                     print("Obstacle détécté")
-                    self.stop(self)
-                    print("Valeur du capteur [%d] vaut : %d ", (sharp_list[i], MCP3008.readadc(self.sharp_list[i])))
+                    self.stop()
+                    print("Valeur du capteur [%d] vaut : %d ", (self.sharp_list[i], MCP3008.readadc(self.sharp_list[i])))
 
     def wait_end_move(self, sharp_list):
 
@@ -143,7 +144,7 @@ class Move:
 
         axis0.controller.move_incremental(target0, True)
         axis1.controller.move_incremental(target1, True)
-        self.wait_end_move(senslist)
+        self.wait_end_move(sharp_list)
 
         print("Translation Terminée !")
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
