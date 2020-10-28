@@ -32,8 +32,8 @@ class Move:
 
         # Définition données évitement :
         self.OBS = False
-        self.sharp = [0, 1, 2, 3, 4]  # liste des capteurs
-        self.SenOn = [0 for i in range(len(self.sharp))]  # liste flag detection pour chaque capteur
+        self.sharp_list = [0, 1, 2, 3, 4]  # liste des capteurs
+        self.SenOn = [0 for i in range(len(self.sharp_list))]  # liste flag detection pour chaque capteur
         self.Sen_count = 0 # compteur de detection
         self.limite_detection = 700
 
@@ -81,18 +81,19 @@ class Move:
         # Publication distance parcourue
         self.Robot.update_Distance_parc()
 
-    def evitement(self):
+    def evitement(self, sharp_list):
         print("Début fct EVITEMENT")
-        for i in range(len(self.sharp)):
-            if self.sharp[i] is True:
-                if MCP3008.readadc(self.sharp[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
+        print(sharp_list)
+        for i in range(len(self.sharp_list)):
+            if sharp_list[i] is True:
+                if MCP3008.readadc(sharp_list[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
                     self.SenOn[i] = 1
                     self.OBS = True
                     print("Obstacle détécté")
                     self.stop(self)
-                    print("Valeur du capteur [%d] vaut : %d ", (self.sharp[i], MCP3008.readadc(self.sharp[i])))
+                    print("Valeur du capteur [%d] vaut : %d ", (sharp_list[i], MCP3008.readadc(self.sharp_list[i])))
 
-    def wait_end_move(self):
+    def wait_end_move(self, sharp_list):
 
         # Définition des Aliases :
         axis0 = self.odrv.axis0
@@ -104,13 +105,13 @@ class Move:
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
             sleep(0.1)
             wd += 1
-            self.evitement()
+            self.evitement(sharp_list)
             #print("watchdog = %d" % wd)
             if wd > 200:
                 break
 
 
-    def translation(self, distance, senslist):
+    def translation(self, distance, sharp_list):
         ''' [Fonction qui permet d'avancer droit pour une distance
             donnée en mm] '''
 
@@ -142,7 +143,7 @@ class Move:
 
         axis0.controller.move_incremental(target0, True)
         axis1.controller.move_incremental(target1, True)
-        self.wait_end_move()
+        self.wait_end_move(senslist)
 
         print("Translation Terminée !")
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
