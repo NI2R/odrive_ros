@@ -32,7 +32,7 @@ class Move:
         self.sharp = [0, 1, 2, 3, 4]  # liste des capteurs
         self.SenOn = [0 for i in range(len(self.sharp))]  # liste flag detection pour chaque capteur
         self.Sen_count = 0 # compteur de detection
-        self.limite_detection = 500
+        self.limite_detection = 700
 
         # Définition des distances et vitesses :
         self.distance0_mm = 0
@@ -79,7 +79,7 @@ class Move:
         self.Robot.update_Distance_parc()
 
     def evitement(self):
-
+        print("Début fct EVITEMENT")
         for i in range(len(self.sharp)):
             if self.sharp[i] is True:
                 if MCP3008.readadc(self.sharp[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
@@ -100,10 +100,11 @@ class Move:
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
             sleep(0.1)
             wd += 1
-            #print("watchdog = %d" % wd)
-            if wd > 100:
-                break
             self.evitement()
+            #print("watchdog = %d" % wd)
+            if wd > 200:
+                break
+
 
     def translation(self, distance, senslist):
         ''' [Fonction qui permet d'avancer droit pour une distance
