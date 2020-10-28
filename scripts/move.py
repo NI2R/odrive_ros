@@ -151,7 +151,7 @@ class Move:
         self.distanceRobot_mm = abs(self.distance0_mm + self.distance1_mm)/2
 
         # Publication :
-        self.publication(self)
+        self.publication()
 
     def rotation(self, angle, senslist):
         ''' [ Fonction qui fait tourner le robot sur lui même
