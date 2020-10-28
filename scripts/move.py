@@ -166,7 +166,7 @@ class Move:
             while True :
                 sleep(1)
 
-    def rotation(self, angle, senslist):
+    def rotation(self, angle, sharp_list):
         ''' [ Fonction qui fait tourner le robot sur lui même
             d'un angle donné en radiant ] '''
 
