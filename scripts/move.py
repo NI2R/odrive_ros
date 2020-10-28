@@ -15,6 +15,9 @@ class Move:
 
         self.odrv = odrv0      # Assignation du odrive
 
+        # Bool à publier au MAIN
+        self.position_atteinte = False
+
         # Robot physical constant
         self.nbTics = 8192    # Nombre de tics pr un tour d'encoder
         self.diametreRoue = 77     # Diamètre roue en mm
@@ -155,6 +158,12 @@ class Move:
         # Publication :
         self.publication()
 
+
+        # TEST MONO TRANSLATION
+        if distance > 0 :
+            while True :
+                sleep(1)
+
     def rotation(self, angle, senslist):
         ''' [ Fonction qui fait tourner le robot sur lui même
             d'un angle donné en radiant ] '''
@@ -202,6 +211,7 @@ class Move:
 
     def run(self):
 
+        self.position_atteinte = False
         print("----------------<- 1 ROTATION ->----------------")
         self.rotation(self.Robot.Angle_int, [True, True, True, True, True])
         sleep(0.5)
@@ -214,3 +224,4 @@ class Move:
         self.rotation(self.Robot.Angle_fi, [True, True, True, True, True])
         print("====================== FIN DEPLACEMENT n°%d =======================" % self.compteur_deplacement)
         self.compteur_deplacement += 1
+        self.position_atteinte = True

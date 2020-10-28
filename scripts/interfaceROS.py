@@ -21,10 +21,12 @@ class Robot_properties:
         self.publish_Distance = '/odriveDistance_parcourue'
         self.publish_Vitesse0 = '/odriveVitesse_RG'  # nom du topic que je publie
         self.publish_Vitesse1 = '/odriveVitesse_RD'
+        self.publish_Position_atteinte = '/odrivePosition_atteinte'
 
         self.pubDistance = rospy.Publisher(self.publish_Distance, Float32, queue_size=1)
         self.pubVitesse0 = rospy.Publisher(self.publish_Vitesse0, Twist, queue_size=1)
         self.pubVitesse1 = rospy.Publisher(self.publish_Vitesse1, Twist, queue_size=1)
+        self.pubPosition_atteinte = rospy.Publisher(self.publish_Position_atteinte, Bool, queue_size=1)
 
         rospy.Subscriber("Angle_intermediaire", Float32, self.update_Angle_int)
         rospy.Subscriber("Angle_final", Float32, self.update_Angle_fi)
@@ -63,6 +65,9 @@ class Robot_properties:
         toFloat32.data = Distance
         # print("Distance parcourue en mm :" % Distance)
         self.pubDistance.publish(toFloat32)
+
+    def update_Position_atteinte(self, pos_atteinte):
+        self.pubPosition_atteinte.publish()
 
 
 def main():
