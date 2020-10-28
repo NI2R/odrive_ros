@@ -9,6 +9,7 @@ import move as m
 
 from std_msgs.msg import Float32, Bool
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Bool
 
 
 
@@ -18,6 +19,7 @@ class Robot_properties:
         self.Angle_int = 0
         self.Angle_fi = 0
         self.Dist_rect = 0
+        self.STOP = False
 
         self.publish_Distance = '/odriveDistance_parcourue'
         self.publish_Vitesse0 = '/odriveVitesse_RG'  # nom du topic que je publie
@@ -32,6 +34,7 @@ class Robot_properties:
         rospy.Subscriber("Angle_intermediaire", Float32, self.update_Angle_int)
         rospy.Subscriber("Angle_final", Float32, self.update_Angle_fi)
         rospy.Subscriber("Distance_rectiligne", Float32, self.update_Distance_rec)
+        rospy.Subscriber("Stop_time", Bool, self.update_Stop)
 
     """ INPUTS """
 
@@ -43,6 +46,9 @@ class Robot_properties:
 
     def update_Distance_rec(self, data):
         self.Dist_rect = data.data
+
+    def update_Stop(self, data):
+        self.STOP = data.data
 
     """ OUTPUTS """
 
