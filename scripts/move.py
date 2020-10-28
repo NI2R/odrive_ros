@@ -94,9 +94,10 @@ class Move:
         # Définition des Aliases :
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
-
+        print("Début WAIT_END_MOVE")
         sleep(1)
         wd = 0
+        print("While %d" % (int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0))
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
             sleep(0.1)
             wd += 1
