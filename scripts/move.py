@@ -47,8 +47,8 @@ class Move:
     def publication(self):
 
         # Variables locales :
-        axis0 = self.odrv0.axis0
-        axis1 = self.odrv0.axis1
+        axis0 = self.odrv.axis0
+        axis1 = self.odrv.axis1
 
         """ PUBLICATIONS """
         # Publication distance parcourue
@@ -65,8 +65,8 @@ class Move:
         """   POUR ARReTER LES MOTEURS : """
 
         # Variables locales :
-        axis0 = self.odrv0.axis0
-        axis1 = self.odrv0.axis1
+        axis0 = self.odrv.axis0
+        axis1 = self.odrv.axis1
 
         # Met la vitessea des roues à 0.
         print("Le robot s'arrête")
