@@ -6,6 +6,7 @@ import MCP3008
 from interfaceROS import Robot_properties
 from time import sleep
 from math import pi, fabs
+import rospy
 
 
 class Move:
@@ -163,7 +164,7 @@ class Move:
 
         # TEST MONO TRANSLATION
         if distance > 0 :
-            while True :
+            while not rospy.is_shutdown():
                 sleep(1)
 
     def rotation(self, angle, sharp_list):
