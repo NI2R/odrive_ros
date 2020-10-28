@@ -7,8 +7,9 @@ import rospy
 import param as p
 import move as m
 
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32, Bool
 from geometry_msgs.msg import Twist
+
 
 
 class Robot_properties:
@@ -67,7 +68,10 @@ class Robot_properties:
         self.pubDistance.publish(toFloat32)
 
     def update_Position_atteinte(self, pos_atteinte):
-        self.pubPosition_atteinte.publish()
+
+        toBool = Bool()
+        toBool.data = pos_atteinte
+        self.pubPosition_atteinte.publish(toBool)
 
 
 def main():
