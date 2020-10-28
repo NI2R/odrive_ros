@@ -13,8 +13,6 @@ from std_msgs.msg import Bool
 
 
 
-
-
 class Robot_properties:
 
     def __init__(self):
