@@ -83,11 +83,9 @@ class Move:
         self.Robot.update_Distance_parc(self.distanceRobot_mm)
 
     def evitement(self, sharp_list):
-        print("Début fct EVITEMENT")
         print(sharp_list)
         for i in range(len(self.sharp_list)):
             if sharp_list[i] is True:
-                print("Test of", self.sharp_list[i])
                 if MCP3008.readadc(self.sharp_list[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
                     self.SenOn[i] = 1
                     self.OBS = True
@@ -100,11 +98,14 @@ class Move:
         # Définition des Aliases :
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
-        print("Début WAIT_END_MOVE")
         sleep(1)
         wd = 0
-        print("While %d" % (int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0))
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
+            # TEST TIMER FIN
+            if self.Robot.STOP is True:
+                while not rospy.is_shutdown():
+                    sleep(1)
+
             sleep(0.1)
             wd += 1
             self.evitement(sharp_list)
@@ -156,14 +157,13 @@ class Move:
         print("Distance Roue Gauche (mm) : %.4f " % self.distance0_mm)
         self.distance1_mm = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
         print("Distance Roue Droite (mm) : %.4f " % self.distance1_mm)
-        self.distanceRobot_mm = abs(self.distance0_mm + self.distance1_mm)/2
-
+        self.distanceRobot_mm = abs(self.distance0_mm - self.distance1_mm)/2
+        print("distanceRobot_mm = %.2f" % self.distanceRobot_mm)
         # Publication :
         self.publication()
 
-
-        # TEST MONO TRANSLATION
-        if distance > 0 :
+        # TEST TIMER FIN:
+        if distance > 0:
             while not rospy.is_shutdown():
                 sleep(1)
 
