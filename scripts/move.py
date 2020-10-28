@@ -81,7 +81,7 @@ class Move:
     def evitement(self):
 
         for i in range(len(self.sharp)):
-            if self.senslist[i] is True:
+            if self.sharp[i] is True:
                 if MCP3008.readadc(self.sharp[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
                     self.SenOn[i] = 1
                     self.OBS = True
