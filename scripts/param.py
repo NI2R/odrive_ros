@@ -26,14 +26,14 @@ class Param:
         self.odrv.axis1.controller.config.vel_limit = 10000
 
         # trap_traj parametrage des valeurs limit du comportement dynamique
-        self.odrv.axis1.trap_traj.config.vel_limit = 7000
-        self.odrv.axis0.trap_traj.config.vel_limit = 7000
+        self.odrv.axis1.trap_traj.config.vel_limit = 4000
+        self.odrv.axis0.trap_traj.config.vel_limit = 4000
 
-        self.odrv.axis0.trap_traj.config.accel_limit = 5000
-        self.odrv.axis1.trap_traj.config.accel_limit = 5000
+        self.odrv.axis0.trap_traj.config.accel_limit = 3000
+        self.odrv.axis1.trap_traj.config.accel_limit = 3000
 
-        self.odrv.axis0.trap_traj.config.decel_limit = 5000
-        self.odrv.axis1.trap_traj.config.decel_limit = 5000
+        self.odrv.axis0.trap_traj.config.decel_limit = 3000
+        self.odrv.axis1.trap_traj.config.decel_limit = 3000
 
     def calib(self):
 
