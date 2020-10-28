@@ -191,7 +191,7 @@ class Move:
         # values = MCP3008.readadc(1)
         axis0.controller.move_incremental(distAngulaire, False)
         axis1.controller.move_incremental(distAngulaire, False)
-        self.wait_end_move()
+        self.wait_end_move(sharp_list)
 
         print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
         print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
