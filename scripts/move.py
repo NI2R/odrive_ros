@@ -80,7 +80,7 @@ class Move:
         axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
 
         # Publication distance parcourue
-        self.Robot.update_Distance_parc()
+        self.Robot.update_Distance_parc(self.distanceRobot_mm)
 
     def evitement(self, sharp_list):
         print("Début fct EVITEMENT")
