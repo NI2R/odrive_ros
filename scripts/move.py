@@ -81,6 +81,9 @@ class Move:
 
         # Publication distance parcourue
         self.Robot.update_Distance_parc(self.distanceRobot_mm)
+        # attente avant fin stop:
+        sleep(3)
+        self.OBS = False
 
     def evitement(self, sharp_list):
         print(sharp_list)
@@ -90,8 +93,8 @@ class Move:
                     self.SenOn[i] = 1
                     self.OBS = True
                     print("Obstacle détécté")
-                    self.stop()
                     print("Valeur du capteur [%d] vaut : %d ", (self.sharp_list[i], MCP3008.readadc(self.sharp_list[i])))
+                    self.stop()
 
     def wait_end_move(self, sharp_list):
 
@@ -100,11 +103,12 @@ class Move:
         axis1 = self.odrv.axis1
         sleep(1)
         wd = 0
-        while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
+        while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0  or self.OBS is False :
             # TEST TIMER FIN
             if self.Robot.STOP is True:
                 while not rospy.is_shutdown():
                     sleep(1)
+
 
             sleep(0.1)
             wd += 1
@@ -112,7 +116,6 @@ class Move:
             #print("watchdog = %d" % wd)
             if wd > 200:
                 break
-
 
     def translation(self, distance, sharp_list):
         ''' [Fonction qui permet d'avancer droit pour une distance
@@ -204,6 +207,7 @@ class Move:
         #angleRobotFin = (self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
         #print("angle parcourue par le robot = %.2f" % angleRobotFin)
 
+        # Publication ROS des données POS/VEL:
         self.publication()
 
             # fonction lié à l'OAS
