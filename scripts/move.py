@@ -34,7 +34,7 @@ class Move:
         self.OBS = False
         self.sharp_list = [0, 1, 2, 3, 4]  # liste des capteurs
         self.SenOn = [0 for i in range(len(self.sharp_list))]  # liste flag detection pour chaque capteur
-        self.Sen_count = 0  # compteur de detection
+        self.Sen_count = 0 # compteur de detection
         self.limite_detection = 400
 
         # Définition des distances et vitesses :
