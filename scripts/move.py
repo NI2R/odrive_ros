@@ -54,13 +54,15 @@ class Move:
         axis1 = self.odrv.axis1
 
         """ PUBLICATIONS """
-        # Publication distance parcourue
+
+        ''' Publication distance parcourue '''
         self.Robot.update_Distance_parc(self.distanceRobot_mm)
-        # Publication vitesse moteurs:
+
+        ''' Publication vitesse moteurs: '''
         self.vitesse0_ms = - axis0.encoder.vel_estimate / (self.perimetreRoue/1000)
         self.vitesse1_ms = axis1.encoder.vel_estimate / (self.perimetreRoue/1000)
-        print("Vitesse roue gauche (m/s) : %d " % self.vitesse0_ms)
-        print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
+        #print("Vitesse roue gauche (m/s) : %d " % self.vitesse0_ms)
+        #print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
         self.Robot.update_Vitesse0(self.vitesse0_ms)
         self.Robot.update_Vitesse1(self.vitesse1_ms)
         for i in range(10):
@@ -81,13 +83,13 @@ class Move:
         axis1.controller.pos_setpoint = axis1.encoder.pos_estimate
 
         # Publication distance parcourue
-        self.Robot.update_Distance_parc(self.distanceRobot_mm)
+        #self.Robot.update_Distance_parc(self.distanceRobot_mm)
         # attente avant fin stop:
         sleep(2)
         self.OBS = False
 
     def evitement(self, sharp_list):
-        #print(sharp_list)
+
         for i in range(len(self.sharp_list)):
             if sharp_list[i] is True:
                 if MCP3008.readadc(self.sharp_list[i]) > self.limite_detection :  # a voir:  600 trop de detection #  1000 test
@@ -105,14 +107,9 @@ class Move:
         sleep(0.5)
         wd = 0
         while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
-            # TEST TIMER FIN
-            if self.Robot.STOP is True:
-                while not rospy.is_shutdown():
-                    sleep(0.01)
             sleep(0.1)
             wd += 1
             self.evitement(sharp_list)
-            #print("watchdog = %d" % wd)
             if wd > 200:
                 break
 
@@ -123,9 +120,6 @@ class Move:
         # Défintion des Aliases
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
-
-        # Définition du type de mouvement (Flag) :
-        strMouv = "trans"
 
         # Def. de la distance parcouru par les roues avant nouveau deplacement
         distInit0_tics = axis0.encoder.pos_estimate
@@ -156,9 +150,10 @@ class Move:
 
         # Distance parcourue par les roues :
         self.distance0_mm = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
-        print("Distance Roue Gauche (mm) : %.4f " % self.distance0_mm)
+        #print("Distance Roue Gauche (mm) : %.4f " % self.distance0_mm)
         self.distance1_mm = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
-        print("Distance Roue Droite (mm) : %.4f " % self.distance1_mm)
+        #print("Distance Roue Droite (mm) : %.4f " % self.distance1_mm)
+
         # Distance parcourue par le robot :
         self.distanceRobot_mm = abs(self.distance0_mm - self.distance1_mm)/2
         print("Distance du Robot (mm) : %.2f" % self.distanceRobot_mm)
@@ -167,9 +162,9 @@ class Move:
         self.publication()
 
         # TEST TIMER FIN:
-        if distance > 0:
-            while not rospy.is_shutdown():
-                sleep(1)
+        #if distance > 0:
+        #    while not rospy.is_shutdown():
+        #        sleep(1)
 
     def rotation(self, angle, sharp_list):
         ''' [ Fonction qui fait tourner le robot sur lui même
@@ -193,8 +188,7 @@ class Move:
         #angleRobot = (distAngulaire * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
         #print("angle parcourue par le robot = %.2f" % angleRobot)
 
-        # Assignation de values avec valeur du capteur IR
-        # values = MCP3008.readadc(1)
+        # Début du mouvement :
         axis0.controller.move_incremental(distAngulaire, False)
         axis1.controller.move_incremental(distAngulaire, False)
         self.wait_end_move(sharp_list)
@@ -213,32 +207,23 @@ class Move:
         # Publication ROS des données POS/VEL:
         self.publication()
 
-            # fonction lié à l'OAS
-        # elif self.OBS is True and self.actionFait is False:
-        #     self.stop()
-        #     sleep(0.5)
-        #     self.OBS = False
-        #     print("Rotation : Obstacle")
-        # else:
-        #     print("Rotation Terminée !")
-        #     self.actionFait = False
-        #self.actionFait = False
-
 
     def run(self):
 
+        self.Robot.Enable_Move(self.EnableMove)
         self.position_atteinte = False
-        print("----------------<- 1 ROTATION ->----------------")
-        self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
-        sleep(0.5)
+        if self.Robot.EnableMove == True u:
+            print("----------------<- 1 ROTATION ->----------------")
+            self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
+            sleep(0.5)
 
-        print("---------------<- 2 TRANSLATION ->---------------")
-        self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
-        sleep(0.5)
+            print("---------------<- 2 TRANSLATION ->---------------")
+            self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
+            sleep(0.5)
 
-        print("----------------<- 3 ROTATION ->----------------")
-        self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
-        print("====================== FIN DEPLACEMENT n°%d =======================" % self.compteur_deplacement)
-        self.compteur_deplacement += 1
-        self.position_atteinte = True
-        self.publication()
+            print("----------------<- 3 ROTATION ->----------------")
+            self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
+            print("====================== FIN DEPLACEMENT n°%d =======================" % self.compteur_deplacement)
+            self.position_atteinte = True
+            self.compteur_deplacement += 1
+            self.publication()

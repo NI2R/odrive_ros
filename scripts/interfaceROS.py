@@ -18,6 +18,7 @@ class Robot_properties:
         self.Angle_int = 0
         self.Angle_fi = 0
         self.Dist_rect = 0
+        self.Enable_Move = False
         self.STOP = False
 
         self.publish_Distance = '/odriveDistance_parcourue'
@@ -34,6 +35,8 @@ class Robot_properties:
         rospy.Subscriber("Angle_final", Float32, self.update_Angle_fi)
         rospy.Subscriber("Distance_rectiligne", Float32, self.update_Distance_rec)
         rospy.Subscriber("Stop_time", Bool, self.update_Stop)
+        rospy.Subscriber("/odriveEnableMove", Bool, self.update_EnableMove)
+
 
     """ INPUTS """
 
@@ -48,6 +51,9 @@ class Robot_properties:
 
     def update_Stop(self, data):
         self.STOP = data.data
+
+    def update_EnableMove(self, data):
+        self.Enable_Move = data.data
 
     """ OUTPUTS """
 
@@ -77,6 +83,8 @@ class Robot_properties:
         toBool = Bool()
         toBool.data = pos_atteinte
         self.pubPosition_atteinte.publish(toBool)
+
+
 
 
 def main():
