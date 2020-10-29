@@ -74,7 +74,7 @@ class Move:
         axis1 = self.odrv.axis1
 
         # Met la vitessea des roues à 0.
-        print("Le robot s'arrête")
+        print("------- /!\ ARRET ROBOT --------")
         axis0.controller.set_vel_setpoint(0, 0)
         axis1.controller.set_vel_setpoint(0, 0)
         axis0.controller.pos_setpoint = axis0.encoder.pos_estimate
@@ -83,7 +83,7 @@ class Move:
         # Publication distance parcourue
         self.Robot.update_Distance_parc(self.distanceRobot_mm)
         # attente avant fin stop:
-        sleep(3)
+        sleep(2)
         self.OBS = False
 
     def evitement(self, sharp_list):
@@ -102,9 +102,9 @@ class Move:
         # Définition des Aliases :
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
-        sleep(1)
+        sleep(0.5)
         wd = 0
-        while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0  or self.OBS is False :
+        while int(axis0.encoder.vel_estimate) != 0 and int(axis1.encoder.vel_estimate) != 0:
             # TEST TIMER FIN
             if self.Robot.STOP is True:
                 while not rospy.is_shutdown():
