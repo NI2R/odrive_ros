@@ -53,7 +53,7 @@ class Robot_properties:
         self.STOP = data.data
 
     def update_EnableMove(self, data):
-        self.Enable_Move = data.data
+        self.Enable_Move = data
 
     """ OUTPUTS """
 
