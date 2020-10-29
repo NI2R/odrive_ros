@@ -34,8 +34,8 @@ class Move:
         self.OBS = False
         self.sharp_list = [0, 1, 2, 3, 4]  # liste des capteurs
         self.SenOn = [0 for i in range(len(self.sharp_list))]  # liste flag detection pour chaque capteur
-        self.Sen_count = 0  # compteur de detection
-        self.limite_detection = 600
+        self.Sen_count = 0 # compteur de detection
+        self.limite_detection = 400
 
         # Définition des distances et vitesses :
         self.distance0_mm = 0
@@ -63,7 +63,8 @@ class Move:
         print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
         self.Robot.update_Vitesse0(self.vitesse0_ms)
         self.Robot.update_Vitesse1(self.vitesse1_ms)
-        self.Robot.update_Position_atteinte(self.position_atteinte)
+        for i in range(10):
+            self.Robot.update_Position_atteinte(self.position_atteinte)
 
     def stop(self):
         """   POUR ARReTER LES MOTEURS : """
@@ -106,7 +107,7 @@ class Move:
                 while not rospy.is_shutdown():
                     sleep(1)
 
-            sleep(0.1)
+            sleep(0.01)
             wd += 1
             self.evitement(sharp_list)
             #print("watchdog = %d" % wd)
@@ -163,11 +164,6 @@ class Move:
 
         # Publication ROS des données POS/VEL:
         self.publication()
-
-        # TEST TIMER FIN:
-        if distance > 0:
-            while not rospy.is_shutdown():
-                sleep(1)
 
     def rotation(self, angle, sharp_list):
         ''' [ Fonction qui fait tourner le robot sur lui même
