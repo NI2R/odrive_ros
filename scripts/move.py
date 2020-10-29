@@ -210,9 +210,14 @@ class Move:
 
     def run(self):
 
+        print("------ DEBUT RUN n°%d------ " % self.compteur_deplacement)
+
         self.Robot.Enable_Move(self.Robot.EnableMove)
         self.position_atteinte = False
-        if self.Robot.EnableMove == True:
+        if self.Robot.EnableMove is True:
+
+            print("ETAT Enable_Move = %d" % self.Robot.EnableMove)
+
             print("----------------<- 1 ROTATION ->----------------")
             self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
             sleep(0.5)
@@ -227,3 +232,4 @@ class Move:
             self.position_atteinte = True
             self.compteur_deplacement += 1
             self.publication()
+            print("ETAT Position Atteinte = %d" % self.position_atteinte)
