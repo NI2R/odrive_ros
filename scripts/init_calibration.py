@@ -16,19 +16,23 @@ odrv0.axis0.encoder.config.use_index = False
 odrv0.axis1.encoder.config.use_index = False
 sleep(0.5)
 
-print(" Définition des limites en courant et tension")
+print(" Définition des limites en courant")
 odrv0.axis0.motor.config.calibration_current = 30  # init: 10
 odrv0.axis1.motor.config.calibration_current = 30
 odrv0.axis0.motor.config.current_lim = 40 # init:
 odrv0.axis1.motor.config.current_lim = 40
 
-odrv0.axis0.config.calibration_lockin.current = 20  # init: 10
-odrv0.axis1.config.calibration_lockin.current = 20
-odrv0.axis0.config.general_lockin.current = 20  # init: 10
-odrv0.axis1.config.general_lockin.current = 20
+print(" Définition des gains")
+odrv0.axis0.controller.config.pos_gain = 30
+odrv0.axis1.controller.config.pos_gain = 30
+
+#odrv0.axis0.config.calibration_lockin.current = 20  # init: 10
+#odrv0.axis1.config.calibration_lockin.current = 20
+#odrv0.axis0.config.general_lockin.current = 20  # init: 10
+#odrv0.axis1.config.general_lockin.current = 20
 
 odrv0.axis0.motor.config.resistance_calib_max_voltage = 2  # init: 2
-odrv0.axis0.motor.config.resistance_calib_max_voltage = 2  # init: 2
+odrv0.axis1.motor.config.resistance_calib_max_voltage = 2  # init: 2
 
 
 print("Lancement d'une calibration complète  moteurs + encoders ")
