@@ -212,7 +212,7 @@ class Move:
 
         self.Robot.Enable_Move(self.EnableMove)
         self.position_atteinte = False
-        if self.Robot.EnableMove == True u:
+        if self.Robot.EnableMove == True:
             print("----------------<- 1 ROTATION ->----------------")
             self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
             sleep(0.5)
