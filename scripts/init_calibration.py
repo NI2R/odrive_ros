@@ -23,8 +23,8 @@ odrv0.axis0.motor.config.current_lim = 40 # init:
 odrv0.axis1.motor.config.current_lim = 40
 
 print(" Définition des gains")
-odrv0.axis0.controller.config.pos_gain = 30
-odrv0.axis1.controller.config.pos_gain = 30
+#odrv0.axis0.controller.config.pos_gain = 30
+#odrv0.axis1.controller.config.pos_gain = 30
 
 #odrv0.axis0.config.calibration_lockin.current = 20  # init: 10
 #odrv0.axis1.config.calibration_lockin.current = 20
