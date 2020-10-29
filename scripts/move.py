@@ -229,15 +229,15 @@ class Move:
 
         self.position_atteinte = False
         print("----------------<- 1 ROTATION ->----------------")
-        self.rotation(self.Robot.Angle_int, [True, True, True, True, True])
+        self.rotation(self.Robot.Angle_int, [False, False, False, False, False])
         sleep(0.5)
 
         print("---------------<- 2 TRANSLATION ->---------------")
-        self.translation(self.Robot.Dist_rect, [True, True, True, True, True])
+        self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
         sleep(0.5)
 
         print("----------------<- 3 ROTATION ->----------------")
-        self.rotation(self.Robot.Angle_fi, [True, True, True, True, True])
+        self.rotation(self.Robot.Angle_fi, [False, False, False, False, False])
         print("====================== FIN DEPLACEMENT n°%d =======================" % self.compteur_deplacement)
         self.compteur_deplacement += 1
         self.position_atteinte = True
