@@ -10,11 +10,10 @@ import rospy
 
 
 class Move:
-    def __init__(self, odrv0):  # p1, p2
-        # self.Treat = Treatment()
-        # self.info_move = self.Treat.step(p1, p2)
+    def __init__(self, odrv0):
 
-        self.odrv = odrv0      # Assignation du odrive
+        # Assignation du odrive
+        self.odrv = odrv0
 
         # Bool à publier au MAIN
         self.position_atteinte = False
@@ -64,6 +63,7 @@ class Move:
         print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
         self.Robot.update_Vitesse0(self.vitesse0_ms)
         self.Robot.update_Vitesse1(self.vitesse1_ms)
+        self.Robot.update_Position_atteinte(self.position_atteinte)
 
     def stop(self):
         """   POUR ARReTER LES MOTEURS : """
@@ -138,28 +138,30 @@ class Move:
         target0 = - (self.nbTics * distance) / self.perimetreRoue
         target1 = (self.nbTics * distance) / self.perimetreRoue
 
-        print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
-        print("target0 : %d" % target0)
-        print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
-        print("target1 : %d" % target1)
-        # Début de la translation :
+        #print("pos_estimate 0: %d" % axis0.encoder.shadow_count)
+        #print("target0 : %d" % target0)
+        #print("pos_estimate 1: %d" % axis1.encoder.shadow_count)
+        #print("target1 : %d" % target1)
 
+        # Début de la translation :
         axis0.controller.move_incremental(target0, True)
         axis1.controller.move_incremental(target1, True)
         self.wait_end_move(sharp_list)
 
         print("Translation Terminée !")
-        print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
-        print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
+        #print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
+        #print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
 
-        # Distance parcourue par les roues
+        # Distance parcourue par les roues :
         self.distance0_mm = - distInit0_mm + (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
         print("Distance Roue Gauche (mm) : %.4f " % self.distance0_mm)
         self.distance1_mm = - distInit1_mm + (axis1.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
         print("Distance Roue Droite (mm) : %.4f " % self.distance1_mm)
+        # Distance parcourue par le robot :
         self.distanceRobot_mm = abs(self.distance0_mm - self.distance1_mm)/2
-        print("distanceRobot_mm = %.2f" % self.distanceRobot_mm)
-        # Publication :
+        print("Distance du Robot (mm) : %.2f" % self.distanceRobot_mm)
+
+        # Publication ROS des données POS/VEL:
         self.publication()
 
         # TEST TIMER FIN:
@@ -171,7 +173,6 @@ class Move:
         ''' [ Fonction qui fait tourner le robot sur lui même
             d'un angle donné en radiant ] '''
 
-        """ --- Variables Locales : --- """
         # Définition des Aliases :
         axis0 = self.odrv.axis0
         axis1 = self.odrv.axis1
@@ -180,9 +181,9 @@ class Move:
         angleDeg = angle * 180 / pi
 
         print("Lancement d'une Rotation de %.2f°" % angleDeg)
-        # calcul des ticks/pas à parcourir pour tourner
 
-        # distance angulaire en tics avec angle en radiant
+
+        # distance angulaire en tics
         distAngulaire = (self.distanceEntreAxe/2) * angle * self.nbTics / self.perimetreRoue
         print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
         #angleRobot = (distAngulaire * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
@@ -194,11 +195,16 @@ class Move:
         axis1.controller.move_incremental(distAngulaire, False)
         self.wait_end_move(sharp_list)
 
-        print("pos_estimate 0: %d" % axis0.encoder.pos_estimate)
-        print("pos_estimate 1: %d" % axis1.encoder.pos_estimate)
-        #angleRobotFin = (axis0.encoder.pos_estimate * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
+        #angleRoue_G_rad = (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
+        ##angleRoue_G_rad = self.perimetreRoue / (self.axis1.encoder.shadow_count * (self.distanceEntreAxe/2) * self.nbTics)
+
+        ##angleRobot_final_rad = (angleRoue_G_rad + angleRoue_G_rad)/2
+        ##angleRobot_final_deg = (angleRoue_G_rad * 180) / pi
+        ##print("Angle final du Robot = %0f°" % angleRobot_final_deg)
+        #angleRobotFin = (self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
         #print("angle parcourue par le robot = %.2f" % angleRobotFin)
 
+        self.publication()
 
             # fonction lié à l'OAS
         # elif self.OBS is True and self.actionFait is False:
@@ -228,3 +234,4 @@ class Move:
         print("====================== FIN DEPLACEMENT n°%d =======================" % self.compteur_deplacement)
         self.compteur_deplacement += 1
         self.position_atteinte = True
+        self.publication()
