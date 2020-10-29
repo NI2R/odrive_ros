@@ -164,11 +164,6 @@ class Move:
         # Publication ROS des données POS/VEL:
         self.publication()
 
-        # TEST TIMER FIN:
-        if distance > 0:
-            while not rospy.is_shutdown():
-                sleep(1)
-
     def rotation(self, angle, sharp_list):
         ''' [ Fonction qui fait tourner le robot sur lui même
             d'un angle donné en radiant ] '''
