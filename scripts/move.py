@@ -63,7 +63,8 @@ class Move:
         print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
         self.Robot.update_Vitesse0(self.vitesse0_ms)
         self.Robot.update_Vitesse1(self.vitesse1_ms)
-        self.Robot.update_Position_atteinte(self.position_atteinte)
+        for i in range(10):
+            self.Robot.update_Position_atteinte(self.position_atteinte)
 
     def stop(self):
         """   POUR ARReTER LES MOTEURS : """
