@@ -210,7 +210,7 @@ class Move:
 
     def run(self):
 
-        self.Robot.Enable_Move(self.EnableMove)
+        self.Robot.Enable_Move(self.Robot.EnableMove)
         self.position_atteinte = False
         if self.Robot.EnableMove == True:
             print("----------------<- 1 ROTATION ->----------------")
