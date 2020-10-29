@@ -223,7 +223,7 @@ class Move:
             sleep(0.5)
 
             print("---------------<- 2 TRANSLATION ->---------------")
-            self.translation(self.Robot.Dist_rect, [False, False, False, False, False])
+            self.translation(self.Robot.Dist_rect, [False, True, False, False, False])
             sleep(0.5)
 
             print("----------------<- 3 ROTATION ->----------------")
