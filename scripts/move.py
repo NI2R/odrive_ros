@@ -189,7 +189,7 @@ class Move:
 
         # distance angulaire en tics
         distAngulaire = (self.distanceEntreAxe/2) * angle * self.nbTics / self.perimetreRoue
-        print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
+        #print("fraction de tour de roue = %.2f" % (distAngulaire / self.nbTics))
         #angleRobot = (distAngulaire * self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
         #print("angle parcourue par le robot = %.2f" % angleRobot)
 
@@ -199,6 +199,7 @@ class Move:
         axis1.controller.move_incremental(distAngulaire, False)
         self.wait_end_move(sharp_list)
 
+        print("Rotation Terminée !")
         angleRoue_G_rad = (ratio_angulaire * axis0.encoder.pos_estimate) / self.nbTics
         print("angle roue G rad : %d" % angleRoue_G_rad )
         ##angleRoue_G_rad = self.perimetreRoue / (self.axis1.encoder.shadow_count * (self.distanceEntreAxe/2) * self.nbTics)
