@@ -212,7 +212,7 @@ class Move:
 
         print("------ DEBUT RUN n°%d------ " % self.compteur_deplacement)
 
-        self.Robot.Enable_Move(self.Robot.EnableMove)
+        self.Robot.Enable_Move(self.Robot.Enable_Move)
         self.position_atteinte = False
         if self.Robot.EnableMove is True:
 
