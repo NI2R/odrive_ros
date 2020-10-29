@@ -50,6 +50,53 @@ def Calibration(odrv):
     #odrv.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
     time.sleep(3)
 
+def Test_Rot_incremental(odrv, distance):
+
+    # définition des données :
+    nb_tics = 8192
+    diametre_roue_mm = 80
+    perimetre_roue_mm = diametre_roue_mm * pi
+    distance_tics_G = - (nb_tics * distance) / perimetre_roue_mm
+    distance_tics_D = (nb_tics * distance) / perimetre_roue_mm
+    distInitG_mm = (distance_tics_G * perimetre_roue_mm) / nb_tics
+    distInitD_mm = (distance_tics_D * perimetre_roue_mm) / nb_tics
+    errorMax = 2.5
+    print('___________________________________________')
+    print('--------- test  move_incremental ----------')
+    print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
+    print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
+    print('---')
+    distanceInit_G = odrv.axis0.encoder.shadow_count * perimetre_roue_mm / nb_tics
+    print("Distance Initiale Roue Gauche (mm) : %.4f " % distanceInit_G)
+    distanceInit_D = odrv.axis1.encoder.shadow_count * perimetre_roue_mm / nb_tics
+    print("Distance Initiale Roue Droite (mm) : %.4f " % distanceInit_D)
+
+    print('----- depart mvt -----')
+    odrv.axis0.controller.move_incremental(distance_tics_G, False)
+    odrv.axis1.controller.move_incremental(distance_tics_D, False)
+    time.sleep(1)
+    wd = 0
+    while int(odrv.axis0.encoder.vel_estimate) != 0 and int(odrv.axis1.encoder.vel_estimate) != 0:
+        time.sleep(0.01)
+        wd += 1
+        #print("watchdog = %d" % wd)
+        if wd > 1000:
+            break
+
+
+    print('----- fin mvt -----')
+    print("pos_estimate 0: %d" % odrv.axis0.encoder.shadow_count)
+    print("pos_estimate 1: %d" % odrv.axis1.encoder.shadow_count)
+    print('---')
+    distanceFinaleG = odrv.axis0.encoder.shadow_count * perimetre_roue_mm / nb_tics
+    print("Distance finale Roue Gauche (mm) : %.4f " % distanceFinaleG)
+    distanceFinaleD = odrv.axis1.encoder.shadow_count * perimetre_roue_mm / nb_tics
+    print("Distance Roue Droite (mm) : %.4f " % distanceFinaleD)
+    print('---')
+    time.sleep(1)
+    print('Delta pos RG (mm) = %.3f' % (distanceFinaleG - distanceInit_G))
+    print('Delta pos RD (mm) = %.3f' % (distanceFinaleD - distanceInit_D))
+
 
 def Test_move_incremental(odrv, distance):
 

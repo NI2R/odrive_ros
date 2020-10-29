@@ -35,7 +35,7 @@ class Move:
         self.sharp_list = [0, 1, 2, 3, 4]  # liste des capteurs
         self.SenOn = [0 for i in range(len(self.sharp_list))]  # liste flag detection pour chaque capteur
         self.Sen_count = 0  # compteur de detection
-        self.limite_detection = 600
+        self.limite_detection = 400
 
         # Définition des distances et vitesses :
         self.distance0_mm = 0
@@ -63,7 +63,8 @@ class Move:
         print("Vitesse roue droite (m/s) : %d " % self.vitesse1_ms)
         self.Robot.update_Vitesse0(self.vitesse0_ms)
         self.Robot.update_Vitesse1(self.vitesse1_ms)
-        self.Robot.update_Position_atteinte(self.position_atteinte)
+        for i in range(10):
+            self.Robot.update_Position_atteinte(self.position_atteinte)
 
     def stop(self):
         """   POUR ARReTER LES MOTEURS : """
@@ -107,9 +108,7 @@ class Move:
             # TEST TIMER FIN
             if self.Robot.STOP is True:
                 while not rospy.is_shutdown():
-                    sleep(1)
-
-
+                    sleep(0.01)
             sleep(0.1)
             wd += 1
             self.evitement(sharp_list)
@@ -182,6 +181,8 @@ class Move:
 
         # Convertion angle en degré :
         angleDeg = angle * 180 / pi
+        # Ratio angle robot fonction tours de roues:
+        ratio_angulaire = (self.distanceEntreAxe) / (self.diametreRoue)
 
         print("Lancement d'une Rotation de %.2f°" % angleDeg)
 
@@ -198,10 +199,11 @@ class Move:
         axis1.controller.move_incremental(distAngulaire, False)
         self.wait_end_move(sharp_list)
 
-        #angleRoue_G_rad = (axis0.encoder.pos_estimate * self.perimetreRoue) / self.nbTics
+        angleRoue_G_rad = (ratio_angulaire * axis0.encoder.pos_estimate) / self.nbTics
+        print("angle roue G rad : %d" % angleRoue_G_rad )
         ##angleRoue_G_rad = self.perimetreRoue / (self.axis1.encoder.shadow_count * (self.distanceEntreAxe/2) * self.nbTics)
 
-        ##angleRobot_final_rad = (angleRoue_G_rad + angleRoue_G_rad)/2
+        #angleRobot_final_rad = (angleRoue_G_rad + angleRoue_G_rad)/2
         ##angleRobot_final_deg = (angleRoue_G_rad * 180) / pi
         ##print("Angle final du Robot = %0f°" % angleRobot_final_deg)
         #angleRobotFin = (self.perimetreRoue * pi)/ ((self.distanceEntreAxe/2) * self.nbTics * angleDeg)
