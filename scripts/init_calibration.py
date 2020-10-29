@@ -19,10 +19,10 @@ sleep(0.5)
 print(" Définition des limites en courant et tension")
 odrv0.axis0.motor.config.calibration_current = 20 # init: 10
 odrv0.axis1.motor.config.calibration_current = 20
-odrv0.axis0.motor.config.calibration_lockin.current = 20
-odrv0.axis1.motor.config.calibration_lockin.current = 20
-#odrv0.axis0.motor.config.general_lockin.current = 20
-#odrv0.axis1.motor.config.general_lockin.current = 20
+#odrv0.axis0.motor.config.calibration_lockin.current = 20 # met plus vite les moteurs en defaut
+#odrv0.axis1.motor.config.calibration_lockin.current = 20
+odrv0.axis0.motor.config.general_lockin.current = 20
+odrv0.axis1.motor.config.general_lockin.current = 20
 
 odrv0.axis0.motor.config.resistance_calib_max_voltage = 4 #init: 2
 odrv0.axis0.motor.config.resistance_calib_max_voltage = 4 #init: 2
