@@ -106,7 +106,7 @@ class Move:
                 while not rospy.is_shutdown():
                     sleep(1)
 
-            sleep(0.1)
+            sleep(0.01)
             wd += 1
             self.evitement(sharp_list)
             #print("watchdog = %d" % wd)
